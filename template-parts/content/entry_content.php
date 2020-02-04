@@ -14,8 +14,9 @@ namespace WP_Rig\WP_Rig;
 	the_content(
 		sprintf(
 			wp_kses(
-				/* translators: %s: Name of current post. Only visible to screen readers */
+			/* translators: %s: Name of current post. Only visible to screen readers */
 				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'wp-rig' ),
+				// phpcs:ignore Generic.Arrays.DisallowShortArraySyntax.Found
 				[
 					'span' => [
 						'class' => [],
@@ -27,6 +28,7 @@ namespace WP_Rig\WP_Rig;
 	);
 
 	wp_link_pages(
+	// phpcs:ignore Generic.Arrays.DisallowShortArraySyntax.Found
 		[
 			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'wp-rig' ),
 			'after'  => '</div>',

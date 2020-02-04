@@ -17,8 +17,9 @@ namespace WP_Rig\WP_Rig;
 			comments_popup_link(
 				sprintf(
 					wp_kses(
-						/* translators: %s: post title */
+					/* translators: %s: post title */
 						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'wp-rig' ),
+						// phpcs:ignore Generic.Arrays.DisallowShortArraySyntax.Found
 						[
 							'span' => [
 								'class' => [],
@@ -36,8 +37,9 @@ namespace WP_Rig\WP_Rig;
 	edit_post_link(
 		sprintf(
 			wp_kses(
-				/* translators: %s: post title */
+			/* translators: %s: post title */
 				__( 'Edit <span class="screen-reader-text">%s</span>', 'wp-rig' ),
+				// phpcs:ignore Generic.Arrays.DisallowShortArraySyntax.Found
 				[
 					'span' => [
 						'class' => [],

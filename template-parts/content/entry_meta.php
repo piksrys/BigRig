@@ -52,25 +52,25 @@ if ( ! empty( $post->post_parent ) && 'attachment' === get_post_type() ) {
 }
 
 ?>
-<div class="entry-meta">
-	<?php
-	if ( ! empty( $time_string ) ) {
-		?>
-		<span class="posted-on">
+	<div class="entry-meta">
+		<?php
+		if ( ! empty( $time_string ) ) {
+			?>
+			<span class="posted-on">
 			<?php
 			printf(
-				/* translators: %s: post date */
+			/* translators: %s: post date */
 				esc_html_x( 'Posted on %s', 'post date', 'wp-rig' ),
 				$time_string // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			);
 			?>
 		</span>
-		<?php
-	}
+			<?php
+		}
 
-	if ( ! empty( $author_string ) ) {
-		?>
-		<span class="posted-by">
+		if ( ! empty( $author_string ) ) {
+			?>
+			<span class="posted-by">
 			<?php
 			/* translators: %s: post author */
 			$author_byline = _x( 'By %s', 'post author', 'wp-rig' );
@@ -84,12 +84,12 @@ if ( ! empty( $post->post_parent ) && 'attachment' === get_post_type() ) {
 			);
 			?>
 		</span>
-		<?php
-	}
+			<?php
+		}
 
-	if ( ! empty( $parent_string ) ) {
-		?>
-		<span class="posted-in">
+		if ( ! empty( $parent_string ) ) {
+			?>
+			<span class="posted-in">
 			<?php
 			/* translators: %s: post parent title */
 			$parent_note = _x( 'In %s', 'post parent', 'wp-rig' );
@@ -103,8 +103,8 @@ if ( ! empty( $post->post_parent ) && 'attachment' === get_post_type() ) {
 			);
 			?>
 		</span>
-		<?php
-	}
-	?>
-</div><!-- .entry-meta -->
+			<?php
+		}
+		?>
+	</div><!-- .entry-meta -->
 <?php

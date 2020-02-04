@@ -19,13 +19,13 @@ namespace WP_Rig\WP_Rig;
 				<?php
 				printf(
 					wp_kses(
-						/* translators: 1: link to WP admin new post page. */
+					/* translators: 1: link to WP admin new post page. */
 						__( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'wp-rig' ),
-						[
-							'a' => [
-								'href' => [],
-							],
-						]
+						array(
+							'a' => array(
+								'href' => array(),
+							),
+						)
 					),
 					esc_url( admin_url( 'post-new.php' ) )
 				);

@@ -9,15 +9,15 @@ namespace WP_Rig\WP_Rig;
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'entry' ); ?>>
-	<?php get_template_part( 'template-parts/content/entry_header', get_post_type() ); ?>
+	<article id="post-<?php the_ID(); ?>" <?php post_class( 'entry' ); ?>>
+		<?php get_template_part( 'template-parts/content/entry_header', get_post_type() ); ?>
 
-	<?php get_template_part( 'template-parts/content/entry_content', get_post_type() ); ?>
+		<?php get_template_part( 'template-parts/content/entry_content', get_post_type() ); ?>
 
-	<?php get_template_part( 'template-parts/content/entry_footer', get_post_type() ); ?>
-</article><!-- #post-<?php the_ID(); ?> -->
+		<?php get_template_part( 'template-parts/content/entry_footer', get_post_type() ); ?>
+	</article><!-- #post-<?php the_ID(); ?> -->
 
-<?php
+	<?php
 if ( is_singular( get_post_type() ) ) {
 	// Show attachment navigation only when the attachment has a parent.
 	if ( ! empty( $post->post_parent ) ) {

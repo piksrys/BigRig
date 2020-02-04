@@ -37,7 +37,7 @@ if ( is_404() ) {
 		<h1 class="page-title">
 			<?php
 			printf(
-				/* translators: %s: search query */
+			/* translators: %s: search query */
 				esc_html__( 'Search Results for: %s', 'wp-rig' ),
 				'<span>' . get_search_query() . '</span>'
 			);

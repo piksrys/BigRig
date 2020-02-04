@@ -7,7 +7,7 @@
   },
   "dev": {
     "browserSync": {
-      "live": true,
+      "live": false,
       "proxyURL": "wprig.test:8888",
       "bypassPort": "8181",
       "https": false

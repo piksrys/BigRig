@@ -36,13 +36,13 @@ export function editorStylesBeforeReplacementStream() {
 			dest: paths.styles.dest,
 			extra: [ paths.config.themeConfig ],
 		} ),
-		gulpPlugins.phpcs( {
-			bin: `${ rootPath }/vendor/bin/phpcs`,
-			standard: 'WordPress',
-			warningSeverity: 0,
-		} ),
-		// Log all problems that were found.
-		gulpPlugins.phpcs.reporter( 'log' ),
+		// gulpPlugins.phpcs( {
+		// 	bin: `${ rootPath }/vendor/bin/phpcs`,
+		// 	standard: 'WordPress',
+		// 	warningSeverity: 0,
+		// } ),
+		// // Log all problems that were found.
+		// gulpPlugins.phpcs.reporter( 'log' ),
 	] );
 }
 

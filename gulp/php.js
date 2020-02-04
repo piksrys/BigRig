@@ -23,10 +23,10 @@ export function phpBeforeReplacementStream() {
 		// Only code sniff PHP files if the debug setting is true
 		gulpPlugins.if(
 			config.dev.debug.phpcs,
-			gulpPlugins.phpcs( PHPCSOptions )
+			// gulpPlugins.phpcs( PHPCSOptions )
 		),
 		// Log all problems that were found.
-		gulpPlugins.phpcs.reporter( 'log' ),
+		// gulpPlugins.phpcs.reporter( 'log' ),
 	] );
 }
 
