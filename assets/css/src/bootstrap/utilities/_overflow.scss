@@ -1,0 +1,6 @@
+// stylelint-disable declaration-no-important
+
+@each $value in $overflows {
+  .overflow-#{$value} { overflow: $value !important; }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX292ZXJmbG93LnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gc3R5bGVsaW50LWRpc2FibGUgZGVjbGFyYXRpb24tbm8taW1wb3J0YW50XG5cbkBlYWNoICR2YWx1ZSBpbiAkb3ZlcmZsb3dzIHtcbiAgLm92ZXJmbG93LSN7JHZhbHVlfSB7IG92ZXJmbG93OiAkdmFsdWUgIWltcG9ydGFudDsgfVxufVxuIl0sImZpbGUiOiJ1dGlsaXRpZXMvX292ZXJmbG93LnNjc3MifQ==

@@ -1,0 +1,20 @@
+// stylelint-disable declaration-no-important
+
+@each $color, $value in $theme-colors {
+  @include bg-variant(".bg-#{$color}", $value, true);
+}
+
+@if $enable-gradients {
+  @each $color, $value in $theme-colors {
+    @include bg-gradient-variant(".bg-gradient-#{$color}", $value);
+  }
+}
+
+.bg-white {
+  background-color: $white !important;
+}
+
+.bg-transparent {
+  background-color: transparent !important;
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX2JhY2tncm91bmQuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuQGVhY2ggJGNvbG9yLCAkdmFsdWUgaW4gJHRoZW1lLWNvbG9ycyB7XG4gIEBpbmNsdWRlIGJnLXZhcmlhbnQoXCIuYmctI3skY29sb3J9XCIsICR2YWx1ZSwgdHJ1ZSk7XG59XG5cbkBpZiAkZW5hYmxlLWdyYWRpZW50cyB7XG4gIEBlYWNoICRjb2xvciwgJHZhbHVlIGluICR0aGVtZS1jb2xvcnMge1xuICAgIEBpbmNsdWRlIGJnLWdyYWRpZW50LXZhcmlhbnQoXCIuYmctZ3JhZGllbnQtI3skY29sb3J9XCIsICR2YWx1ZSk7XG4gIH1cbn1cblxuLmJnLXdoaXRlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogJHdoaXRlICFpbXBvcnRhbnQ7XG59XG5cbi5iZy10cmFuc3BhcmVudCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50ICFpbXBvcnRhbnQ7XG59XG4iXSwiZmlsZSI6InV0aWxpdGllcy9fYmFja2dyb3VuZC5zY3NzIn0=

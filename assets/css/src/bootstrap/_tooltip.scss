@@ -1,0 +1,116 @@
+// Base class
+.tooltip {
+  position: absolute;
+  z-index: $zindex-tooltip;
+  display: block;
+  margin: $tooltip-margin;
+  // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+  // So reset our font and text properties to avoid inheriting weird values.
+  @include reset-text();
+  @include font-size($tooltip-font-size);
+  // Allow breaking very long words so they don't overflow the tooltip's bounds
+  word-wrap: break-word;
+  opacity: 0;
+
+  &.show { opacity: $tooltip-opacity; }
+
+  .arrow {
+    position: absolute;
+    display: block;
+    width: $tooltip-arrow-width;
+    height: $tooltip-arrow-height;
+
+    &::before {
+      position: absolute;
+      content: "";
+      border-color: transparent;
+      border-style: solid;
+    }
+  }
+}
+
+.bs-tooltip-top {
+  padding: $tooltip-arrow-height 0;
+
+  .arrow {
+    bottom: 0;
+
+    &::before {
+      top: 0;
+      border-width: $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+      border-top-color: $tooltip-arrow-color;
+    }
+  }
+}
+
+.bs-tooltip-right {
+  padding: 0 $tooltip-arrow-height;
+
+  .arrow {
+    left: 0;
+    width: $tooltip-arrow-height;
+    height: $tooltip-arrow-width;
+
+    &::before {
+      right: 0;
+      border-width: ($tooltip-arrow-width / 2) $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+      border-right-color: $tooltip-arrow-color;
+    }
+  }
+}
+
+.bs-tooltip-bottom {
+  padding: $tooltip-arrow-height 0;
+
+  .arrow {
+    top: 0;
+
+    &::before {
+      bottom: 0;
+      border-width: 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+      border-bottom-color: $tooltip-arrow-color;
+    }
+  }
+}
+
+.bs-tooltip-left {
+  padding: 0 $tooltip-arrow-height;
+
+  .arrow {
+    right: 0;
+    width: $tooltip-arrow-height;
+    height: $tooltip-arrow-width;
+
+    &::before {
+      left: 0;
+      border-width: ($tooltip-arrow-width / 2) 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+      border-left-color: $tooltip-arrow-color;
+    }
+  }
+}
+
+.bs-tooltip-auto {
+  &[x-placement^="top"] {
+    @extend .bs-tooltip-top;
+  }
+  &[x-placement^="right"] {
+    @extend .bs-tooltip-right;
+  }
+  &[x-placement^="bottom"] {
+    @extend .bs-tooltip-bottom;
+  }
+  &[x-placement^="left"] {
+    @extend .bs-tooltip-left;
+  }
+}
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+  max-width: $tooltip-max-width;
+  padding: $tooltip-padding-y $tooltip-padding-x;
+  color: $tooltip-color;
+  text-align: center;
+  background-color: $tooltip-bg;
+  @include border-radius($tooltip-border-radius);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfdG9vbHRpcC5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIEJhc2UgY2xhc3Ncbi50b29sdGlwIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB6LWluZGV4OiAkemluZGV4LXRvb2x0aXA7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBtYXJnaW46ICR0b29sdGlwLW1hcmdpbjtcbiAgLy8gT3VyIHBhcmVudCBlbGVtZW50IGNhbiBiZSBhcmJpdHJhcnkgc2luY2UgdG9vbHRpcHMgYXJlIGJ5IGRlZmF1bHQgaW5zZXJ0ZWQgYXMgYSBzaWJsaW5nIG9mIHRoZWlyIHRhcmdldCBlbGVtZW50LlxuICAvLyBTbyByZXNldCBvdXIgZm9udCBhbmQgdGV4dCBwcm9wZXJ0aWVzIHRvIGF2b2lkIGluaGVyaXRpbmcgd2VpcmQgdmFsdWVzLlxuICBAaW5jbHVkZSByZXNldC10ZXh0KCk7XG4gIEBpbmNsdWRlIGZvbnQtc2l6ZSgkdG9vbHRpcC1mb250LXNpemUpO1xuICAvLyBBbGxvdyBicmVha2luZyB2ZXJ5IGxvbmcgd29yZHMgc28gdGhleSBkb24ndCBvdmVyZmxvdyB0aGUgdG9vbHRpcCdzIGJvdW5kc1xuICB3b3JkLXdyYXA6IGJyZWFrLXdvcmQ7XG4gIG9wYWNpdHk6IDA7XG5cbiAgJi5zaG93IHsgb3BhY2l0eTogJHRvb2x0aXAtb3BhY2l0eTsgfVxuXG4gIC5hcnJvdyB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIGRpc3BsYXk6IGJsb2NrO1xuICAgIHdpZHRoOiAkdG9vbHRpcC1hcnJvdy13aWR0aDtcbiAgICBoZWlnaHQ6ICR0b29sdGlwLWFycm93LWhlaWdodDtcblxuICAgICY6OmJlZm9yZSB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBjb250ZW50OiBcIlwiO1xuICAgICAgYm9yZGVyLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgICAgIGJvcmRlci1zdHlsZTogc29saWQ7XG4gICAgfVxuICB9XG59XG5cbi5icy10b29sdGlwLXRvcCB7XG4gIHBhZGRpbmc6ICR0b29sdGlwLWFycm93LWhlaWdodCAwO1xuXG4gIC5hcnJvdyB7XG4gICAgYm90dG9tOiAwO1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIHRvcDogMDtcbiAgICAgIGJvcmRlci13aWR0aDogJHRvb2x0aXAtYXJyb3ctaGVpZ2h0ICgkdG9vbHRpcC1hcnJvdy13aWR0aCAvIDIpIDA7XG4gICAgICBib3JkZXItdG9wLWNvbG9yOiAkdG9vbHRpcC1hcnJvdy1jb2xvcjtcbiAgICB9XG4gIH1cbn1cblxuLmJzLXRvb2x0aXAtcmlnaHQge1xuICBwYWRkaW5nOiAwICR0b29sdGlwLWFycm93LWhlaWdodDtcblxuICAuYXJyb3cge1xuICAgIGxlZnQ6IDA7XG4gICAgd2lkdGg6ICR0b29sdGlwLWFycm93LWhlaWdodDtcbiAgICBoZWlnaHQ6ICR0b29sdGlwLWFycm93LXdpZHRoO1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIHJpZ2h0OiAwO1xuICAgICAgYm9yZGVyLXdpZHRoOiAoJHRvb2x0aXAtYXJyb3ctd2lkdGggLyAyKSAkdG9vbHRpcC1hcnJvdy1oZWlnaHQgKCR0b29sdGlwLWFycm93LXdpZHRoIC8gMikgMDtcbiAgICAgIGJvcmRlci1yaWdodC1jb2xvcjogJHRvb2x0aXAtYXJyb3ctY29sb3I7XG4gICAgfVxuICB9XG59XG5cbi5icy10b29sdGlwLWJvdHRvbSB7XG4gIHBhZGRpbmc6ICR0b29sdGlwLWFycm93LWhlaWdodCAwO1xuXG4gIC5hcnJvdyB7XG4gICAgdG9wOiAwO1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIGJvdHRvbTogMDtcbiAgICAgIGJvcmRlci13aWR0aDogMCAoJHRvb2x0aXAtYXJyb3ctd2lkdGggLyAyKSAkdG9vbHRpcC1hcnJvdy1oZWlnaHQ7XG4gICAgICBib3JkZXItYm90dG9tLWNvbG9yOiAkdG9vbHRpcC1hcnJvdy1jb2xvcjtcbiAgICB9XG4gIH1cbn1cblxuLmJzLXRvb2x0aXAtbGVmdCB7XG4gIHBhZGRpbmc6IDAgJHRvb2x0aXAtYXJyb3ctaGVpZ2h0O1xuXG4gIC5hcnJvdyB7XG4gICAgcmlnaHQ6IDA7XG4gICAgd2lkdGg6ICR0b29sdGlwLWFycm93LWhlaWdodDtcbiAgICBoZWlnaHQ6ICR0b29sdGlwLWFycm93LXdpZHRoO1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICBib3JkZXItd2lkdGg6ICgkdG9vbHRpcC1hcnJvdy13aWR0aCAvIDIpIDAgKCR0b29sdGlwLWFycm93LXdpZHRoIC8gMikgJHRvb2x0aXAtYXJyb3ctaGVpZ2h0O1xuICAgICAgYm9yZGVyLWxlZnQtY29sb3I6ICR0b29sdGlwLWFycm93LWNvbG9yO1xuICAgIH1cbiAgfVxufVxuXG4uYnMtdG9vbHRpcC1hdXRvIHtcbiAgJlt4LXBsYWNlbWVudF49XCJ0b3BcIl0ge1xuICAgIEBleHRlbmQgLmJzLXRvb2x0aXAtdG9wO1xuICB9XG4gICZbeC1wbGFjZW1lbnRePVwicmlnaHRcIl0ge1xuICAgIEBleHRlbmQgLmJzLXRvb2x0aXAtcmlnaHQ7XG4gIH1cbiAgJlt4LXBsYWNlbWVudF49XCJib3R0b21cIl0ge1xuICAgIEBleHRlbmQgLmJzLXRvb2x0aXAtYm90dG9tO1xuICB9XG4gICZbeC1wbGFjZW1lbnRePVwibGVmdFwiXSB7XG4gICAgQGV4dGVuZCAuYnMtdG9vbHRpcC1sZWZ0O1xuICB9XG59XG5cbi8vIFdyYXBwZXIgZm9yIHRoZSB0b29sdGlwIGNvbnRlbnRcbi50b29sdGlwLWlubmVyIHtcbiAgbWF4LXdpZHRoOiAkdG9vbHRpcC1tYXgtd2lkdGg7XG4gIHBhZGRpbmc6ICR0b29sdGlwLXBhZGRpbmcteSAkdG9vbHRpcC1wYWRkaW5nLXg7XG4gIGNvbG9yOiAkdG9vbHRpcC1jb2xvcjtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAkdG9vbHRpcC1iZztcbiAgQGluY2x1ZGUgYm9yZGVyLXJhZGl1cygkdG9vbHRpcC1ib3JkZXItcmFkaXVzKTtcbn1cbiJdLCJmaWxlIjoiX3Rvb2x0aXAuc2NzcyJ9

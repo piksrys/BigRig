@@ -1,0 +1,12 @@
+// stylelint-disable declaration-no-important
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .float#{$infix}-left  { float: left !important; }
+    .float#{$infix}-right { float: right !important; }
+    .float#{$infix}-none  { float: none !important; }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX2Zsb2F0LnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gc3R5bGVsaW50LWRpc2FibGUgZGVjbGFyYXRpb24tbm8taW1wb3J0YW50XG5cbkBlYWNoICRicmVha3BvaW50IGluIG1hcC1rZXlzKCRncmlkLWJyZWFrcG9pbnRzKSB7XG4gIEBpbmNsdWRlIG1lZGlhLWJyZWFrcG9pbnQtdXAoJGJyZWFrcG9pbnQpIHtcbiAgICAkaW5maXg6IGJyZWFrcG9pbnQtaW5maXgoJGJyZWFrcG9pbnQsICRncmlkLWJyZWFrcG9pbnRzKTtcblxuICAgIC5mbG9hdCN7JGluZml4fS1sZWZ0ICB7IGZsb2F0OiBsZWZ0ICFpbXBvcnRhbnQ7IH1cbiAgICAuZmxvYXQjeyRpbmZpeH0tcmlnaHQgeyBmbG9hdDogcmlnaHQgIWltcG9ydGFudDsgfVxuICAgIC5mbG9hdCN7JGluZml4fS1ub25lICB7IGZsb2F0OiBub25lICFpbXBvcnRhbnQ7IH1cbiAgfVxufVxuIl0sImZpbGUiOiJ1dGlsaXRpZXMvX2Zsb2F0LnNjc3MifQ==

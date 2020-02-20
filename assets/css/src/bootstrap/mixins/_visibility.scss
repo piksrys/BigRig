@@ -1,0 +1,9 @@
+// stylelint-disable declaration-no-important
+
+// Visibility
+
+@mixin invisible($visibility) {
+  visibility: $visibility !important;
+  @include deprecate("`invisible()`", "v4.3.0", "v5");
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3Zpc2liaWxpdHkuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuLy8gVmlzaWJpbGl0eVxuXG5AbWl4aW4gaW52aXNpYmxlKCR2aXNpYmlsaXR5KSB7XG4gIHZpc2liaWxpdHk6ICR2aXNpYmlsaXR5ICFpbXBvcnRhbnQ7XG4gIEBpbmNsdWRlIGRlcHJlY2F0ZShcImBpbnZpc2libGUoKWBcIiwgXCJ2NC4zLjBcIiwgXCJ2NVwiKTtcbn1cbiJdLCJmaWxlIjoibWl4aW5zL192aXNpYmlsaXR5LnNjc3MifQ==

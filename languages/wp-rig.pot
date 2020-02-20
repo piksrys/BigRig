@@ -202,11 +202,11 @@ msgstr ""
 msgid "Invalid theme stylesheet handle: %s"
 msgstr ""
 
-#: template-parts/content/entry-attachment.php:33, template-parts/content/entry.php:32
+#: template-parts/content/entry-attachment.php:33, template-parts/content/entry.php:33
 msgid "Previous:"
 msgstr ""
 
-#: template-parts/content/entry-attachment.php:43, template-parts/content/entry.php:33
+#: template-parts/content/entry-attachment.php:43, template-parts/content/entry.php:34
 msgid "Next:"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: post title
-#: template-parts/content/entry_actions.php:40
+#: template-parts/content/entry_actions.php:41
 msgid "Edit <span class=\"screen-reader-text\">%s</span>"
 msgstr ""
 
@@ -229,7 +229,7 @@ msgstr ""
 msgid "Continue reading<span class=\"screen-reader-text\"> \"%s\"</span>"
 msgstr ""
 
-#: template-parts/content/entry_content.php:31
+#: template-parts/content/entry_content.php:33
 msgid "Pages:"
 msgstr ""
 
@@ -363,10 +363,10 @@ msgstr ""
 msgid "Main menu"
 msgstr ""
 
-#: template-parts/header/navigation.php:39
+#: template-parts/header/navigation.php:30
 msgid "Open menu"
 msgstr ""
 
-#: template-parts/header/navigation.php:49
+#: template-parts/header/navigation.php:31
 msgid "Menu"
 msgstr ""

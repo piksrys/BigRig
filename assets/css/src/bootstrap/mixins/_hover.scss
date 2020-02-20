@@ -1,0 +1,38 @@
+// Hover mixin and `$enable-hover-media-query` are deprecated.
+//
+// Originally added during our alphas and maintained during betas, this mixin was
+// designed to prevent `:hover` stickiness on iOS-an issue where hover styles
+// would persist after initial touch.
+//
+// For backward compatibility, we've kept these mixins and updated them to
+// always return their regular pseudo-classes instead of a shimmed media query.
+//
+// Issue: https://github.com/twbs/bootstrap/issues/25195
+
+@mixin hover() {
+  &:hover { @content; }
+}
+
+@mixin hover-focus() {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin plain-hover-focus() {
+  &,
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin hover-focus-active() {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2hvdmVyLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gSG92ZXIgbWl4aW4gYW5kIGAkZW5hYmxlLWhvdmVyLW1lZGlhLXF1ZXJ5YCBhcmUgZGVwcmVjYXRlZC5cbi8vXG4vLyBPcmlnaW5hbGx5IGFkZGVkIGR1cmluZyBvdXIgYWxwaGFzIGFuZCBtYWludGFpbmVkIGR1cmluZyBiZXRhcywgdGhpcyBtaXhpbiB3YXNcbi8vIGRlc2lnbmVkIHRvIHByZXZlbnQgYDpob3ZlcmAgc3RpY2tpbmVzcyBvbiBpT1MtYW4gaXNzdWUgd2hlcmUgaG92ZXIgc3R5bGVzXG4vLyB3b3VsZCBwZXJzaXN0IGFmdGVyIGluaXRpYWwgdG91Y2guXG4vL1xuLy8gRm9yIGJhY2t3YXJkIGNvbXBhdGliaWxpdHksIHdlJ3ZlIGtlcHQgdGhlc2UgbWl4aW5zIGFuZCB1cGRhdGVkIHRoZW0gdG9cbi8vIGFsd2F5cyByZXR1cm4gdGhlaXIgcmVndWxhciBwc2V1ZG8tY2xhc3NlcyBpbnN0ZWFkIG9mIGEgc2hpbW1lZCBtZWRpYSBxdWVyeS5cbi8vXG4vLyBJc3N1ZTogaHR0cHM6Ly9naXRodWIuY29tL3R3YnMvYm9vdHN0cmFwL2lzc3Vlcy8yNTE5NVxuXG5AbWl4aW4gaG92ZXIoKSB7XG4gICY6aG92ZXIgeyBAY29udGVudDsgfVxufVxuXG5AbWl4aW4gaG92ZXItZm9jdXMoKSB7XG4gICY6aG92ZXIsXG4gICY6Zm9jdXMge1xuICAgIEBjb250ZW50O1xuICB9XG59XG5cbkBtaXhpbiBwbGFpbi1ob3Zlci1mb2N1cygpIHtcbiAgJixcbiAgJjpob3ZlcixcbiAgJjpmb2N1cyB7XG4gICAgQGNvbnRlbnQ7XG4gIH1cbn1cblxuQG1peGluIGhvdmVyLWZvY3VzLWFjdGl2ZSgpIHtcbiAgJjpob3ZlcixcbiAgJjpmb2N1cyxcbiAgJjphY3RpdmUge1xuICAgIEBjb250ZW50O1xuICB9XG59XG4iXSwiZmlsZSI6Im1peGlucy9faG92ZXIuc2NzcyJ9

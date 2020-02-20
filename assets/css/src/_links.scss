@@ -1,0 +1,27 @@
+/*--------------------------------------------------------------
+# Links
+--------------------------------------------------------------*/
+/* stylelint-disable */
+a {
+	color: $color_link;
+
+	&:visited {
+		color: $color_link_visited;
+	}
+
+	&:hover,
+	&:focus,
+	&:active {
+		color: $color_link_active;
+	}
+
+	&:focus {
+		outline: thin dotted;
+	}
+
+	&:hover,
+	&:active {
+		outline: 0;
+	}
+}
+/* stylelint-enable */

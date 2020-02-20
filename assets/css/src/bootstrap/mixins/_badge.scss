@@ -1,0 +1,18 @@
+@mixin badge-variant($bg) {
+  color: color-yiq($bg);
+  background-color: $bg;
+
+  @at-root a#{&} {
+    @include hover-focus() {
+      color: color-yiq($bg);
+      background-color: darken($bg, 10%);
+    }
+
+    &:focus,
+    &.focus {
+      outline: 0;
+      box-shadow: 0 0 0 $badge-focus-width rgba($bg, .5);
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2JhZGdlLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiQG1peGluIGJhZGdlLXZhcmlhbnQoJGJnKSB7XG4gIGNvbG9yOiBjb2xvci15aXEoJGJnKTtcbiAgYmFja2dyb3VuZC1jb2xvcjogJGJnO1xuXG4gIEBhdC1yb290IGEjeyZ9IHtcbiAgICBAaW5jbHVkZSBob3Zlci1mb2N1cygpIHtcbiAgICAgIGNvbG9yOiBjb2xvci15aXEoJGJnKTtcbiAgICAgIGJhY2tncm91bmQtY29sb3I6IGRhcmtlbigkYmcsIDEwJSk7XG4gICAgfVxuXG4gICAgJjpmb2N1cyxcbiAgICAmLmZvY3VzIHtcbiAgICAgIG91dGxpbmU6IDA7XG4gICAgICBib3gtc2hhZG93OiAwIDAgMCAkYmFkZ2UtZm9jdXMtd2lkdGggcmdiYSgkYmcsIC41KTtcbiAgICB9XG4gIH1cbn1cbiJdLCJmaWxlIjoibWl4aW5zL19iYWRnZS5zY3NzIn0=

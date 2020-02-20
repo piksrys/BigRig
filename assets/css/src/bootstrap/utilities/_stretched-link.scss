@@ -1,0 +1,20 @@
+//
+// Stretched link
+//
+
+.stretched-link {
+  &::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    // Just in case `pointer-events: none` is set on a parent
+    pointer-events: auto;
+    content: "";
+    // IE10 bugfix, see https://stackoverflow.com/questions/16947967/ie10-hover-pseudo-class-doesnt-work-without-background-color
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX3N0cmV0Y2hlZC1saW5rLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy9cbi8vIFN0cmV0Y2hlZCBsaW5rXG4vL1xuXG4uc3RyZXRjaGVkLWxpbmsge1xuICAmOjphZnRlciB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogMDtcbiAgICByaWdodDogMDtcbiAgICBib3R0b206IDA7XG4gICAgbGVmdDogMDtcbiAgICB6LWluZGV4OiAxO1xuICAgIC8vIEp1c3QgaW4gY2FzZSBgcG9pbnRlci1ldmVudHM6IG5vbmVgIGlzIHNldCBvbiBhIHBhcmVudFxuICAgIHBvaW50ZXItZXZlbnRzOiBhdXRvO1xuICAgIGNvbnRlbnQ6IFwiXCI7XG4gICAgLy8gSUUxMCBidWdmaXgsIHNlZSBodHRwczovL3N0YWNrb3ZlcmZsb3cuY29tL3F1ZXN0aW9ucy8xNjk0Nzk2Ny9pZTEwLWhvdmVyLXBzZXVkby1jbGFzcy1kb2VzbnQtd29yay13aXRob3V0LWJhY2tncm91bmQtY29sb3JcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDApO1xuICB9XG59XG4iXSwiZmlsZSI6InV0aWxpdGllcy9fc3RyZXRjaGVkLWxpbmsuc2NzcyJ9

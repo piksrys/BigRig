@@ -1,0 +1,8 @@
+//Font awesome 5 pro. Installed with npm and imported here. font files copied using fontawesome functions in gulpfile.babel.js
+
+$fa-font-path: '../fonts/fontawesome';
+@import '../../../node_modules/@fortawesome/fontawesome-pro/scss/fontawesome';
+@import '../../../node_modules/@fortawesome/fontawesome-pro/scss/brands';
+@import '../../../node_modules/@fortawesome/fontawesome-pro/scss/solid';
+@import '../../../node_modules/@fortawesome/fontawesome-pro/scss/regular';
+@import '../../../node_modules/@fortawesome/fontawesome-pro/scss/light';

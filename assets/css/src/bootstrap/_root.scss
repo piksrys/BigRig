@@ -1,0 +1,21 @@
+// Do not forget to update getting-started/theming.md!
+:root {
+  // Custom variable values only support SassScript inside `#{}`.
+  @each $color, $value in $colors {
+    --#{$color}: #{$value};
+  }
+
+  @each $color, $value in $theme-colors {
+    --#{$color}: #{$value};
+  }
+
+  @each $bp, $value in $grid-breakpoints {
+    --breakpoint-#{$bp}: #{$value};
+  }
+
+  // Use `inspect` for lists so that quoted items keep the quotes.
+  // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+  --font-family-sans-serif: #{inspect($font-family-sans-serif)};
+  --font-family-monospace: #{inspect($font-family-monospace)};
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfcm9vdC5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIERvIG5vdCBmb3JnZXQgdG8gdXBkYXRlIGdldHRpbmctc3RhcnRlZC90aGVtaW5nLm1kIVxuOnJvb3Qge1xuICAvLyBDdXN0b20gdmFyaWFibGUgdmFsdWVzIG9ubHkgc3VwcG9ydCBTYXNzU2NyaXB0IGluc2lkZSBgI3t9YC5cbiAgQGVhY2ggJGNvbG9yLCAkdmFsdWUgaW4gJGNvbG9ycyB7XG4gICAgLS0jeyRjb2xvcn06ICN7JHZhbHVlfTtcbiAgfVxuXG4gIEBlYWNoICRjb2xvciwgJHZhbHVlIGluICR0aGVtZS1jb2xvcnMge1xuICAgIC0tI3skY29sb3J9OiAjeyR2YWx1ZX07XG4gIH1cblxuICBAZWFjaCAkYnAsICR2YWx1ZSBpbiAkZ3JpZC1icmVha3BvaW50cyB7XG4gICAgLS1icmVha3BvaW50LSN7JGJwfTogI3skdmFsdWV9O1xuICB9XG5cbiAgLy8gVXNlIGBpbnNwZWN0YCBmb3IgbGlzdHMgc28gdGhhdCBxdW90ZWQgaXRlbXMga2VlcCB0aGUgcXVvdGVzLlxuICAvLyBTZWUgaHR0cHM6Ly9naXRodWIuY29tL3Nhc3Mvc2Fzcy9pc3N1ZXMvMjM4MyNpc3N1ZWNvbW1lbnQtMzM2MzQ5MTcyXG4gIC0tZm9udC1mYW1pbHktc2Fucy1zZXJpZjogI3tpbnNwZWN0KCRmb250LWZhbWlseS1zYW5zLXNlcmlmKX07XG4gIC0tZm9udC1mYW1pbHktbW9ub3NwYWNlOiAje2luc3BlY3QoJGZvbnQtZmFtaWx5LW1vbm9zcGFjZSl9O1xufVxuIl0sImZpbGUiOiJfcm9vdC5zY3NzIn0=

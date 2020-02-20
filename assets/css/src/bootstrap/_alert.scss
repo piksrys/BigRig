@@ -1,0 +1,52 @@
+//
+// Base styles
+//
+
+.alert {
+  position: relative;
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: $alert-margin-bottom;
+  border: $alert-border-width solid transparent;
+  @include border-radius($alert-border-radius);
+}
+
+// Headings for larger alerts
+.alert-heading {
+  // Specified to prevent conflicts of changing $headings-color
+  color: inherit;
+}
+
+// Provide class for links that match alerts
+.alert-link {
+  font-weight: $alert-link-font-weight;
+}
+
+
+// Dismissible alerts
+//
+// Expand the right padding and account for the close button's positioning.
+
+.alert-dismissible {
+  padding-right: $close-font-size + $alert-padding-x * 2;
+
+  // Adjust close link position
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: $alert-padding-y $alert-padding-x;
+    color: inherit;
+  }
+}
+
+
+// Alternate styles
+//
+// Generate contextual modifier classes for colorizing the alert.
+
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    @include alert-variant(theme-color-level($color, $alert-bg-level), theme-color-level($color, $alert-border-level), theme-color-level($color, $alert-color-level));
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfYWxlcnQuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvL1xuLy8gQmFzZSBzdHlsZXNcbi8vXG5cbi5hbGVydCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgcGFkZGluZzogJGFsZXJ0LXBhZGRpbmcteSAkYWxlcnQtcGFkZGluZy14O1xuICBtYXJnaW4tYm90dG9tOiAkYWxlcnQtbWFyZ2luLWJvdHRvbTtcbiAgYm9yZGVyOiAkYWxlcnQtYm9yZGVyLXdpZHRoIHNvbGlkIHRyYW5zcGFyZW50O1xuICBAaW5jbHVkZSBib3JkZXItcmFkaXVzKCRhbGVydC1ib3JkZXItcmFkaXVzKTtcbn1cblxuLy8gSGVhZGluZ3MgZm9yIGxhcmdlciBhbGVydHNcbi5hbGVydC1oZWFkaW5nIHtcbiAgLy8gU3BlY2lmaWVkIHRvIHByZXZlbnQgY29uZmxpY3RzIG9mIGNoYW5naW5nICRoZWFkaW5ncy1jb2xvclxuICBjb2xvcjogaW5oZXJpdDtcbn1cblxuLy8gUHJvdmlkZSBjbGFzcyBmb3IgbGlua3MgdGhhdCBtYXRjaCBhbGVydHNcbi5hbGVydC1saW5rIHtcbiAgZm9udC13ZWlnaHQ6ICRhbGVydC1saW5rLWZvbnQtd2VpZ2h0O1xufVxuXG5cbi8vIERpc21pc3NpYmxlIGFsZXJ0c1xuLy9cbi8vIEV4cGFuZCB0aGUgcmlnaHQgcGFkZGluZyBhbmQgYWNjb3VudCBmb3IgdGhlIGNsb3NlIGJ1dHRvbidzIHBvc2l0aW9uaW5nLlxuXG4uYWxlcnQtZGlzbWlzc2libGUge1xuICBwYWRkaW5nLXJpZ2h0OiAkY2xvc2UtZm9udC1zaXplICsgJGFsZXJ0LXBhZGRpbmcteCAqIDI7XG5cbiAgLy8gQWRqdXN0IGNsb3NlIGxpbmsgcG9zaXRpb25cbiAgLmNsb3NlIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAwO1xuICAgIHJpZ2h0OiAwO1xuICAgIHBhZGRpbmc6ICRhbGVydC1wYWRkaW5nLXkgJGFsZXJ0LXBhZGRpbmcteDtcbiAgICBjb2xvcjogaW5oZXJpdDtcbiAgfVxufVxuXG5cbi8vIEFsdGVybmF0ZSBzdHlsZXNcbi8vXG4vLyBHZW5lcmF0ZSBjb250ZXh0dWFsIG1vZGlmaWVyIGNsYXNzZXMgZm9yIGNvbG9yaXppbmcgdGhlIGFsZXJ0LlxuXG5AZWFjaCAkY29sb3IsICR2YWx1ZSBpbiAkdGhlbWUtY29sb3JzIHtcbiAgLmFsZXJ0LSN7JGNvbG9yfSB7XG4gICAgQGluY2x1ZGUgYWxlcnQtdmFyaWFudCh0aGVtZS1jb2xvci1sZXZlbCgkY29sb3IsICRhbGVydC1iZy1sZXZlbCksIHRoZW1lLWNvbG9yLWxldmVsKCRjb2xvciwgJGFsZXJ0LWJvcmRlci1sZXZlbCksIHRoZW1lLWNvbG9yLWxldmVsKCRjb2xvciwgJGFsZXJ0LWNvbG9yLWxldmVsKSk7XG4gIH1cbn1cbiJdLCJmaWxlIjoiX2FsZXJ0LnNjc3MifQ==

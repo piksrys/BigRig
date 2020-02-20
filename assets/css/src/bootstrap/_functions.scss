@@ -1,0 +1,135 @@
+// Bootstrap functions
+//
+// Utility mixins and functions for evaluating source code across our variables, maps, and mixins.
+
+// Ascending
+// Used to evaluate Sass maps like our grid breakpoints.
+@mixin _assert-ascending($map, $map-name) {
+  $prev-key: null;
+  $prev-num: null;
+  @each $key, $num in $map {
+    @if $prev-num == null or unit($num) == "%" or unit($prev-num) == "%" {
+      // Do nothing
+    } @else if not comparable($prev-num, $num) {
+      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    } @else if $prev-num >= $num {
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+    }
+    $prev-key: $key;
+    $prev-num: $num;
+  }
+}
+
+// Starts at zero
+// Used to ensure the min-width of the lowest breakpoint starts at 0.
+@mixin _assert-starts-at-zero($map, $map-name: "$grid-breakpoints") {
+  $values: map-values($map);
+  $first-value: nth($values, 1);
+  @if $first-value != 0 {
+    @warn "First breakpoint in #{$map-name} must start at 0, but starts at #{$first-value}.";
+  }
+}
+
+// Replace `$search` with `$replace` in `$string`
+// Used on our SVG icon backgrounds for custom forms.
+//
+// @author Hugo Giraudel
+// @param {String} $string - Initial string
+// @param {String} $search - Substring to replace
+// @param {String} $replace ('') - New value
+// @return {String} - Updated string
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+}
+
+// See https://codepen.io/kevinweber/pen/dXWoRw
+@function escape-svg($string) {
+  @if str-index($string, "data:image/svg+xml") {
+    @each $char, $encoded in $escaped-characters {
+      $string: str-replace($string, $char, $encoded);
+    }
+  }
+
+  @return $string;
+}
+
+// Color contrast
+@function color-yiq($color, $dark: $yiq-text-dark, $light: $yiq-text-light) {
+  $r: red($color);
+  $g: green($color);
+  $b: blue($color);
+
+  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+
+  @if ($yiq >= $yiq-contrasted-threshold) {
+    @return $dark;
+  } @else {
+    @return $light;
+  }
+}
+
+// Retrieve color Sass maps
+@function color($key: "blue") {
+  @return map-get($colors, $key);
+}
+
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+
+@function gray($key: "100") {
+  @return map-get($grays, $key);
+}
+
+// Request a theme color level
+@function theme-color-level($color-name: "primary", $level: 0) {
+  $color: theme-color($color-name);
+  $color-base: if($level > 0, $black, $white);
+  $level: abs($level);
+
+  @return mix($color-base, $color, $level * $theme-color-interval);
+}
+
+// Return valid calc
+@function add($value1, $value2, $return-calc: true) {
+  @if $value1 == null {
+    @return $value2;
+  }
+
+  @if $value2 == null {
+    @return $value1;
+  }
+
+  @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @return $value1 + $value2;
+  }
+
+  @return if($return-calc == true, calc(#{$value1} + #{$value2}), $value1 + unquote(" + ") + $value2);
+}
+
+@function subtract($value1, $value2, $return-calc: true) {
+  @if $value1 == null and $value2 == null {
+    @return null;
+  }
+
+  @if $value1 == null {
+    @return -$value2;
+  }
+
+  @if $value2 == null {
+    @return $value1;
+  }
+
+  @if type-of($value1) == number and type-of($value2) == number and comparable($value1, $value2) {
+    @return $value1 - $value2;
+  }
+
+  @return if($return-calc == true, calc(#{$value1} - #{$value2}), $value1 + unquote(" - ") + $value2);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfZnVuY3Rpb25zLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gQm9vdHN0cmFwIGZ1bmN0aW9uc1xuLy9cbi8vIFV0aWxpdHkgbWl4aW5zIGFuZCBmdW5jdGlvbnMgZm9yIGV2YWx1YXRpbmcgc291cmNlIGNvZGUgYWNyb3NzIG91ciB2YXJpYWJsZXMsIG1hcHMsIGFuZCBtaXhpbnMuXG5cbi8vIEFzY2VuZGluZ1xuLy8gVXNlZCB0byBldmFsdWF0ZSBTYXNzIG1hcHMgbGlrZSBvdXIgZ3JpZCBicmVha3BvaW50cy5cbkBtaXhpbiBfYXNzZXJ0LWFzY2VuZGluZygkbWFwLCAkbWFwLW5hbWUpIHtcbiAgJHByZXYta2V5OiBudWxsO1xuICAkcHJldi1udW06IG51bGw7XG4gIEBlYWNoICRrZXksICRudW0gaW4gJG1hcCB7XG4gICAgQGlmICRwcmV2LW51bSA9PSBudWxsIG9yIHVuaXQoJG51bSkgPT0gXCIlXCIgb3IgdW5pdCgkcHJldi1udW0pID09IFwiJVwiIHtcbiAgICAgIC8vIERvIG5vdGhpbmdcbiAgICB9IEBlbHNlIGlmIG5vdCBjb21wYXJhYmxlKCRwcmV2LW51bSwgJG51bSkge1xuICAgICAgQHdhcm4gXCJQb3RlbnRpYWxseSBpbnZhbGlkIHZhbHVlIGZvciAjeyRtYXAtbmFtZX06IFRoaXMgbWFwIG11c3QgYmUgaW4gYXNjZW5kaW5nIG9yZGVyLCBidXQga2V5ICcjeyRrZXl9JyBoYXMgdmFsdWUgI3skbnVtfSB3aG9zZSB1bml0IG1ha2VzIGl0IGluY29tcGFyYWJsZSB0byAjeyRwcmV2LW51bX0sIHRoZSB2YWx1ZSBvZiB0aGUgcHJldmlvdXMga2V5ICcjeyRwcmV2LWtleX0nICFcIjtcbiAgICB9IEBlbHNlIGlmICRwcmV2LW51bSA+PSAkbnVtIHtcbiAgICAgIEB3YXJuIFwiSW52YWxpZCB2YWx1ZSBmb3IgI3skbWFwLW5hbWV9OiBUaGlzIG1hcCBtdXN0IGJlIGluIGFzY2VuZGluZyBvcmRlciwgYnV0IGtleSAnI3ska2V5fScgaGFzIHZhbHVlICN7JG51bX0gd2hpY2ggaXNuJ3QgZ3JlYXRlciB0aGFuICN7JHByZXYtbnVtfSwgdGhlIHZhbHVlIG9mIHRoZSBwcmV2aW91cyBrZXkgJyN7JHByZXYta2V5fScgIVwiO1xuICAgIH1cbiAgICAkcHJldi1rZXk6ICRrZXk7XG4gICAgJHByZXYtbnVtOiAkbnVtO1xuICB9XG59XG5cbi8vIFN0YXJ0cyBhdCB6ZXJvXG4vLyBVc2VkIHRvIGVuc3VyZSB0aGUgbWluLXdpZHRoIG9mIHRoZSBsb3dlc3QgYnJlYWtwb2ludCBzdGFydHMgYXQgMC5cbkBtaXhpbiBfYXNzZXJ0LXN0YXJ0cy1hdC16ZXJvKCRtYXAsICRtYXAtbmFtZTogXCIkZ3JpZC1icmVha3BvaW50c1wiKSB7XG4gICR2YWx1ZXM6IG1hcC12YWx1ZXMoJG1hcCk7XG4gICRmaXJzdC12YWx1ZTogbnRoKCR2YWx1ZXMsIDEpO1xuICBAaWYgJGZpcnN0LXZhbHVlICE9IDAge1xuICAgIEB3YXJuIFwiRmlyc3QgYnJlYWtwb2ludCBpbiAjeyRtYXAtbmFtZX0gbXVzdCBzdGFydCBhdCAwLCBidXQgc3RhcnRzIGF0ICN7JGZpcnN0LXZhbHVlfS5cIjtcbiAgfVxufVxuXG4vLyBSZXBsYWNlIGAkc2VhcmNoYCB3aXRoIGAkcmVwbGFjZWAgaW4gYCRzdHJpbmdgXG4vLyBVc2VkIG9uIG91ciBTVkcgaWNvbiBiYWNrZ3JvdW5kcyBmb3IgY3VzdG9tIGZvcm1zLlxuLy9cbi8vIEBhdXRob3IgSHVnbyBHaXJhdWRlbFxuLy8gQHBhcmFtIHtTdHJpbmd9ICRzdHJpbmcgLSBJbml0aWFsIHN0cmluZ1xuLy8gQHBhcmFtIHtTdHJpbmd9ICRzZWFyY2ggLSBTdWJzdHJpbmcgdG8gcmVwbGFjZVxuLy8gQHBhcmFtIHtTdHJpbmd9ICRyZXBsYWNlICgnJykgLSBOZXcgdmFsdWVcbi8vIEByZXR1cm4ge1N0cmluZ30gLSBVcGRhdGVkIHN0cmluZ1xuQGZ1bmN0aW9uIHN0ci1yZXBsYWNlKCRzdHJpbmcsICRzZWFyY2gsICRyZXBsYWNlOiBcIlwiKSB7XG4gICRpbmRleDogc3RyLWluZGV4KCRzdHJpbmcsICRzZWFyY2gpO1xuXG4gIEBpZiAkaW5kZXgge1xuICAgIEByZXR1cm4gc3RyLXNsaWNlKCRzdHJpbmcsIDEsICRpbmRleCAtIDEpICsgJHJlcGxhY2UgKyBzdHItcmVwbGFjZShzdHItc2xpY2UoJHN0cmluZywgJGluZGV4ICsgc3RyLWxlbmd0aCgkc2VhcmNoKSksICRzZWFyY2gsICRyZXBsYWNlKTtcbiAgfVxuXG4gIEByZXR1cm4gJHN0cmluZztcbn1cblxuLy8gU2VlIGh0dHBzOi8vY29kZXBlbi5pby9rZXZpbndlYmVyL3Blbi9kWFdvUndcbkBmdW5jdGlvbiBlc2NhcGUtc3ZnKCRzdHJpbmcpIHtcbiAgQGlmIHN0ci1pbmRleCgkc3RyaW5nLCBcImRhdGE6aW1hZ2Uvc3ZnK3htbFwiKSB7XG4gICAgQGVhY2ggJGNoYXIsICRlbmNvZGVkIGluICRlc2NhcGVkLWNoYXJhY3RlcnMge1xuICAgICAgJHN0cmluZzogc3RyLXJlcGxhY2UoJHN0cmluZywgJGNoYXIsICRlbmNvZGVkKTtcbiAgICB9XG4gIH1cblxuICBAcmV0dXJuICRzdHJpbmc7XG59XG5cbi8vIENvbG9yIGNvbnRyYXN0XG5AZnVuY3Rpb24gY29sb3IteWlxKCRjb2xvciwgJGRhcms6ICR5aXEtdGV4dC1kYXJrLCAkbGlnaHQ6ICR5aXEtdGV4dC1saWdodCkge1xuICAkcjogcmVkKCRjb2xvcik7XG4gICRnOiBncmVlbigkY29sb3IpO1xuICAkYjogYmx1ZSgkY29sb3IpO1xuXG4gICR5aXE6ICgoJHIgKiAyOTkpICsgKCRnICogNTg3KSArICgkYiAqIDExNCkpIC8gMTAwMDtcblxuICBAaWYgKCR5aXEgPj0gJHlpcS1jb250cmFzdGVkLXRocmVzaG9sZCkge1xuICAgIEByZXR1cm4gJGRhcms7XG4gIH0gQGVsc2Uge1xuICAgIEByZXR1cm4gJGxpZ2h0O1xuICB9XG59XG5cbi8vIFJldHJpZXZlIGNvbG9yIFNhc3MgbWFwc1xuQGZ1bmN0aW9uIGNvbG9yKCRrZXk6IFwiYmx1ZVwiKSB7XG4gIEByZXR1cm4gbWFwLWdldCgkY29sb3JzLCAka2V5KTtcbn1cblxuQGZ1bmN0aW9uIHRoZW1lLWNvbG9yKCRrZXk6IFwicHJpbWFyeVwiKSB7XG4gIEByZXR1cm4gbWFwLWdldCgkdGhlbWUtY29sb3JzLCAka2V5KTtcbn1cblxuQGZ1bmN0aW9uIGdyYXkoJGtleTogXCIxMDBcIikge1xuICBAcmV0dXJuIG1hcC1nZXQoJGdyYXlzLCAka2V5KTtcbn1cblxuLy8gUmVxdWVzdCBhIHRoZW1lIGNvbG9yIGxldmVsXG5AZnVuY3Rpb24gdGhlbWUtY29sb3ItbGV2ZWwoJGNvbG9yLW5hbWU6IFwicHJpbWFyeVwiLCAkbGV2ZWw6IDApIHtcbiAgJGNvbG9yOiB0aGVtZS1jb2xvcigkY29sb3ItbmFtZSk7XG4gICRjb2xvci1iYXNlOiBpZigkbGV2ZWwgPiAwLCAkYmxhY2ssICR3aGl0ZSk7XG4gICRsZXZlbDogYWJzKCRsZXZlbCk7XG5cbiAgQHJldHVybiBtaXgoJGNvbG9yLWJhc2UsICRjb2xvciwgJGxldmVsICogJHRoZW1lLWNvbG9yLWludGVydmFsKTtcbn1cblxuLy8gUmV0dXJuIHZhbGlkIGNhbGNcbkBmdW5jdGlvbiBhZGQoJHZhbHVlMSwgJHZhbHVlMiwgJHJldHVybi1jYWxjOiB0cnVlKSB7XG4gIEBpZiAkdmFsdWUxID09IG51bGwge1xuICAgIEByZXR1cm4gJHZhbHVlMjtcbiAgfVxuXG4gIEBpZiAkdmFsdWUyID09IG51bGwge1xuICAgIEByZXR1cm4gJHZhbHVlMTtcbiAgfVxuXG4gIEBpZiB0eXBlLW9mKCR2YWx1ZTEpID09IG51bWJlciBhbmQgdHlwZS1vZigkdmFsdWUyKSA9PSBudW1iZXIgYW5kIGNvbXBhcmFibGUoJHZhbHVlMSwgJHZhbHVlMikge1xuICAgIEByZXR1cm4gJHZhbHVlMSArICR2YWx1ZTI7XG4gIH1cblxuICBAcmV0dXJuIGlmKCRyZXR1cm4tY2FsYyA9PSB0cnVlLCBjYWxjKCN7JHZhbHVlMX0gKyAjeyR2YWx1ZTJ9KSwgJHZhbHVlMSArIHVucXVvdGUoXCIgKyBcIikgKyAkdmFsdWUyKTtcbn1cblxuQGZ1bmN0aW9uIHN1YnRyYWN0KCR2YWx1ZTEsICR2YWx1ZTIsICRyZXR1cm4tY2FsYzogdHJ1ZSkge1xuICBAaWYgJHZhbHVlMSA9PSBudWxsIGFuZCAkdmFsdWUyID09IG51bGwge1xuICAgIEByZXR1cm4gbnVsbDtcbiAgfVxuXG4gIEBpZiAkdmFsdWUxID09IG51bGwge1xuICAgIEByZXR1cm4gLSR2YWx1ZTI7XG4gIH1cblxuICBAaWYgJHZhbHVlMiA9PSBudWxsIHtcbiAgICBAcmV0dXJuICR2YWx1ZTE7XG4gIH1cblxuICBAaWYgdHlwZS1vZigkdmFsdWUxKSA9PSBudW1iZXIgYW5kIHR5cGUtb2YoJHZhbHVlMikgPT0gbnVtYmVyIGFuZCBjb21wYXJhYmxlKCR2YWx1ZTEsICR2YWx1ZTIpIHtcbiAgICBAcmV0dXJuICR2YWx1ZTEgLSAkdmFsdWUyO1xuICB9XG5cbiAgQHJldHVybiBpZigkcmV0dXJuLWNhbGMgPT0gdHJ1ZSwgY2FsYygjeyR2YWx1ZTF9IC0gI3skdmFsdWUyfSksICR2YWx1ZTEgKyB1bnF1b3RlKFwiIC0gXCIpICsgJHZhbHVlMik7XG59XG4iXSwiZmlsZSI6Il9mdW5jdGlvbnMuc2NzcyJ9

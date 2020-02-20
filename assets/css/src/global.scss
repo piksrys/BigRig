@@ -1,0 +1,19 @@
+// stripped back version of bootstrap.
+@import 'bdd_bootstrap';
+
+//custom variables and mixins
+@import 'variables';
+@import 'bdd_mixins';
+//@import 'animations';
+
+@import 'content';
+@import 'elements';
+@import 'fa';
+@import 'buttons';
+@import 'footer';
+@import 'header';
+@import 'general';
+@import 'links';
+@import 'typography';
+@import 'browserfix';
+

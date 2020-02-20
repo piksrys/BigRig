@@ -1,0 +1,40 @@
+// Tables
+
+@mixin table-row-variant($state, $background, $border: null) {
+  // Exact selectors below required to override `.table-striped` and prevent
+  // inheritance to nested tables.
+  .table-#{$state} {
+    &,
+    > th,
+    > td {
+      background-color: $background;
+    }
+
+    @if $border != null {
+      th,
+      td,
+      thead th,
+      tbody + tbody {
+        border-color: $border;
+      }
+    }
+  }
+
+  // Hover states for `.table-hover`
+  // Note: this is not available for cells or rows within `thead` or `tfoot`.
+  .table-hover {
+    $hover-background: darken($background, 5%);
+
+    .table-#{$state} {
+      @include hover() {
+        background-color: $hover-background;
+
+        > td,
+        > th {
+          background-color: $hover-background;
+        }
+      }
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3RhYmxlLXJvdy5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIFRhYmxlc1xuXG5AbWl4aW4gdGFibGUtcm93LXZhcmlhbnQoJHN0YXRlLCAkYmFja2dyb3VuZCwgJGJvcmRlcjogbnVsbCkge1xuICAvLyBFeGFjdCBzZWxlY3RvcnMgYmVsb3cgcmVxdWlyZWQgdG8gb3ZlcnJpZGUgYC50YWJsZS1zdHJpcGVkYCBhbmQgcHJldmVudFxuICAvLyBpbmhlcml0YW5jZSB0byBuZXN0ZWQgdGFibGVzLlxuICAudGFibGUtI3skc3RhdGV9IHtcbiAgICAmLFxuICAgID4gdGgsXG4gICAgPiB0ZCB7XG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkYmFja2dyb3VuZDtcbiAgICB9XG5cbiAgICBAaWYgJGJvcmRlciAhPSBudWxsIHtcbiAgICAgIHRoLFxuICAgICAgdGQsXG4gICAgICB0aGVhZCB0aCxcbiAgICAgIHRib2R5ICsgdGJvZHkge1xuICAgICAgICBib3JkZXItY29sb3I6ICRib3JkZXI7XG4gICAgICB9XG4gICAgfVxuICB9XG5cbiAgLy8gSG92ZXIgc3RhdGVzIGZvciBgLnRhYmxlLWhvdmVyYFxuICAvLyBOb3RlOiB0aGlzIGlzIG5vdCBhdmFpbGFibGUgZm9yIGNlbGxzIG9yIHJvd3Mgd2l0aGluIGB0aGVhZGAgb3IgYHRmb290YC5cbiAgLnRhYmxlLWhvdmVyIHtcbiAgICAkaG92ZXItYmFja2dyb3VuZDogZGFya2VuKCRiYWNrZ3JvdW5kLCA1JSk7XG5cbiAgICAudGFibGUtI3skc3RhdGV9IHtcbiAgICAgIEBpbmNsdWRlIGhvdmVyKCkge1xuICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkaG92ZXItYmFja2dyb3VuZDtcblxuICAgICAgICA+IHRkLFxuICAgICAgICA+IHRoIHtcbiAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkaG92ZXItYmFja2dyb3VuZDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl0sImZpbGUiOiJtaXhpbnMvX3RhYmxlLXJvdy5zY3NzIn0=

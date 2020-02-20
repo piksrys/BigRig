@@ -1,0 +1,55 @@
+// Base class
+//
+// Requires one of the contextual, color modifier classes for `color` and
+// `background-color`.
+
+.badge {
+  display: inline-block;
+  padding: $badge-padding-y $badge-padding-x;
+  @include font-size($badge-font-size);
+  font-weight: $badge-font-weight;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  @include border-radius($badge-border-radius);
+  @include transition($badge-transition);
+
+  @at-root a#{&} {
+    @include hover-focus() {
+      text-decoration: none;
+    }
+  }
+
+  // Empty badges collapse automatically
+  &:empty {
+    display: none;
+  }
+}
+
+// Quick fix for badges in buttons
+.btn .badge {
+  position: relative;
+  top: -1px;
+}
+
+// Pill badges
+//
+// Make them extra rounded with a modifier to replace v3's badges.
+
+.badge-pill {
+  padding-right: $badge-pill-padding-x;
+  padding-left: $badge-pill-padding-x;
+  @include border-radius($badge-pill-border-radius);
+}
+
+// Colors
+//
+// Contextual variations (linked badges get darker on :hover).
+
+@each $color, $value in $theme-colors {
+  .badge-#{$color} {
+    @include badge-variant($value);
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfYmFkZ2Uuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBCYXNlIGNsYXNzXG4vL1xuLy8gUmVxdWlyZXMgb25lIG9mIHRoZSBjb250ZXh0dWFsLCBjb2xvciBtb2RpZmllciBjbGFzc2VzIGZvciBgY29sb3JgIGFuZFxuLy8gYGJhY2tncm91bmQtY29sb3JgLlxuXG4uYmFkZ2Uge1xuICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gIHBhZGRpbmc6ICRiYWRnZS1wYWRkaW5nLXkgJGJhZGdlLXBhZGRpbmcteDtcbiAgQGluY2x1ZGUgZm9udC1zaXplKCRiYWRnZS1mb250LXNpemUpO1xuICBmb250LXdlaWdodDogJGJhZGdlLWZvbnQtd2VpZ2h0O1xuICBsaW5lLWhlaWdodDogMTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICB2ZXJ0aWNhbC1hbGlnbjogYmFzZWxpbmU7XG4gIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJGJhZGdlLWJvcmRlci1yYWRpdXMpO1xuICBAaW5jbHVkZSB0cmFuc2l0aW9uKCRiYWRnZS10cmFuc2l0aW9uKTtcblxuICBAYXQtcm9vdCBhI3smfSB7XG4gICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gICAgfVxuICB9XG5cbiAgLy8gRW1wdHkgYmFkZ2VzIGNvbGxhcHNlIGF1dG9tYXRpY2FsbHlcbiAgJjplbXB0eSB7XG4gICAgZGlzcGxheTogbm9uZTtcbiAgfVxufVxuXG4vLyBRdWljayBmaXggZm9yIGJhZGdlcyBpbiBidXR0b25zXG4uYnRuIC5iYWRnZSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgdG9wOiAtMXB4O1xufVxuXG4vLyBQaWxsIGJhZGdlc1xuLy9cbi8vIE1ha2UgdGhlbSBleHRyYSByb3VuZGVkIHdpdGggYSBtb2RpZmllciB0byByZXBsYWNlIHYzJ3MgYmFkZ2VzLlxuXG4uYmFkZ2UtcGlsbCB7XG4gIHBhZGRpbmctcmlnaHQ6ICRiYWRnZS1waWxsLXBhZGRpbmcteDtcbiAgcGFkZGluZy1sZWZ0OiAkYmFkZ2UtcGlsbC1wYWRkaW5nLXg7XG4gIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJGJhZGdlLXBpbGwtYm9yZGVyLXJhZGl1cyk7XG59XG5cbi8vIENvbG9yc1xuLy9cbi8vIENvbnRleHR1YWwgdmFyaWF0aW9ucyAobGlua2VkIGJhZGdlcyBnZXQgZGFya2VyIG9uIDpob3ZlcikuXG5cbkBlYWNoICRjb2xvciwgJHZhbHVlIGluICR0aGVtZS1jb2xvcnMge1xuICAuYmFkZ2UtI3skY29sb3J9IHtcbiAgICBAaW5jbHVkZSBiYWRnZS12YXJpYW50KCR2YWx1ZSk7XG4gIH1cbn1cbiJdLCJmaWxlIjoiX2JhZGdlLnNjc3MifQ==

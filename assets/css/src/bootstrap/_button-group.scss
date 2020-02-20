@@ -1,0 +1,164 @@
+// stylelint-disable selector-no-qualifying-type
+
+// Make the div behave like a button
+.btn-group,
+.btn-group-vertical {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle; // match .btn alignment given font-size hack above
+
+  > .btn {
+    position: relative;
+    flex: 1 1 auto;
+
+    // Bring the hover, focused, and "active" buttons to the front to overlay
+    // the borders properly
+    @include hover() {
+      z-index: 1;
+    }
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 1;
+    }
+  }
+}
+
+// Optional: Group multiple button groups together for a toolbar
+.btn-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .input-group {
+    width: auto;
+  }
+}
+
+.btn-group {
+  // Prevent double borders when buttons are next to each other
+  > .btn:not(:first-child),
+  > .btn-group:not(:first-child) {
+    margin-left: -$btn-border-width;
+  }
+
+  // Reset rounded corners
+  > .btn:not(:last-child):not(.dropdown-toggle),
+  > .btn-group:not(:last-child) > .btn {
+    @include border-right-radius(0);
+  }
+
+  > .btn:not(:first-child),
+  > .btn-group:not(:first-child) > .btn {
+    @include border-left-radius(0);
+  }
+}
+
+// Sizing
+//
+// Remix the default button sizing classes into new ones for easier manipulation.
+
+.btn-group-sm > .btn { @extend .btn-sm; }
+.btn-group-lg > .btn { @extend .btn-lg; }
+
+
+//
+// Split button dropdowns
+//
+
+.dropdown-toggle-split {
+  padding-right: $btn-padding-x * .75;
+  padding-left: $btn-padding-x * .75;
+
+  &::after,
+  .dropup &::after,
+  .dropright &::after {
+    margin-left: 0;
+  }
+
+  .dropleft &::before {
+    margin-right: 0;
+  }
+}
+
+.btn-sm + .dropdown-toggle-split {
+  padding-right: $btn-padding-x-sm * .75;
+  padding-left: $btn-padding-x-sm * .75;
+}
+
+.btn-lg + .dropdown-toggle-split {
+  padding-right: $btn-padding-x-lg * .75;
+  padding-left: $btn-padding-x-lg * .75;
+}
+
+
+// The clickable button for toggling the menu
+// Set the same inset shadow as the :active state
+.btn-group.show .dropdown-toggle {
+  @include box-shadow($btn-active-box-shadow);
+
+  // Show no shadow for `.btn-link` since it has no other button styles.
+  &.btn-link {
+    @include box-shadow(none);
+  }
+}
+
+
+//
+// Vertical button groups
+//
+
+.btn-group-vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  > .btn,
+  > .btn-group {
+    width: 100%;
+  }
+
+  > .btn:not(:first-child),
+  > .btn-group:not(:first-child) {
+    margin-top: -$btn-border-width;
+  }
+
+  // Reset rounded corners
+  > .btn:not(:last-child):not(.dropdown-toggle),
+  > .btn-group:not(:last-child) > .btn {
+    @include border-bottom-radius(0);
+  }
+
+  > .btn:not(:first-child),
+  > .btn-group:not(:first-child) > .btn {
+    @include border-top-radius(0);
+  }
+}
+
+
+// Checkbox and radio options
+//
+// In order to support the browser's form validation feedback, powered by the
+// `required` attribute, we have to "hide" the inputs via `clip`. We cannot use
+// `display: none;` or `visibility: hidden;` as that also hides the popover.
+// Simply visually hiding the inputs via `opacity` would leave them clickable in
+// certain cases which is prevented by using `clip` and `pointer-events`.
+// This way, we ensure a DOM element is visible to position the popover from.
+//
+// See https://github.com/twbs/bootstrap/pull/12794 and
+// https://github.com/twbs/bootstrap/pull/14559 for more information.
+
+.btn-group-toggle {
+  > .btn,
+  > .btn-group > .btn {
+    margin-bottom: 0; // Override default `<label>` value
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      position: absolute;
+      clip: rect(0, 0, 0, 0);
+      pointer-events: none;
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfYnV0dG9uLWdyb3VwLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gc3R5bGVsaW50LWRpc2FibGUgc2VsZWN0b3Itbm8tcXVhbGlmeWluZy10eXBlXG5cbi8vIE1ha2UgdGhlIGRpdiBiZWhhdmUgbGlrZSBhIGJ1dHRvblxuLmJ0bi1ncm91cCxcbi5idG4tZ3JvdXAtdmVydGljYWwge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGRpc3BsYXk6IGlubGluZS1mbGV4O1xuICB2ZXJ0aWNhbC1hbGlnbjogbWlkZGxlOyAvLyBtYXRjaCAuYnRuIGFsaWdubWVudCBnaXZlbiBmb250LXNpemUgaGFjayBhYm92ZVxuXG4gID4gLmJ0biB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIGZsZXg6IDEgMSBhdXRvO1xuXG4gICAgLy8gQnJpbmcgdGhlIGhvdmVyLCBmb2N1c2VkLCBhbmQgXCJhY3RpdmVcIiBidXR0b25zIHRvIHRoZSBmcm9udCB0byBvdmVybGF5XG4gICAgLy8gdGhlIGJvcmRlcnMgcHJvcGVybHlcbiAgICBAaW5jbHVkZSBob3ZlcigpIHtcbiAgICAgIHotaW5kZXg6IDE7XG4gICAgfVxuICAgICY6Zm9jdXMsXG4gICAgJjphY3RpdmUsXG4gICAgJi5hY3RpdmUge1xuICAgICAgei1pbmRleDogMTtcbiAgICB9XG4gIH1cbn1cblxuLy8gT3B0aW9uYWw6IEdyb3VwIG11bHRpcGxlIGJ1dHRvbiBncm91cHMgdG9nZXRoZXIgZm9yIGEgdG9vbGJhclxuLmJ0bi10b29sYmFyIHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XG5cbiAgLmlucHV0LWdyb3VwIHtcbiAgICB3aWR0aDogYXV0bztcbiAgfVxufVxuXG4uYnRuLWdyb3VwIHtcbiAgLy8gUHJldmVudCBkb3VibGUgYm9yZGVycyB3aGVuIGJ1dHRvbnMgYXJlIG5leHQgdG8gZWFjaCBvdGhlclxuICA+IC5idG46bm90KDpmaXJzdC1jaGlsZCksXG4gID4gLmJ0bi1ncm91cDpub3QoOmZpcnN0LWNoaWxkKSB7XG4gICAgbWFyZ2luLWxlZnQ6IC0kYnRuLWJvcmRlci13aWR0aDtcbiAgfVxuXG4gIC8vIFJlc2V0IHJvdW5kZWQgY29ybmVyc1xuICA+IC5idG46bm90KDpsYXN0LWNoaWxkKTpub3QoLmRyb3Bkb3duLXRvZ2dsZSksXG4gID4gLmJ0bi1ncm91cDpub3QoOmxhc3QtY2hpbGQpID4gLmJ0biB7XG4gICAgQGluY2x1ZGUgYm9yZGVyLXJpZ2h0LXJhZGl1cygwKTtcbiAgfVxuXG4gID4gLmJ0bjpub3QoOmZpcnN0LWNoaWxkKSxcbiAgPiAuYnRuLWdyb3VwOm5vdCg6Zmlyc3QtY2hpbGQpID4gLmJ0biB7XG4gICAgQGluY2x1ZGUgYm9yZGVyLWxlZnQtcmFkaXVzKDApO1xuICB9XG59XG5cbi8vIFNpemluZ1xuLy9cbi8vIFJlbWl4IHRoZSBkZWZhdWx0IGJ1dHRvbiBzaXppbmcgY2xhc3NlcyBpbnRvIG5ldyBvbmVzIGZvciBlYXNpZXIgbWFuaXB1bGF0aW9uLlxuXG4uYnRuLWdyb3VwLXNtID4gLmJ0biB7IEBleHRlbmQgLmJ0bi1zbTsgfVxuLmJ0bi1ncm91cC1sZyA+IC5idG4geyBAZXh0ZW5kIC5idG4tbGc7IH1cblxuXG4vL1xuLy8gU3BsaXQgYnV0dG9uIGRyb3Bkb3duc1xuLy9cblxuLmRyb3Bkb3duLXRvZ2dsZS1zcGxpdCB7XG4gIHBhZGRpbmctcmlnaHQ6ICRidG4tcGFkZGluZy14ICogLjc1O1xuICBwYWRkaW5nLWxlZnQ6ICRidG4tcGFkZGluZy14ICogLjc1O1xuXG4gICY6OmFmdGVyLFxuICAuZHJvcHVwICY6OmFmdGVyLFxuICAuZHJvcHJpZ2h0ICY6OmFmdGVyIHtcbiAgICBtYXJnaW4tbGVmdDogMDtcbiAgfVxuXG4gIC5kcm9wbGVmdCAmOjpiZWZvcmUge1xuICAgIG1hcmdpbi1yaWdodDogMDtcbiAgfVxufVxuXG4uYnRuLXNtICsgLmRyb3Bkb3duLXRvZ2dsZS1zcGxpdCB7XG4gIHBhZGRpbmctcmlnaHQ6ICRidG4tcGFkZGluZy14LXNtICogLjc1O1xuICBwYWRkaW5nLWxlZnQ6ICRidG4tcGFkZGluZy14LXNtICogLjc1O1xufVxuXG4uYnRuLWxnICsgLmRyb3Bkb3duLXRvZ2dsZS1zcGxpdCB7XG4gIHBhZGRpbmctcmlnaHQ6ICRidG4tcGFkZGluZy14LWxnICogLjc1O1xuICBwYWRkaW5nLWxlZnQ6ICRidG4tcGFkZGluZy14LWxnICogLjc1O1xufVxuXG5cbi8vIFRoZSBjbGlja2FibGUgYnV0dG9uIGZvciB0b2dnbGluZyB0aGUgbWVudVxuLy8gU2V0IHRoZSBzYW1lIGluc2V0IHNoYWRvdyBhcyB0aGUgOmFjdGl2ZSBzdGF0ZVxuLmJ0bi1ncm91cC5zaG93IC5kcm9wZG93bi10b2dnbGUge1xuICBAaW5jbHVkZSBib3gtc2hhZG93KCRidG4tYWN0aXZlLWJveC1zaGFkb3cpO1xuXG4gIC8vIFNob3cgbm8gc2hhZG93IGZvciBgLmJ0bi1saW5rYCBzaW5jZSBpdCBoYXMgbm8gb3RoZXIgYnV0dG9uIHN0eWxlcy5cbiAgJi5idG4tbGluayB7XG4gICAgQGluY2x1ZGUgYm94LXNoYWRvdyhub25lKTtcbiAgfVxufVxuXG5cbi8vXG4vLyBWZXJ0aWNhbCBidXR0b24gZ3JvdXBzXG4vL1xuXG4uYnRuLWdyb3VwLXZlcnRpY2FsIHtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7XG4gIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXG4gID4gLmJ0bixcbiAgPiAuYnRuLWdyb3VwIHtcbiAgICB3aWR0aDogMTAwJTtcbiAgfVxuXG4gID4gLmJ0bjpub3QoOmZpcnN0LWNoaWxkKSxcbiAgPiAuYnRuLWdyb3VwOm5vdCg6Zmlyc3QtY2hpbGQpIHtcbiAgICBtYXJnaW4tdG9wOiAtJGJ0bi1ib3JkZXItd2lkdGg7XG4gIH1cblxuICAvLyBSZXNldCByb3VuZGVkIGNvcm5lcnNcbiAgPiAuYnRuOm5vdCg6bGFzdC1jaGlsZCk6bm90KC5kcm9wZG93bi10b2dnbGUpLFxuICA+IC5idG4tZ3JvdXA6bm90KDpsYXN0LWNoaWxkKSA+IC5idG4ge1xuICAgIEBpbmNsdWRlIGJvcmRlci1ib3R0b20tcmFkaXVzKDApO1xuICB9XG5cbiAgPiAuYnRuOm5vdCg6Zmlyc3QtY2hpbGQpLFxuICA+IC5idG4tZ3JvdXA6bm90KDpmaXJzdC1jaGlsZCkgPiAuYnRuIHtcbiAgICBAaW5jbHVkZSBib3JkZXItdG9wLXJhZGl1cygwKTtcbiAgfVxufVxuXG5cbi8vIENoZWNrYm94IGFuZCByYWRpbyBvcHRpb25zXG4vL1xuLy8gSW4gb3JkZXIgdG8gc3VwcG9ydCB0aGUgYnJvd3NlcidzIGZvcm0gdmFsaWRhdGlvbiBmZWVkYmFjaywgcG93ZXJlZCBieSB0aGVcbi8vIGByZXF1aXJlZGAgYXR0cmlidXRlLCB3ZSBoYXZlIHRvIFwiaGlkZVwiIHRoZSBpbnB1dHMgdmlhIGBjbGlwYC4gV2UgY2Fubm90IHVzZVxuLy8gYGRpc3BsYXk6IG5vbmU7YCBvciBgdmlzaWJpbGl0eTogaGlkZGVuO2AgYXMgdGhhdCBhbHNvIGhpZGVzIHRoZSBwb3BvdmVyLlxuLy8gU2ltcGx5IHZpc3VhbGx5IGhpZGluZyB0aGUgaW5wdXRzIHZpYSBgb3BhY2l0eWAgd291bGQgbGVhdmUgdGhlbSBjbGlja2FibGUgaW5cbi8vIGNlcnRhaW4gY2FzZXMgd2hpY2ggaXMgcHJldmVudGVkIGJ5IHVzaW5nIGBjbGlwYCBhbmQgYHBvaW50ZXItZXZlbnRzYC5cbi8vIFRoaXMgd2F5LCB3ZSBlbnN1cmUgYSBET00gZWxlbWVudCBpcyB2aXNpYmxlIHRvIHBvc2l0aW9uIHRoZSBwb3BvdmVyIGZyb20uXG4vL1xuLy8gU2VlIGh0dHBzOi8vZ2l0aHViLmNvbS90d2JzL2Jvb3RzdHJhcC9wdWxsLzEyNzk0IGFuZFxuLy8gaHR0cHM6Ly9naXRodWIuY29tL3R3YnMvYm9vdHN0cmFwL3B1bGwvMTQ1NTkgZm9yIG1vcmUgaW5mb3JtYXRpb24uXG5cbi5idG4tZ3JvdXAtdG9nZ2xlIHtcbiAgPiAuYnRuLFxuICA+IC5idG4tZ3JvdXAgPiAuYnRuIHtcbiAgICBtYXJnaW4tYm90dG9tOiAwOyAvLyBPdmVycmlkZSBkZWZhdWx0IGA8bGFiZWw+YCB2YWx1ZVxuXG4gICAgaW5wdXRbdHlwZT1cInJhZGlvXCJdLFxuICAgIGlucHV0W3R5cGU9XCJjaGVja2JveFwiXSB7XG4gICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICBjbGlwOiByZWN0KDAsIDAsIDAsIDApO1xuICAgICAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gICAgfVxuICB9XG59XG4iXSwiZmlsZSI6Il9idXR0b24tZ3JvdXAuc2NzcyJ9

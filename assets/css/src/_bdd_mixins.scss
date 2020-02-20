@@ -1,0 +1,76 @@
+@mixin font_size($size, $lg: inherit, $md: inherit, $sm:inherit, $xs: inherit, $mobile_units: px) {
+  font-size: $size + px;
+
+
+  @if $lg != inherit {
+    @include media-breakpoint-down(lg) {
+      font-size: $lg + px;
+    }
+  }
+
+
+  @if $md != inherit {
+    @include media-breakpoint-down(md) {
+      font-size: $md + px;
+    }
+  }
+
+  @if $sm != inherit {
+    @include media-breakpoint-down(sm) {
+      font-size: $sm + $mobile_units;
+    }
+  }
+
+
+  @if $xs != inherit {
+    @include media-breakpoint-down(xs) {
+      font-size: $xs + $mobile_units;
+    }
+  }
+}
+
+@mixin heading_font_size($font_size) {
+	font_size: $font_size/1.5;
+
+	@include media-breakpoint-up(md) {
+		font-size: $font_size;
+	}
+
+}
+
+/* Buttons */
+
+@mixin btn_one {
+	background-color: $primary_theme_colour;
+	border-color: $primary_theme_colour;
+	color: white;
+}
+
+@mixin btn_one_hover {
+	background-color: darken($primary_theme_colour, 10%);
+	border-color: darken($primary_theme_colour, 10%);
+	color: white;
+}
+
+@mixin btn_two {
+	background-color: $secondary_theme_colour;
+	border-color: $secondary_theme_colour;
+	color: white;
+}
+
+@mixin btn_two_hover {
+	background-color: darken($secondary_theme_colour, 10%);
+	border-color: darken($secondary_theme_colour, 10%);
+	color: white;
+}
+
+@mixin btn_ghost {
+	background-color: transparent;
+	border-color: $primary_theme_colour;
+	color: $primary_theme_colour;
+}
+
+@mixin btn_ghost_hover {
+	background-color: white;
+	color: $primary_theme_colour;
+}

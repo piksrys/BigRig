@@ -7,7 +7,7 @@
   },
   "dev": {
     "browserSync": {
-      "live": false
+      "live": true
     },
     "styles": {
       "stage": 3,
@@ -26,7 +26,7 @@
     "debug": {
       "styles": false,
       "scripts": false,
-      "phpcs": true
+      "phpcs": false
     }
   },
   "export": {

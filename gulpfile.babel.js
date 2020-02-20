@@ -10,6 +10,9 @@ import generateCert from './gulp/generateCert';
 import images from './gulp/images';
 // import php from './gulp/php';
 // import {serve} from './gulp/browserSync';
+// import fonts from './gulp/fonts';
+// import bootstrap from './gulp/bootstrap';
+import copyFiles from './gulp/dependencyFiles';
 import scripts from './gulp/scripts';
 import styles from './gulp/styles';
 import editorStyles from './gulp/editorStyles';
@@ -24,7 +27,7 @@ import {cleanCSS, cleanJS} from './gulp/clean';
  * Map out the sequence of events on first load and make it the default task
  */
 export const firstRun = series(
-    cleanCSS, cleanJS, parallel( images, series( styles, editorStyles ), scripts), watch
+    cleanCSS, cleanJS, copyFiles, parallel( images, series( styles, editorStyles ), scripts), watch
 );
 
 export default firstRun;
@@ -32,15 +35,15 @@ export default firstRun;
 /**
  * Build theme for development without BrowserSync or watching
  */
-export const buildDev = parallel(
+export const buildDev = series(copyFiles, parallel(
      images, series( styles, editorStyles ), scripts, translate
-);
+) );
 
 /**
  * Export theme for distribution.
  */
 export const bundleTheme = series(
-    prodPrep, parallel( scripts, series( styles, editorStyles ), images), translate, prodStringReplace, prodCompress
+    prodPrep, copyFiles, parallel( scripts, series( styles, editorStyles ), images), translate, prodStringReplace, prodCompress
 );
 
 /**

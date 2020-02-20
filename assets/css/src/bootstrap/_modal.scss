@@ -1,0 +1,240 @@
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and stuff
+
+
+.modal-open {
+  // Kill the scroll on the body
+  overflow: hidden;
+
+  .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+// Container that the modal scrolls within
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-modal;
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  // Prevent Chrome on Windows from adding a focus outline. For details, see
+  // https://github.com/twbs/bootstrap/pull/10951.
+  outline: 0;
+  // We deliberately don't use `-webkit-overflow-scrolling: touch;` due to a
+  // gnarly iOS Safari bug: https://bugs.webkit.org/show_bug.cgi?id=158342
+  // See also https://github.com/twbs/bootstrap/issues/17695
+}
+
+// Shell div to position the modal with bottom padding
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: $modal-dialog-margin;
+  // allow clicks to pass through for custom click handling to close modal
+  pointer-events: none;
+
+  // When fading in the modal, animate it to slide down
+  .modal.fade & {
+    @include transition($modal-transition);
+    transform: $modal-fade-transform;
+  }
+  .modal.show & {
+    transform: $modal-show-transform;
+  }
+
+  // When trying to close, animate focus to scale
+  .modal.modal-static & {
+    transform: $modal-scale-transform;
+  }
+}
+
+.modal-dialog-scrollable {
+  display: flex; // IE10/11
+  max-height: subtract(100%, $modal-dialog-margin * 2);
+
+  .modal-content {
+    max-height: subtract(100vh, $modal-dialog-margin * 2); // IE10/11
+    overflow: hidden;
+  }
+
+  .modal-header,
+  .modal-footer {
+    flex-shrink: 0;
+  }
+
+  .modal-body {
+    overflow-y: auto;
+  }
+}
+
+.modal-dialog-centered {
+  display: flex;
+  align-items: center;
+  min-height: subtract(100%, $modal-dialog-margin * 2);
+
+  // Ensure `modal-dialog-centered` extends the full height of the view (IE10/11)
+  &::before {
+    display: block; // IE10
+    height: subtract(100vh, $modal-dialog-margin * 2);
+    content: "";
+  }
+
+  // Ensure `.modal-body` shows scrollbar (IE10/11)
+  &.modal-dialog-scrollable {
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .modal-content {
+      max-height: none;
+    }
+
+    &::before {
+      content: none;
+    }
+  }
+}
+
+// Actual modal
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%; // Ensure `.modal-content` extends the full width of the parent `.modal-dialog`
+  // counteract the pointer-events: none; in the .modal-dialog
+  color: $modal-content-color;
+  pointer-events: auto;
+  background-color: $modal-content-bg;
+  background-clip: padding-box;
+  border: $modal-content-border-width solid $modal-content-border-color;
+  @include border-radius($modal-content-border-radius);
+  @include box-shadow($modal-content-box-shadow-xs);
+  // Remove focus outline from opened modal
+  outline: 0;
+}
+
+// Modal background
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: $zindex-modal-backdrop;
+  width: 100vw;
+  height: 100vh;
+  background-color: $modal-backdrop-bg;
+
+  // Fade for backdrop
+  &.fade { opacity: 0; }
+  &.show { opacity: $modal-backdrop-opacity; }
+}
+
+// Modal header
+// Top section of the modal w/ title and dismiss
+.modal-header {
+  display: flex;
+  align-items: flex-start; // so the close btn always stays on the upper right corner
+  justify-content: space-between; // Put modal header elements (title and dismiss) on opposite ends
+  padding: $modal-header-padding;
+  border-bottom: $modal-header-border-width solid $modal-header-border-color;
+  @include border-top-radius($modal-content-inner-border-radius);
+
+  .close {
+    padding: $modal-header-padding;
+    // auto on the left force icon to the right even when there is no .modal-title
+    margin: (-$modal-header-padding-y) (-$modal-header-padding-x) (-$modal-header-padding-y) auto;
+  }
+}
+
+// Title text within header
+.modal-title {
+  margin-bottom: 0;
+  line-height: $modal-title-line-height;
+}
+
+// Modal body
+// Where all modal content resides (sibling of .modal-header and .modal-footer)
+.modal-body {
+  position: relative;
+  // Enable `flex-grow: 1` so that the body take up as much space as possible
+  // when there should be a fixed height on `.modal-dialog`.
+  flex: 1 1 auto;
+  padding: $modal-inner-padding;
+}
+
+// Footer (for actions)
+.modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; // vertically center
+  justify-content: flex-end; // Right align buttons with flex property because text-align doesn't work on flex items
+  padding: $modal-inner-padding - $modal-footer-margin-between / 2;
+  border-top: $modal-footer-border-width solid $modal-footer-border-color;
+  @include border-bottom-radius($modal-content-inner-border-radius);
+
+  // Place margin between footer elements
+  // This solution is far from ideal because of the universal selector usage,
+  // but is needed to fix https://github.com/twbs/bootstrap/issues/24800
+  // stylelint-disable-next-line selector-max-universal
+  > * {
+    margin: $modal-footer-margin-between / 2;
+  }
+}
+
+// Measure scrollbar width for padding body during modal show/hide
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+// Scale up the modal
+@include media-breakpoint-up(sm) {
+  // Automatically set modal's width for larger viewports
+  .modal-dialog {
+    max-width: $modal-md;
+    margin: $modal-dialog-margin-y-sm-up auto;
+  }
+
+  .modal-dialog-scrollable {
+    max-height: subtract(100%, $modal-dialog-margin-y-sm-up * 2);
+
+    .modal-content {
+      max-height: subtract(100vh, $modal-dialog-margin-y-sm-up * 2);
+    }
+  }
+
+  .modal-dialog-centered {
+    min-height: subtract(100%, $modal-dialog-margin-y-sm-up * 2);
+
+    &::before {
+      height: subtract(100vh, $modal-dialog-margin-y-sm-up * 2);
+    }
+  }
+
+  .modal-content {
+    @include box-shadow($modal-content-box-shadow-sm-up);
+  }
+
+  .modal-sm { max-width: $modal-sm; }
+}
+
+@include media-breakpoint-up(lg) {
+  .modal-lg,
+  .modal-xl {
+    max-width: $modal-lg;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .modal-xl { max-width: $modal-xl; }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfbW9kYWwuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyAubW9kYWwtb3BlbiAgICAgIC0gYm9keSBjbGFzcyBmb3Iga2lsbGluZyB0aGUgc2Nyb2xsXG4vLyAubW9kYWwgICAgICAgICAgIC0gY29udGFpbmVyIHRvIHNjcm9sbCB3aXRoaW5cbi8vIC5tb2RhbC1kaWFsb2cgICAgLSBwb3NpdGlvbmluZyBzaGVsbCBmb3IgdGhlIGFjdHVhbCBtb2RhbFxuLy8gLm1vZGFsLWNvbnRlbnQgICAtIGFjdHVhbCBtb2RhbCB3LyBiZyBhbmQgY29ybmVycyBhbmQgc3R1ZmZcblxuXG4ubW9kYWwtb3BlbiB7XG4gIC8vIEtpbGwgdGhlIHNjcm9sbCBvbiB0aGUgYm9keVxuICBvdmVyZmxvdzogaGlkZGVuO1xuXG4gIC5tb2RhbCB7XG4gICAgb3ZlcmZsb3cteDogaGlkZGVuO1xuICAgIG92ZXJmbG93LXk6IGF1dG87XG4gIH1cbn1cblxuLy8gQ29udGFpbmVyIHRoYXQgdGhlIG1vZGFsIHNjcm9sbHMgd2l0aGluXG4ubW9kYWwge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgei1pbmRleDogJHppbmRleC1tb2RhbDtcbiAgZGlzcGxheTogbm9uZTtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogMTAwJTtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgLy8gUHJldmVudCBDaHJvbWUgb24gV2luZG93cyBmcm9tIGFkZGluZyBhIGZvY3VzIG91dGxpbmUuIEZvciBkZXRhaWxzLCBzZWVcbiAgLy8gaHR0cHM6Ly9naXRodWIuY29tL3R3YnMvYm9vdHN0cmFwL3B1bGwvMTA5NTEuXG4gIG91dGxpbmU6IDA7XG4gIC8vIFdlIGRlbGliZXJhdGVseSBkb24ndCB1c2UgYC13ZWJraXQtb3ZlcmZsb3ctc2Nyb2xsaW5nOiB0b3VjaDtgIGR1ZSB0byBhXG4gIC8vIGduYXJseSBpT1MgU2FmYXJpIGJ1ZzogaHR0cHM6Ly9idWdzLndlYmtpdC5vcmcvc2hvd19idWcuY2dpP2lkPTE1ODM0MlxuICAvLyBTZWUgYWxzbyBodHRwczovL2dpdGh1Yi5jb20vdHdicy9ib290c3RyYXAvaXNzdWVzLzE3Njk1XG59XG5cbi8vIFNoZWxsIGRpdiB0byBwb3NpdGlvbiB0aGUgbW9kYWwgd2l0aCBib3R0b20gcGFkZGluZ1xuLm1vZGFsLWRpYWxvZyB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgd2lkdGg6IGF1dG87XG4gIG1hcmdpbjogJG1vZGFsLWRpYWxvZy1tYXJnaW47XG4gIC8vIGFsbG93IGNsaWNrcyB0byBwYXNzIHRocm91Z2ggZm9yIGN1c3RvbSBjbGljayBoYW5kbGluZyB0byBjbG9zZSBtb2RhbFxuICBwb2ludGVyLWV2ZW50czogbm9uZTtcblxuICAvLyBXaGVuIGZhZGluZyBpbiB0aGUgbW9kYWwsIGFuaW1hdGUgaXQgdG8gc2xpZGUgZG93blxuICAubW9kYWwuZmFkZSAmIHtcbiAgICBAaW5jbHVkZSB0cmFuc2l0aW9uKCRtb2RhbC10cmFuc2l0aW9uKTtcbiAgICB0cmFuc2Zvcm06ICRtb2RhbC1mYWRlLXRyYW5zZm9ybTtcbiAgfVxuICAubW9kYWwuc2hvdyAmIHtcbiAgICB0cmFuc2Zvcm06ICRtb2RhbC1zaG93LXRyYW5zZm9ybTtcbiAgfVxuXG4gIC8vIFdoZW4gdHJ5aW5nIHRvIGNsb3NlLCBhbmltYXRlIGZvY3VzIHRvIHNjYWxlXG4gIC5tb2RhbC5tb2RhbC1zdGF0aWMgJiB7XG4gICAgdHJhbnNmb3JtOiAkbW9kYWwtc2NhbGUtdHJhbnNmb3JtO1xuICB9XG59XG5cbi5tb2RhbC1kaWFsb2ctc2Nyb2xsYWJsZSB7XG4gIGRpc3BsYXk6IGZsZXg7IC8vIElFMTAvMTFcbiAgbWF4LWhlaWdodDogc3VidHJhY3QoMTAwJSwgJG1vZGFsLWRpYWxvZy1tYXJnaW4gKiAyKTtcblxuICAubW9kYWwtY29udGVudCB7XG4gICAgbWF4LWhlaWdodDogc3VidHJhY3QoMTAwdmgsICRtb2RhbC1kaWFsb2ctbWFyZ2luICogMik7IC8vIElFMTAvMTFcbiAgICBvdmVyZmxvdzogaGlkZGVuO1xuICB9XG5cbiAgLm1vZGFsLWhlYWRlcixcbiAgLm1vZGFsLWZvb3RlciB7XG4gICAgZmxleC1zaHJpbms6IDA7XG4gIH1cblxuICAubW9kYWwtYm9keSB7XG4gICAgb3ZlcmZsb3cteTogYXV0bztcbiAgfVxufVxuXG4ubW9kYWwtZGlhbG9nLWNlbnRlcmVkIHtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgbWluLWhlaWdodDogc3VidHJhY3QoMTAwJSwgJG1vZGFsLWRpYWxvZy1tYXJnaW4gKiAyKTtcblxuICAvLyBFbnN1cmUgYG1vZGFsLWRpYWxvZy1jZW50ZXJlZGAgZXh0ZW5kcyB0aGUgZnVsbCBoZWlnaHQgb2YgdGhlIHZpZXcgKElFMTAvMTEpXG4gICY6OmJlZm9yZSB7XG4gICAgZGlzcGxheTogYmxvY2s7IC8vIElFMTBcbiAgICBoZWlnaHQ6IHN1YnRyYWN0KDEwMHZoLCAkbW9kYWwtZGlhbG9nLW1hcmdpbiAqIDIpO1xuICAgIGNvbnRlbnQ6IFwiXCI7XG4gIH1cblxuICAvLyBFbnN1cmUgYC5tb2RhbC1ib2R5YCBzaG93cyBzY3JvbGxiYXIgKElFMTAvMTEpXG4gICYubW9kYWwtZGlhbG9nLXNjcm9sbGFibGUge1xuICAgIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7XG4gICAgaGVpZ2h0OiAxMDAlO1xuXG4gICAgLm1vZGFsLWNvbnRlbnQge1xuICAgICAgbWF4LWhlaWdodDogbm9uZTtcbiAgICB9XG5cbiAgICAmOjpiZWZvcmUge1xuICAgICAgY29udGVudDogbm9uZTtcbiAgICB9XG4gIH1cbn1cblxuLy8gQWN0dWFsIG1vZGFsXG4ubW9kYWwtY29udGVudCB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgd2lkdGg6IDEwMCU7IC8vIEVuc3VyZSBgLm1vZGFsLWNvbnRlbnRgIGV4dGVuZHMgdGhlIGZ1bGwgd2lkdGggb2YgdGhlIHBhcmVudCBgLm1vZGFsLWRpYWxvZ2BcbiAgLy8gY291bnRlcmFjdCB0aGUgcG9pbnRlci1ldmVudHM6IG5vbmU7IGluIHRoZSAubW9kYWwtZGlhbG9nXG4gIGNvbG9yOiAkbW9kYWwtY29udGVudC1jb2xvcjtcbiAgcG9pbnRlci1ldmVudHM6IGF1dG87XG4gIGJhY2tncm91bmQtY29sb3I6ICRtb2RhbC1jb250ZW50LWJnO1xuICBiYWNrZ3JvdW5kLWNsaXA6IHBhZGRpbmctYm94O1xuICBib3JkZXI6ICRtb2RhbC1jb250ZW50LWJvcmRlci13aWR0aCBzb2xpZCAkbW9kYWwtY29udGVudC1ib3JkZXItY29sb3I7XG4gIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJG1vZGFsLWNvbnRlbnQtYm9yZGVyLXJhZGl1cyk7XG4gIEBpbmNsdWRlIGJveC1zaGFkb3coJG1vZGFsLWNvbnRlbnQtYm94LXNoYWRvdy14cyk7XG4gIC8vIFJlbW92ZSBmb2N1cyBvdXRsaW5lIGZyb20gb3BlbmVkIG1vZGFsXG4gIG91dGxpbmU6IDA7XG59XG5cbi8vIE1vZGFsIGJhY2tncm91bmRcbi5tb2RhbC1iYWNrZHJvcCB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgdG9wOiAwO1xuICBsZWZ0OiAwO1xuICB6LWluZGV4OiAkemluZGV4LW1vZGFsLWJhY2tkcm9wO1xuICB3aWR0aDogMTAwdnc7XG4gIGhlaWdodDogMTAwdmg7XG4gIGJhY2tncm91bmQtY29sb3I6ICRtb2RhbC1iYWNrZHJvcC1iZztcblxuICAvLyBGYWRlIGZvciBiYWNrZHJvcFxuICAmLmZhZGUgeyBvcGFjaXR5OiAwOyB9XG4gICYuc2hvdyB7IG9wYWNpdHk6ICRtb2RhbC1iYWNrZHJvcC1vcGFjaXR5OyB9XG59XG5cbi8vIE1vZGFsIGhlYWRlclxuLy8gVG9wIHNlY3Rpb24gb2YgdGhlIG1vZGFsIHcvIHRpdGxlIGFuZCBkaXNtaXNzXG4ubW9kYWwtaGVhZGVyIHtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGZsZXgtc3RhcnQ7IC8vIHNvIHRoZSBjbG9zZSBidG4gYWx3YXlzIHN0YXlzIG9uIHRoZSB1cHBlciByaWdodCBjb3JuZXJcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuOyAvLyBQdXQgbW9kYWwgaGVhZGVyIGVsZW1lbnRzICh0aXRsZSBhbmQgZGlzbWlzcykgb24gb3Bwb3NpdGUgZW5kc1xuICBwYWRkaW5nOiAkbW9kYWwtaGVhZGVyLXBhZGRpbmc7XG4gIGJvcmRlci1ib3R0b206ICRtb2RhbC1oZWFkZXItYm9yZGVyLXdpZHRoIHNvbGlkICRtb2RhbC1oZWFkZXItYm9yZGVyLWNvbG9yO1xuICBAaW5jbHVkZSBib3JkZXItdG9wLXJhZGl1cygkbW9kYWwtY29udGVudC1pbm5lci1ib3JkZXItcmFkaXVzKTtcblxuICAuY2xvc2Uge1xuICAgIHBhZGRpbmc6ICRtb2RhbC1oZWFkZXItcGFkZGluZztcbiAgICAvLyBhdXRvIG9uIHRoZSBsZWZ0IGZvcmNlIGljb24gdG8gdGhlIHJpZ2h0IGV2ZW4gd2hlbiB0aGVyZSBpcyBubyAubW9kYWwtdGl0bGVcbiAgICBtYXJnaW46ICgtJG1vZGFsLWhlYWRlci1wYWRkaW5nLXkpICgtJG1vZGFsLWhlYWRlci1wYWRkaW5nLXgpICgtJG1vZGFsLWhlYWRlci1wYWRkaW5nLXkpIGF1dG87XG4gIH1cbn1cblxuLy8gVGl0bGUgdGV4dCB3aXRoaW4gaGVhZGVyXG4ubW9kYWwtdGl0bGUge1xuICBtYXJnaW4tYm90dG9tOiAwO1xuICBsaW5lLWhlaWdodDogJG1vZGFsLXRpdGxlLWxpbmUtaGVpZ2h0O1xufVxuXG4vLyBNb2RhbCBib2R5XG4vLyBXaGVyZSBhbGwgbW9kYWwgY29udGVudCByZXNpZGVzIChzaWJsaW5nIG9mIC5tb2RhbC1oZWFkZXIgYW5kIC5tb2RhbC1mb290ZXIpXG4ubW9kYWwtYm9keSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgLy8gRW5hYmxlIGBmbGV4LWdyb3c6IDFgIHNvIHRoYXQgdGhlIGJvZHkgdGFrZSB1cCBhcyBtdWNoIHNwYWNlIGFzIHBvc3NpYmxlXG4gIC8vIHdoZW4gdGhlcmUgc2hvdWxkIGJlIGEgZml4ZWQgaGVpZ2h0IG9uIGAubW9kYWwtZGlhbG9nYC5cbiAgZmxleDogMSAxIGF1dG87XG4gIHBhZGRpbmc6ICRtb2RhbC1pbm5lci1wYWRkaW5nO1xufVxuXG4vLyBGb290ZXIgKGZvciBhY3Rpb25zKVxuLm1vZGFsLWZvb3RlciB7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtd3JhcDogd3JhcDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjsgLy8gdmVydGljYWxseSBjZW50ZXJcbiAganVzdGlmeS1jb250ZW50OiBmbGV4LWVuZDsgLy8gUmlnaHQgYWxpZ24gYnV0dG9ucyB3aXRoIGZsZXggcHJvcGVydHkgYmVjYXVzZSB0ZXh0LWFsaWduIGRvZXNuJ3Qgd29yayBvbiBmbGV4IGl0ZW1zXG4gIHBhZGRpbmc6ICRtb2RhbC1pbm5lci1wYWRkaW5nIC0gJG1vZGFsLWZvb3Rlci1tYXJnaW4tYmV0d2VlbiAvIDI7XG4gIGJvcmRlci10b3A6ICRtb2RhbC1mb290ZXItYm9yZGVyLXdpZHRoIHNvbGlkICRtb2RhbC1mb290ZXItYm9yZGVyLWNvbG9yO1xuICBAaW5jbHVkZSBib3JkZXItYm90dG9tLXJhZGl1cygkbW9kYWwtY29udGVudC1pbm5lci1ib3JkZXItcmFkaXVzKTtcblxuICAvLyBQbGFjZSBtYXJnaW4gYmV0d2VlbiBmb290ZXIgZWxlbWVudHNcbiAgLy8gVGhpcyBzb2x1dGlvbiBpcyBmYXIgZnJvbSBpZGVhbCBiZWNhdXNlIG9mIHRoZSB1bml2ZXJzYWwgc2VsZWN0b3IgdXNhZ2UsXG4gIC8vIGJ1dCBpcyBuZWVkZWQgdG8gZml4IGh0dHBzOi8vZ2l0aHViLmNvbS90d2JzL2Jvb3RzdHJhcC9pc3N1ZXMvMjQ4MDBcbiAgLy8gc3R5bGVsaW50LWRpc2FibGUtbmV4dC1saW5lIHNlbGVjdG9yLW1heC11bml2ZXJzYWxcbiAgPiAqIHtcbiAgICBtYXJnaW46ICRtb2RhbC1mb290ZXItbWFyZ2luLWJldHdlZW4gLyAyO1xuICB9XG59XG5cbi8vIE1lYXN1cmUgc2Nyb2xsYmFyIHdpZHRoIGZvciBwYWRkaW5nIGJvZHkgZHVyaW5nIG1vZGFsIHNob3cvaGlkZVxuLm1vZGFsLXNjcm9sbGJhci1tZWFzdXJlIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IC05OTk5cHg7XG4gIHdpZHRoOiA1MHB4O1xuICBoZWlnaHQ6IDUwcHg7XG4gIG92ZXJmbG93OiBzY3JvbGw7XG59XG5cbi8vIFNjYWxlIHVwIHRoZSBtb2RhbFxuQGluY2x1ZGUgbWVkaWEtYnJlYWtwb2ludC11cChzbSkge1xuICAvLyBBdXRvbWF0aWNhbGx5IHNldCBtb2RhbCdzIHdpZHRoIGZvciBsYXJnZXIgdmlld3BvcnRzXG4gIC5tb2RhbC1kaWFsb2cge1xuICAgIG1heC13aWR0aDogJG1vZGFsLW1kO1xuICAgIG1hcmdpbjogJG1vZGFsLWRpYWxvZy1tYXJnaW4teS1zbS11cCBhdXRvO1xuICB9XG5cbiAgLm1vZGFsLWRpYWxvZy1zY3JvbGxhYmxlIHtcbiAgICBtYXgtaGVpZ2h0OiBzdWJ0cmFjdCgxMDAlLCAkbW9kYWwtZGlhbG9nLW1hcmdpbi15LXNtLXVwICogMik7XG5cbiAgICAubW9kYWwtY29udGVudCB7XG4gICAgICBtYXgtaGVpZ2h0OiBzdWJ0cmFjdCgxMDB2aCwgJG1vZGFsLWRpYWxvZy1tYXJnaW4teS1zbS11cCAqIDIpO1xuICAgIH1cbiAgfVxuXG4gIC5tb2RhbC1kaWFsb2ctY2VudGVyZWQge1xuICAgIG1pbi1oZWlnaHQ6IHN1YnRyYWN0KDEwMCUsICRtb2RhbC1kaWFsb2ctbWFyZ2luLXktc20tdXAgKiAyKTtcblxuICAgICY6OmJlZm9yZSB7XG4gICAgICBoZWlnaHQ6IHN1YnRyYWN0KDEwMHZoLCAkbW9kYWwtZGlhbG9nLW1hcmdpbi15LXNtLXVwICogMik7XG4gICAgfVxuICB9XG5cbiAgLm1vZGFsLWNvbnRlbnQge1xuICAgIEBpbmNsdWRlIGJveC1zaGFkb3coJG1vZGFsLWNvbnRlbnQtYm94LXNoYWRvdy1zbS11cCk7XG4gIH1cblxuICAubW9kYWwtc20geyBtYXgtd2lkdGg6ICRtb2RhbC1zbTsgfVxufVxuXG5AaW5jbHVkZSBtZWRpYS1icmVha3BvaW50LXVwKGxnKSB7XG4gIC5tb2RhbC1sZyxcbiAgLm1vZGFsLXhsIHtcbiAgICBtYXgtd2lkdGg6ICRtb2RhbC1sZztcbiAgfVxufVxuXG5AaW5jbHVkZSBtZWRpYS1icmVha3BvaW50LXVwKHhsKSB7XG4gIC5tb2RhbC14bCB7IG1heC13aWR0aDogJG1vZGFsLXhsOyB9XG59XG4iXSwiZmlsZSI6Il9tb2RhbC5zY3NzIn0=

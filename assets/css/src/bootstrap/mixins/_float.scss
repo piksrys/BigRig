@@ -1,0 +1,15 @@
+// stylelint-disable declaration-no-important
+
+@mixin float-left() {
+  float: left !important;
+  @include deprecate("The `float-left` mixin", "v4.3.0", "v5");
+}
+@mixin float-right() {
+  float: right !important;
+  @include deprecate("The `float-right` mixin", "v4.3.0", "v5");
+}
+@mixin float-none() {
+  float: none !important;
+  @include deprecate("The `float-none` mixin", "v4.3.0", "v5");
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2Zsb2F0LnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gc3R5bGVsaW50LWRpc2FibGUgZGVjbGFyYXRpb24tbm8taW1wb3J0YW50XG5cbkBtaXhpbiBmbG9hdC1sZWZ0KCkge1xuICBmbG9hdDogbGVmdCAhaW1wb3J0YW50O1xuICBAaW5jbHVkZSBkZXByZWNhdGUoXCJUaGUgYGZsb2F0LWxlZnRgIG1peGluXCIsIFwidjQuMy4wXCIsIFwidjVcIik7XG59XG5AbWl4aW4gZmxvYXQtcmlnaHQoKSB7XG4gIGZsb2F0OiByaWdodCAhaW1wb3J0YW50O1xuICBAaW5jbHVkZSBkZXByZWNhdGUoXCJUaGUgYGZsb2F0LXJpZ2h0YCBtaXhpblwiLCBcInY0LjMuMFwiLCBcInY1XCIpO1xufVxuQG1peGluIGZsb2F0LW5vbmUoKSB7XG4gIGZsb2F0OiBub25lICFpbXBvcnRhbnQ7XG4gIEBpbmNsdWRlIGRlcHJlY2F0ZShcIlRoZSBgZmxvYXQtbm9uZWAgbWl4aW5cIiwgXCJ2NC4zLjBcIiwgXCJ2NVwiKTtcbn1cbiJdLCJmaWxlIjoibWl4aW5zL19mbG9hdC5zY3NzIn0=

@@ -1,0 +1,12 @@
+// Horizontal dividers
+//
+// Dividers (basically an hr) within dropdowns and nav lists
+
+@mixin nav-divider($color: $nav-divider-color, $margin-y: $nav-divider-margin-y, $ignore-warning: false) {
+  height: 0;
+  margin: $margin-y 0;
+  overflow: hidden;
+  border-top: 1px solid $color;
+  @include deprecate("The `nav-divider()` mixin", "v4.4.0", "v5", $ignore-warning);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX25hdi1kaXZpZGVyLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gSG9yaXpvbnRhbCBkaXZpZGVyc1xuLy9cbi8vIERpdmlkZXJzIChiYXNpY2FsbHkgYW4gaHIpIHdpdGhpbiBkcm9wZG93bnMgYW5kIG5hdiBsaXN0c1xuXG5AbWl4aW4gbmF2LWRpdmlkZXIoJGNvbG9yOiAkbmF2LWRpdmlkZXItY29sb3IsICRtYXJnaW4teTogJG5hdi1kaXZpZGVyLW1hcmdpbi15LCAkaWdub3JlLXdhcm5pbmc6IGZhbHNlKSB7XG4gIGhlaWdodDogMDtcbiAgbWFyZ2luOiAkbWFyZ2luLXkgMDtcbiAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgYm9yZGVyLXRvcDogMXB4IHNvbGlkICRjb2xvcjtcbiAgQGluY2x1ZGUgZGVwcmVjYXRlKFwiVGhlIGBuYXYtZGl2aWRlcigpYCBtaXhpblwiLCBcInY0LjQuMFwiLCBcInY1XCIsICRpZ25vcmUtd2FybmluZyk7XG59XG4iXSwiZmlsZSI6Im1peGlucy9fbmF2LWRpdmlkZXIuc2NzcyJ9

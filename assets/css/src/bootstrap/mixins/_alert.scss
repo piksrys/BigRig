@@ -1,0 +1,14 @@
+@mixin alert-variant($background, $border, $color) {
+  color: $color;
+  @include gradient-bg($background);
+  border-color: $border;
+
+  hr {
+    border-top-color: darken($border, 5%);
+  }
+
+  .alert-link {
+    color: darken($color, 10%);
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2FsZXJ0LnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiQG1peGluIGFsZXJ0LXZhcmlhbnQoJGJhY2tncm91bmQsICRib3JkZXIsICRjb2xvcikge1xuICBjb2xvcjogJGNvbG9yO1xuICBAaW5jbHVkZSBncmFkaWVudC1iZygkYmFja2dyb3VuZCk7XG4gIGJvcmRlci1jb2xvcjogJGJvcmRlcjtcblxuICBociB7XG4gICAgYm9yZGVyLXRvcC1jb2xvcjogZGFya2VuKCRib3JkZXIsIDUlKTtcbiAgfVxuXG4gIC5hbGVydC1saW5rIHtcbiAgICBjb2xvcjogZGFya2VuKCRjb2xvciwgMTAlKTtcbiAgfVxufVxuIl0sImZpbGUiOiJtaXhpbnMvX2FsZXJ0LnNjc3MifQ==

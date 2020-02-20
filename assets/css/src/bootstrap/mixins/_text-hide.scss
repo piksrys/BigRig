@@ -1,0 +1,12 @@
+// CSS image replacement
+@mixin text-hide($ignore-warning: false) {
+  // stylelint-disable-next-line font-family-no-missing-generic-family-keyword
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+
+  @include deprecate("`text-hide()`", "v4.1.0", "v5", $ignore-warning);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3RleHQtaGlkZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIENTUyBpbWFnZSByZXBsYWNlbWVudFxuQG1peGluIHRleHQtaGlkZSgkaWdub3JlLXdhcm5pbmc6IGZhbHNlKSB7XG4gIC8vIHN0eWxlbGludC1kaXNhYmxlLW5leHQtbGluZSBmb250LWZhbWlseS1uby1taXNzaW5nLWdlbmVyaWMtZmFtaWx5LWtleXdvcmRcbiAgZm9udDogMC8wIGE7XG4gIGNvbG9yOiB0cmFuc3BhcmVudDtcbiAgdGV4dC1zaGFkb3c6IG5vbmU7XG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuICBib3JkZXI6IDA7XG5cbiAgQGluY2x1ZGUgZGVwcmVjYXRlKFwiYHRleHQtaGlkZSgpYFwiLCBcInY0LjEuMFwiLCBcInY1XCIsICRpZ25vcmUtd2FybmluZyk7XG59XG4iXSwiZmlsZSI6Im1peGlucy9fdGV4dC1oaWRlLnNjc3MifQ==

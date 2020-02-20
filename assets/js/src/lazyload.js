@@ -1,7 +1,6 @@
 /**
  * Lazy-load images script.
- *
- * @link https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/
+ *@link https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/
  */
 document.addEventListener( 'DOMContentLoaded', function() {
 	let lazyImages = [].slice.call( document.querySelectorAll( 'img.lazy' ) );

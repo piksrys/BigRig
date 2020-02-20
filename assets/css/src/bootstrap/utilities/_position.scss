@@ -1,0 +1,33 @@
+// stylelint-disable declaration-no-important
+
+// Common values
+@each $position in $positions {
+  .position-#{$position} { position: $position !important; }
+}
+
+// Shorthand
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+
+.fixed-bottom {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+
+.sticky-top {
+  @supports (position: sticky) {
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX3Bvc2l0aW9uLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gc3R5bGVsaW50LWRpc2FibGUgZGVjbGFyYXRpb24tbm8taW1wb3J0YW50XG5cbi8vIENvbW1vbiB2YWx1ZXNcbkBlYWNoICRwb3NpdGlvbiBpbiAkcG9zaXRpb25zIHtcbiAgLnBvc2l0aW9uLSN7JHBvc2l0aW9ufSB7IHBvc2l0aW9uOiAkcG9zaXRpb24gIWltcG9ydGFudDsgfVxufVxuXG4vLyBTaG9ydGhhbmRcblxuLmZpeGVkLXRvcCB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgdG9wOiAwO1xuICByaWdodDogMDtcbiAgbGVmdDogMDtcbiAgei1pbmRleDogJHppbmRleC1maXhlZDtcbn1cblxuLmZpeGVkLWJvdHRvbSB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgcmlnaHQ6IDA7XG4gIGJvdHRvbTogMDtcbiAgbGVmdDogMDtcbiAgei1pbmRleDogJHppbmRleC1maXhlZDtcbn1cblxuLnN0aWNreS10b3Age1xuICBAc3VwcG9ydHMgKHBvc2l0aW9uOiBzdGlja3kpIHtcbiAgICBwb3NpdGlvbjogc3RpY2t5O1xuICAgIHRvcDogMDtcbiAgICB6LWluZGV4OiAkemluZGV4LXN0aWNreTtcbiAgfVxufVxuIl0sImZpbGUiOiJ1dGlsaXRpZXMvX3Bvc2l0aW9uLnNjc3MifQ==

@@ -1,4 +1,6 @@
 /assets/js/libs/**
+/assets/js/src/libs/bootstrap/**
+/assets/js/src/libs/slick/**
 /node_modules/**
 /vendor/**
 /config/**

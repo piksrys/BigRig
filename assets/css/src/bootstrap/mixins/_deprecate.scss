@@ -1,0 +1,11 @@
+// Deprecate mixin
+//
+// This mixin can be used to deprecate mixins or functions.
+// `$enable-deprecation-messages` is a global variable, `$ignore-warning` is a variable that can be passed to
+// some deprecated mixins to suppress the warning (for example if the mixin is still be used in the current version of Bootstrap)
+@mixin deprecate($name, $deprecate-version, $remove-version, $ignore-warning: false) {
+  @if ($enable-deprecation-messages != false and $ignore-warning != true) {
+    @warn "#{$name} has been deprecated as of #{$deprecate-version}. It will be removed entirely in #{$remove-version}.";
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2RlcHJlY2F0ZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIERlcHJlY2F0ZSBtaXhpblxuLy9cbi8vIFRoaXMgbWl4aW4gY2FuIGJlIHVzZWQgdG8gZGVwcmVjYXRlIG1peGlucyBvciBmdW5jdGlvbnMuXG4vLyBgJGVuYWJsZS1kZXByZWNhdGlvbi1tZXNzYWdlc2AgaXMgYSBnbG9iYWwgdmFyaWFibGUsIGAkaWdub3JlLXdhcm5pbmdgIGlzIGEgdmFyaWFibGUgdGhhdCBjYW4gYmUgcGFzc2VkIHRvXG4vLyBzb21lIGRlcHJlY2F0ZWQgbWl4aW5zIHRvIHN1cHByZXNzIHRoZSB3YXJuaW5nIChmb3IgZXhhbXBsZSBpZiB0aGUgbWl4aW4gaXMgc3RpbGwgYmUgdXNlZCBpbiB0aGUgY3VycmVudCB2ZXJzaW9uIG9mIEJvb3RzdHJhcClcbkBtaXhpbiBkZXByZWNhdGUoJG5hbWUsICRkZXByZWNhdGUtdmVyc2lvbiwgJHJlbW92ZS12ZXJzaW9uLCAkaWdub3JlLXdhcm5pbmc6IGZhbHNlKSB7XG4gIEBpZiAoJGVuYWJsZS1kZXByZWNhdGlvbi1tZXNzYWdlcyAhPSBmYWxzZSBhbmQgJGlnbm9yZS13YXJuaW5nICE9IHRydWUpIHtcbiAgICBAd2FybiBcIiN7JG5hbWV9IGhhcyBiZWVuIGRlcHJlY2F0ZWQgYXMgb2YgI3skZGVwcmVjYXRlLXZlcnNpb259LiBJdCB3aWxsIGJlIHJlbW92ZWQgZW50aXJlbHkgaW4gI3skcmVtb3ZlLXZlcnNpb259LlwiO1xuICB9XG59XG4iXSwiZmlsZSI6Im1peGlucy9fZGVwcmVjYXRlLnNjc3MifQ==

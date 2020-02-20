@@ -1,0 +1,24 @@
+/* Animation Classes and keyframes */
+
+@include media-breakpoint-up(md) {
+  .animate-up {
+    transform: translateY(300px);
+
+    opacity: 0;
+    transition: all 1s ease-out;
+  }
+}
+
+@keyframes bounce-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}

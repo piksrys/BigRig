@@ -1,0 +1,23 @@
+// stylelint-disable declaration-no-important
+
+// Contextual backgrounds
+
+@mixin bg-variant($parent, $color, $ignore-warning: false) {
+  #{$parent} {
+    background-color: $color !important;
+  }
+  a#{$parent},
+  button#{$parent} {
+    @include hover-focus() {
+      background-color: darken($color, 10%) !important;
+    }
+  }
+  @include deprecate("The `bg-variant` mixin", "v4.4.0", "v5", $ignore-warning);
+}
+
+@mixin bg-gradient-variant($parent, $color) {
+  #{$parent} {
+    background: $color linear-gradient(180deg, mix($body-bg, $color, 15%), $color) repeat-x !important;
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2JhY2tncm91bmQtdmFyaWFudC5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIHN0eWxlbGludC1kaXNhYmxlIGRlY2xhcmF0aW9uLW5vLWltcG9ydGFudFxuXG4vLyBDb250ZXh0dWFsIGJhY2tncm91bmRzXG5cbkBtaXhpbiBiZy12YXJpYW50KCRwYXJlbnQsICRjb2xvciwgJGlnbm9yZS13YXJuaW5nOiBmYWxzZSkge1xuICAjeyRwYXJlbnR9IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkY29sb3IgIWltcG9ydGFudDtcbiAgfVxuICBhI3skcGFyZW50fSxcbiAgYnV0dG9uI3skcGFyZW50fSB7XG4gICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBkYXJrZW4oJGNvbG9yLCAxMCUpICFpbXBvcnRhbnQ7XG4gICAgfVxuICB9XG4gIEBpbmNsdWRlIGRlcHJlY2F0ZShcIlRoZSBgYmctdmFyaWFudGAgbWl4aW5cIiwgXCJ2NC40LjBcIiwgXCJ2NVwiLCAkaWdub3JlLXdhcm5pbmcpO1xufVxuXG5AbWl4aW4gYmctZ3JhZGllbnQtdmFyaWFudCgkcGFyZW50LCAkY29sb3IpIHtcbiAgI3skcGFyZW50fSB7XG4gICAgYmFja2dyb3VuZDogJGNvbG9yIGxpbmVhci1ncmFkaWVudCgxODBkZWcsIG1peCgkYm9keS1iZywgJGNvbG9yLCAxNSUpLCAkY29sb3IpIHJlcGVhdC14ICFpbXBvcnRhbnQ7XG4gIH1cbn1cbiJdLCJmaWxlIjoibWl4aW5zL19iYWNrZ3JvdW5kLXZhcmlhbnQuc2NzcyJ9

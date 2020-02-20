@@ -1,0 +1,21 @@
+@mixin box-shadow($shadow...) {
+  @if $enable-shadows {
+    $result: ();
+
+    @if (length($shadow) == 1) {
+      // We can pass `@include box-shadow(none);`
+      $result: $shadow;
+    } @else {
+      // Filter to avoid invalid properties for example `box-shadow: none, 1px 1px black;`
+      @for $i from 1 through length($shadow) {
+        @if nth($shadow, $i) != "none" {
+          $result: append($result, nth($shadow, $i), "comma");
+        }
+      }
+    }
+    @if (length($result) > 0) {
+      box-shadow: $result;
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2JveC1zaGFkb3cuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyJAbWl4aW4gYm94LXNoYWRvdygkc2hhZG93Li4uKSB7XG4gIEBpZiAkZW5hYmxlLXNoYWRvd3Mge1xuICAgICRyZXN1bHQ6ICgpO1xuXG4gICAgQGlmIChsZW5ndGgoJHNoYWRvdykgPT0gMSkge1xuICAgICAgLy8gV2UgY2FuIHBhc3MgYEBpbmNsdWRlIGJveC1zaGFkb3cobm9uZSk7YFxuICAgICAgJHJlc3VsdDogJHNoYWRvdztcbiAgICB9IEBlbHNlIHtcbiAgICAgIC8vIEZpbHRlciB0byBhdm9pZCBpbnZhbGlkIHByb3BlcnRpZXMgZm9yIGV4YW1wbGUgYGJveC1zaGFkb3c6IG5vbmUsIDFweCAxcHggYmxhY2s7YFxuICAgICAgQGZvciAkaSBmcm9tIDEgdGhyb3VnaCBsZW5ndGgoJHNoYWRvdykge1xuICAgICAgICBAaWYgbnRoKCRzaGFkb3csICRpKSAhPSBcIm5vbmVcIiB7XG4gICAgICAgICAgJHJlc3VsdDogYXBwZW5kKCRyZXN1bHQsIG50aCgkc2hhZG93LCAkaSksIFwiY29tbWFcIik7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gICAgQGlmIChsZW5ndGgoJHJlc3VsdCkgPiAwKSB7XG4gICAgICBib3gtc2hhZG93OiAkcmVzdWx0O1xuICAgIH1cbiAgfVxufVxuIl0sImZpbGUiOiJtaXhpbnMvX2JveC1zaGFkb3cuc2NzcyJ9

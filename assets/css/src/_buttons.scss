@@ -1,0 +1,90 @@
+/**************************/
+/********* BUTTONS ********/
+/*************************/
+
+
+
+
+/* All buttons */
+a.bd-btn {
+  padding: 9px 18px !important;
+  border-radius: 3px;
+  transition: all 0.2s ease-out;
+  font-size: 16px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+button.bd-btn,
+li.bd-btn a {
+  @extend a.bd-btn;
+}
+
+/* All buttons - hover */
+a.bd-btn:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.bd-btn:hover, li.bd-btn a:hover {
+  @extend a.bd-btn:hover;
+}
+
+/*  Primary */
+
+a.bd-btn-one {
+  @include btn_one;
+}
+
+button.bd-btn-one,
+li.bd-btn-one a {
+  @extend a.bd-btn-one
+}
+
+a.bd-btn-one:hover {
+  @include btn_one_hover;
+}
+
+button.bd-btn-one:hover,
+li.bd-btn-one a:hover {
+  @extend a.bd-btn-one:hover;
+}
+
+/* Secondary */
+
+a.bd-btn-two {
+  @include btn_two
+}
+
+button.bd-btn-two,
+li.bd-btn-two a {
+  @extend a.bd-btn-two;
+}
+
+a.bd-btn-two:hover {
+  @include btn_two_hover;
+}
+
+button.bd-btn-two:hover,
+li.bd-btn-two a:hover {
+  @extend a.bd-btn-two:hover;
+}
+
+/* Ghost One */
+a.bd-btn-ghost-one {
+  @include btn_ghost;
+}
+
+button.bd-btn-ghost-one,
+li.bd-btn-ghost-one a {
+  @extend a.bd-btn-ghost-one;
+}
+
+a.bd-btn-ghost-one:hover {
+  @include btn_ghost_hover;
+}
+
+button.bd-btn-ghost-one:hover,
+li.bd-btn-ghost-one a:hover {
+  @extend a.bd-btn-ghost-one:hover;
+}

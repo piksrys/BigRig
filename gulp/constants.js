@@ -23,7 +23,7 @@ export const gulpPath = `${ rootPath }/gulp`;
 export const gulpTestPath = `${ rootPath }/gulp/tests`;
 
 // Dev or production
-export const isProd = ( process.env.NODE_ENV === 'production' );
+export const isProd = (process.env.NODE_ENV === 'production');
 
 // get the config
 const config = getThemeConfig();
@@ -36,6 +36,8 @@ export const assetsDir = `${ rootPath }/assets`;
 
 // directory for assets (CSS, JS, images) in production
 export const prodAssetsDir = `${ prodThemePath }/assets`;
+
+export const bootstrapDir = ``;
 
 // PHPCS options
 // export const PHPCSOptions = {
@@ -77,20 +79,50 @@ const paths = {
 		],
 		dest: `${ rootPath }/`,
 	},
+	slick: {
+		styles: {
+			src: [
+				`node_modules/slick-carousel/slick/*.scss`
+			],
+			dest: `${ assetsDir }/css/src/slick/`
+		},
+		scripts: {
+			src: [
+				`node_modules/slick-carousel/slick/slick.js`
+			],
+			dest: `${ assetsDir }/js/src/libs/slick/`
+		}
+	},
+	bootstrap: {
+		styles: {
+			src: [
+				`node_modules/bootstrap/scss/**/*.scss`
+			],
+			dest: `${ assetsDir }/css/src/bootstrap/`
+		},
+		scripts: {
+			src: [
+				`node_modules/bootstrap/js/dist/*.js`
+			],
+			dest: `${ assetsDir }/js/src/libs/bootstrap/`
+		}
+	},
 	styles: {
 		editorSrc: [
-			`${ assetsDir }/css/src/editor/**/*.css`,
+			`${ assetsDir }/css/src/editor/**/*.scss`,
 			// Ignore partial files.
-			`!${ assetsDir }/css/src/**/_*.css`,
+			`!${ assetsDir }/css/src/**/_*.scss`,
 		],
 		editorSrcDir: `${ assetsDir }/css/src/editor`,
 		editorDest: `${ assetsDir }/css/editor`,
 		src: [
-			`${ assetsDir }/css/src/**/*.css`,
+			`${ assetsDir }/css/src/**/*.scss`,
 			// Ignore partial files.
-			`!${ assetsDir }/css/src/**/_*.css`,
+			`!${ assetsDir }/css/src/**/_*.scss`,
+			//ignore boostrap core files. These are compiled independently
+			`!${ assetsDir }/css/src/bootstrap/*.scss`,
 			// Ignore editor source css.
-			`!${ assetsDir }/css/src/editor/**/*.css`,
+			`!${ assetsDir }/css/src/editor/**/*.scss`,
 		],
 		srcDir: `${ assetsDir }/css/src`,
 		dest: `${ assetsDir }/css`,
@@ -107,6 +139,10 @@ const paths = {
 	images: {
 		src: `${ assetsDir }/images/src/**/*.{jpg,JPG,png,svg,gif,GIF}`,
 		dest: `${ assetsDir }/images/`,
+	},
+	fontawesome: {
+		src: [ 'node_modules/@fortawesome/fontawesome-pro/webfonts/*' ],
+		dest: `${ assetsDir }/fonts/fontawesome/`
 	},
 	export: {
 		src: [],

@@ -37,13 +37,14 @@ function initNavToggleSubmenus() {
 	}
 
 	for ( let i = 0; i < navTOGGLE.length; i++ ) {
-		initEachNavToggleSubmenu( navTOGGLE[ i ] );
+		initEachNavToggleSubmenu( navTOGGLE[i] );
 	}
 }
 
 /**
  * Initiate the script to process submenu
  * navigation toggle for a specific navigation menu.
+ *
  * @param {Object} nav Navigation element.
  */
 function initEachNavToggleSubmenu( nav ) {
@@ -59,7 +60,7 @@ function initEachNavToggleSubmenu( nav ) {
 	const dropdownButton = getDropdownButton();
 
 	for ( let i = 0; i < SUBMENUS.length; i++ ) {
-		const parentMenuItem = SUBMENUS[ i ].parentNode;
+		const parentMenuItem = SUBMENUS[i].parentNode;
 		let dropdown = parentMenuItem.querySelector( '.dropdown' );
 
 		// If no dropdown, create one.
@@ -73,7 +74,7 @@ function initEachNavToggleSubmenu( nav ) {
 			dropdown.appendChild( dropdownSymbol );
 
 			// Add before submenu.
-			SUBMENUS[ i ].parentNode.insertBefore( dropdown, SUBMENUS[ i ] );
+			SUBMENUS[i].parentNode.insertBefore( dropdown, SUBMENUS[i] );
 		}
 
 		// Convert dropdown to button.
@@ -99,12 +100,12 @@ function initEachNavToggleSubmenu( nav ) {
 		parentMenuItem.querySelector( 'a' ).addEventListener( 'focus', ( e ) => {
 			const parentMenuItemsToggled = e.target.parentNode.parentNode.querySelectorAll( 'li.menu-item--toggled-on' );
 			for ( let j = 0; j < parentMenuItemsToggled.length; j++ ) {
-				toggleSubMenu( parentMenuItemsToggled[ j ], false );
+				toggleSubMenu( parentMenuItemsToggled[j], false );
 			}
 		} );
 
 		// Handle keyboard accessibility for traversing menu.
-		SUBMENUS[ i ].addEventListener( 'keydown', ( e ) => {
+		SUBMENUS[i].addEventListener( 'keydown', ( e ) => {
 			// These specific selectors help us only select items that are visible.
 			const focusSelector = 'ul.toggle-show > li > a, ul.toggle-show > li > button';
 
@@ -121,7 +122,7 @@ function initEachNavToggleSubmenu( nav ) {
 			}
 		} );
 
-		SUBMENUS[ i ].parentNode.classList.add( 'menu-item--has-toggle' );
+		SUBMENUS[i].parentNode.classList.add( 'menu-item--has-toggle' );
 	}
 }
 
@@ -138,13 +139,14 @@ function initNavToggleSmall() {
 	}
 
 	for ( let i = 0; i < navTOGGLE.length; i++ ) {
-		initEachNavToggleSmall( navTOGGLE[ i ] );
+		initEachNavToggleSmall( navTOGGLE[i] );
 	}
 }
 
 /**
  * Initiate the script to process small
  * navigation toggle for a specific navigation menu.
+ *
  * @param {Object} nav Navigation element.
  */
 function initEachNavToggleSmall( nav ) {
@@ -166,6 +168,7 @@ function initEachNavToggleSmall( nav ) {
 
 /**
  * Toggle submenus open and closed, and tell screen readers what's going on.
+ *
  * @param {Object} parentMenuItem Parent menu element.
  * @param {boolean} forceToggle Force the menu toggle.
  * @return {void}
@@ -176,12 +179,12 @@ function toggleSubMenu( parentMenuItem, forceToggle ) {
 	let parentMenuItemToggled = parentMenuItem.classList.contains( 'menu-item--toggled-on' );
 
 	// Will be true if we want to force the toggle on, false if force toggle close.
-	if ( undefined !== forceToggle && 'boolean' === ( typeof forceToggle ) ) {
+	if ( undefined !== forceToggle && 'boolean' === (typeof forceToggle) ) {
 		parentMenuItemToggled = ! forceToggle;
 	}
 
 	// Toggle aria-expanded status.
-	toggleButton.setAttribute( 'aria-expanded', ( ! parentMenuItemToggled ).toString() );
+	toggleButton.setAttribute( 'aria-expanded', ( ! parentMenuItemToggled).toString() );
 
 	/*
 	 * Steps to handle during toggle:
@@ -197,13 +200,13 @@ function toggleSubMenu( parentMenuItem, forceToggle ) {
 		// Make sure all children are closed.
 		const subMenuItemsToggled = parentMenuItem.querySelectorAll( '.menu-item--toggled-on' );
 		for ( let i = 0; i < subMenuItemsToggled.length; i++ ) {
-			toggleSubMenu( subMenuItemsToggled[ i ], false );
+			toggleSubMenu( subMenuItemsToggled[i], false );
 		}
 	} else {
 		// Make sure siblings are closed.
 		const parentMenuItemsToggled = parentMenuItem.parentNode.querySelectorAll( 'li.menu-item--toggled-on' );
 		for ( let i = 0; i < parentMenuItemsToggled.length; i++ ) {
-			toggleSubMenu( parentMenuItemsToggled[ i ], false );
+			toggleSubMenu( parentMenuItemsToggled[i], false );
 		}
 
 		// Toggle "on" the submenu.
@@ -216,6 +219,7 @@ function toggleSubMenu( parentMenuItem, forceToggle ) {
 /**
  * Returns the dropdown button
  * element needed for the menu.
+ *
  * @return {Object} drop-down button element
  */
 function getDropdownButton() {
@@ -229,6 +233,7 @@ function getDropdownButton() {
 /**
  * Returns true if element is the
  * first focusable element in the container.
+ *
  * @param {Object} container
  * @param {Object} element
  * @param {string} focusSelector
@@ -237,7 +242,7 @@ function getDropdownButton() {
 function isfirstFocusableElement( container, element, focusSelector ) {
 	const focusableElements = container.querySelectorAll( focusSelector );
 	if ( 0 < focusableElements.length ) {
-		return element === focusableElements[ 0 ];
+		return element === focusableElements[0];
 	}
 	return false;
 }
@@ -245,6 +250,7 @@ function isfirstFocusableElement( container, element, focusSelector ) {
 /**
  * Returns true if element is the
  * last focusable element in the container.
+ *
  * @param {Object} container
  * @param {Object} element
  * @param {string} focusSelector
@@ -253,7 +259,7 @@ function isfirstFocusableElement( container, element, focusSelector ) {
 function islastFocusableElement( container, element, focusSelector ) {
 	const focusableElements = container.querySelectorAll( focusSelector );
 	if ( 0 < focusableElements.length ) {
-		return element === focusableElements[ focusableElements.length - 1 ];
+		return element === focusableElements[focusableElements.length - 1];
 	}
 	return false;
 }

@@ -1,0 +1,186 @@
+//
+// Basic Bootstrap table
+//
+
+.table {
+  width: 100%;
+  margin-bottom: $spacer;
+  color: $table-color;
+  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+
+  th,
+  td {
+    padding: $table-cell-padding;
+    vertical-align: top;
+    border-top: $table-border-width solid $table-border-color;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom: (2 * $table-border-width) solid $table-border-color;
+  }
+
+  tbody + tbody {
+    border-top: (2 * $table-border-width) solid $table-border-color;
+  }
+}
+
+
+//
+// Condensed table w/ half padding
+//
+
+.table-sm {
+  th,
+  td {
+    padding: $table-cell-padding-sm;
+  }
+}
+
+
+// Border versions
+//
+// Add or remove borders all around the table and between all the columns.
+
+.table-bordered {
+  border: $table-border-width solid $table-border-color;
+
+  th,
+  td {
+    border: $table-border-width solid $table-border-color;
+  }
+
+  thead {
+    th,
+    td {
+      border-bottom-width: 2 * $table-border-width;
+    }
+  }
+}
+
+.table-borderless {
+  th,
+  td,
+  thead th,
+  tbody + tbody {
+    border: 0;
+  }
+}
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+.table-striped {
+  tbody tr:nth-of-type(#{$table-striped-order}) {
+    background-color: $table-accent-bg;
+  }
+}
+
+
+// Hover effect
+//
+// Placed here since it has to come after the potential zebra striping
+
+.table-hover {
+  tbody tr {
+    @include hover() {
+      color: $table-hover-color;
+      background-color: $table-hover-bg;
+    }
+  }
+}
+
+
+// Table backgrounds
+//
+// Exact selectors below required to override `.table-striped` and prevent
+// inheritance to nested tables.
+
+@each $color, $value in $theme-colors {
+  @include table-row-variant($color, theme-color-level($color, $table-bg-level), theme-color-level($color, $table-border-level));
+}
+
+@include table-row-variant(active, $table-active-bg);
+
+
+// Dark styles
+//
+// Same table markup, but inverted color scheme: dark background and light text.
+
+// stylelint-disable-next-line no-duplicate-selectors
+.table {
+  .thead-dark {
+    th {
+      color: $table-dark-color;
+      background-color: $table-dark-bg;
+      border-color: $table-dark-border-color;
+    }
+  }
+
+  .thead-light {
+    th {
+      color: $table-head-color;
+      background-color: $table-head-bg;
+      border-color: $table-border-color;
+    }
+  }
+}
+
+.table-dark {
+  color: $table-dark-color;
+  background-color: $table-dark-bg;
+
+  th,
+  td,
+  thead th {
+    border-color: $table-dark-border-color;
+  }
+
+  &.table-bordered {
+    border: 0;
+  }
+
+  &.table-striped {
+    tbody tr:nth-of-type(#{$table-striped-order}) {
+      background-color: $table-dark-accent-bg;
+    }
+  }
+
+  &.table-hover {
+    tbody tr {
+      @include hover() {
+        color: $table-dark-hover-color;
+        background-color: $table-dark-hover-bg;
+      }
+    }
+  }
+}
+
+
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
+
+.table-responsive {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        // Prevent double border on horizontal scroll due to use of `display: block;`
+        > .table-bordered {
+          border: 0;
+        }
+      }
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfdGFibGVzLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy9cbi8vIEJhc2ljIEJvb3RzdHJhcCB0YWJsZVxuLy9cblxuLnRhYmxlIHtcbiAgd2lkdGg6IDEwMCU7XG4gIG1hcmdpbi1ib3R0b206ICRzcGFjZXI7XG4gIGNvbG9yOiAkdGFibGUtY29sb3I7XG4gIGJhY2tncm91bmQtY29sb3I6ICR0YWJsZS1iZzsgLy8gUmVzZXQgZm9yIG5lc3Rpbmcgd2l0aGluIHBhcmVudHMgd2l0aCBgYmFja2dyb3VuZC1jb2xvcmAuXG5cbiAgdGgsXG4gIHRkIHtcbiAgICBwYWRkaW5nOiAkdGFibGUtY2VsbC1wYWRkaW5nO1xuICAgIHZlcnRpY2FsLWFsaWduOiB0b3A7XG4gICAgYm9yZGVyLXRvcDogJHRhYmxlLWJvcmRlci13aWR0aCBzb2xpZCAkdGFibGUtYm9yZGVyLWNvbG9yO1xuICB9XG5cbiAgdGhlYWQgdGgge1xuICAgIHZlcnRpY2FsLWFsaWduOiBib3R0b207XG4gICAgYm9yZGVyLWJvdHRvbTogKDIgKiAkdGFibGUtYm9yZGVyLXdpZHRoKSBzb2xpZCAkdGFibGUtYm9yZGVyLWNvbG9yO1xuICB9XG5cbiAgdGJvZHkgKyB0Ym9keSB7XG4gICAgYm9yZGVyLXRvcDogKDIgKiAkdGFibGUtYm9yZGVyLXdpZHRoKSBzb2xpZCAkdGFibGUtYm9yZGVyLWNvbG9yO1xuICB9XG59XG5cblxuLy9cbi8vIENvbmRlbnNlZCB0YWJsZSB3LyBoYWxmIHBhZGRpbmdcbi8vXG5cbi50YWJsZS1zbSB7XG4gIHRoLFxuICB0ZCB7XG4gICAgcGFkZGluZzogJHRhYmxlLWNlbGwtcGFkZGluZy1zbTtcbiAgfVxufVxuXG5cbi8vIEJvcmRlciB2ZXJzaW9uc1xuLy9cbi8vIEFkZCBvciByZW1vdmUgYm9yZGVycyBhbGwgYXJvdW5kIHRoZSB0YWJsZSBhbmQgYmV0d2VlbiBhbGwgdGhlIGNvbHVtbnMuXG5cbi50YWJsZS1ib3JkZXJlZCB7XG4gIGJvcmRlcjogJHRhYmxlLWJvcmRlci13aWR0aCBzb2xpZCAkdGFibGUtYm9yZGVyLWNvbG9yO1xuXG4gIHRoLFxuICB0ZCB7XG4gICAgYm9yZGVyOiAkdGFibGUtYm9yZGVyLXdpZHRoIHNvbGlkICR0YWJsZS1ib3JkZXItY29sb3I7XG4gIH1cblxuICB0aGVhZCB7XG4gICAgdGgsXG4gICAgdGQge1xuICAgICAgYm9yZGVyLWJvdHRvbS13aWR0aDogMiAqICR0YWJsZS1ib3JkZXItd2lkdGg7XG4gICAgfVxuICB9XG59XG5cbi50YWJsZS1ib3JkZXJsZXNzIHtcbiAgdGgsXG4gIHRkLFxuICB0aGVhZCB0aCxcbiAgdGJvZHkgKyB0Ym9keSB7XG4gICAgYm9yZGVyOiAwO1xuICB9XG59XG5cbi8vIFplYnJhLXN0cmlwaW5nXG4vL1xuLy8gRGVmYXVsdCB6ZWJyYS1zdHJpcGUgc3R5bGVzIChhbHRlcm5hdGluZyBncmF5IGFuZCB0cmFuc3BhcmVudCBiYWNrZ3JvdW5kcylcblxuLnRhYmxlLXN0cmlwZWQge1xuICB0Ym9keSB0cjpudGgtb2YtdHlwZSgjeyR0YWJsZS1zdHJpcGVkLW9yZGVyfSkge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICR0YWJsZS1hY2NlbnQtYmc7XG4gIH1cbn1cblxuXG4vLyBIb3ZlciBlZmZlY3Rcbi8vXG4vLyBQbGFjZWQgaGVyZSBzaW5jZSBpdCBoYXMgdG8gY29tZSBhZnRlciB0aGUgcG90ZW50aWFsIHplYnJhIHN0cmlwaW5nXG5cbi50YWJsZS1ob3ZlciB7XG4gIHRib2R5IHRyIHtcbiAgICBAaW5jbHVkZSBob3ZlcigpIHtcbiAgICAgIGNvbG9yOiAkdGFibGUtaG92ZXItY29sb3I7XG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkdGFibGUtaG92ZXItYmc7XG4gICAgfVxuICB9XG59XG5cblxuLy8gVGFibGUgYmFja2dyb3VuZHNcbi8vXG4vLyBFeGFjdCBzZWxlY3RvcnMgYmVsb3cgcmVxdWlyZWQgdG8gb3ZlcnJpZGUgYC50YWJsZS1zdHJpcGVkYCBhbmQgcHJldmVudFxuLy8gaW5oZXJpdGFuY2UgdG8gbmVzdGVkIHRhYmxlcy5cblxuQGVhY2ggJGNvbG9yLCAkdmFsdWUgaW4gJHRoZW1lLWNvbG9ycyB7XG4gIEBpbmNsdWRlIHRhYmxlLXJvdy12YXJpYW50KCRjb2xvciwgdGhlbWUtY29sb3ItbGV2ZWwoJGNvbG9yLCAkdGFibGUtYmctbGV2ZWwpLCB0aGVtZS1jb2xvci1sZXZlbCgkY29sb3IsICR0YWJsZS1ib3JkZXItbGV2ZWwpKTtcbn1cblxuQGluY2x1ZGUgdGFibGUtcm93LXZhcmlhbnQoYWN0aXZlLCAkdGFibGUtYWN0aXZlLWJnKTtcblxuXG4vLyBEYXJrIHN0eWxlc1xuLy9cbi8vIFNhbWUgdGFibGUgbWFya3VwLCBidXQgaW52ZXJ0ZWQgY29sb3Igc2NoZW1lOiBkYXJrIGJhY2tncm91bmQgYW5kIGxpZ2h0IHRleHQuXG5cbi8vIHN0eWxlbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1kdXBsaWNhdGUtc2VsZWN0b3JzXG4udGFibGUge1xuICAudGhlYWQtZGFyayB7XG4gICAgdGgge1xuICAgICAgY29sb3I6ICR0YWJsZS1kYXJrLWNvbG9yO1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogJHRhYmxlLWRhcmstYmc7XG4gICAgICBib3JkZXItY29sb3I6ICR0YWJsZS1kYXJrLWJvcmRlci1jb2xvcjtcbiAgICB9XG4gIH1cblxuICAudGhlYWQtbGlnaHQge1xuICAgIHRoIHtcbiAgICAgIGNvbG9yOiAkdGFibGUtaGVhZC1jb2xvcjtcbiAgICAgIGJhY2tncm91bmQtY29sb3I6ICR0YWJsZS1oZWFkLWJnO1xuICAgICAgYm9yZGVyLWNvbG9yOiAkdGFibGUtYm9yZGVyLWNvbG9yO1xuICAgIH1cbiAgfVxufVxuXG4udGFibGUtZGFyayB7XG4gIGNvbG9yOiAkdGFibGUtZGFyay1jb2xvcjtcbiAgYmFja2dyb3VuZC1jb2xvcjogJHRhYmxlLWRhcmstYmc7XG5cbiAgdGgsXG4gIHRkLFxuICB0aGVhZCB0aCB7XG4gICAgYm9yZGVyLWNvbG9yOiAkdGFibGUtZGFyay1ib3JkZXItY29sb3I7XG4gIH1cblxuICAmLnRhYmxlLWJvcmRlcmVkIHtcbiAgICBib3JkZXI6IDA7XG4gIH1cblxuICAmLnRhYmxlLXN0cmlwZWQge1xuICAgIHRib2R5IHRyOm50aC1vZi10eXBlKCN7JHRhYmxlLXN0cmlwZWQtb3JkZXJ9KSB7XG4gICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkdGFibGUtZGFyay1hY2NlbnQtYmc7XG4gICAgfVxuICB9XG5cbiAgJi50YWJsZS1ob3ZlciB7XG4gICAgdGJvZHkgdHIge1xuICAgICAgQGluY2x1ZGUgaG92ZXIoKSB7XG4gICAgICAgIGNvbG9yOiAkdGFibGUtZGFyay1ob3Zlci1jb2xvcjtcbiAgICAgICAgYmFja2dyb3VuZC1jb2xvcjogJHRhYmxlLWRhcmstaG92ZXItYmc7XG4gICAgICB9XG4gICAgfVxuICB9XG59XG5cblxuLy8gUmVzcG9uc2l2ZSB0YWJsZXNcbi8vXG4vLyBHZW5lcmF0ZSBzZXJpZXMgb2YgYC50YWJsZS1yZXNwb25zaXZlLSpgIGNsYXNzZXMgZm9yIGNvbmZpZ3VyaW5nIHRoZSBzY3JlZW5cbi8vIHNpemUgb2Ygd2hlcmUgeW91ciB0YWJsZSB3aWxsIG92ZXJmbG93LlxuXG4udGFibGUtcmVzcG9uc2l2ZSB7XG4gIEBlYWNoICRicmVha3BvaW50IGluIG1hcC1rZXlzKCRncmlkLWJyZWFrcG9pbnRzKSB7XG4gICAgJG5leHQ6IGJyZWFrcG9pbnQtbmV4dCgkYnJlYWtwb2ludCwgJGdyaWQtYnJlYWtwb2ludHMpO1xuICAgICRpbmZpeDogYnJlYWtwb2ludC1pbmZpeCgkbmV4dCwgJGdyaWQtYnJlYWtwb2ludHMpO1xuXG4gICAgJiN7JGluZml4fSB7XG4gICAgICBAaW5jbHVkZSBtZWRpYS1icmVha3BvaW50LWRvd24oJGJyZWFrcG9pbnQpIHtcbiAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgIHdpZHRoOiAxMDAlO1xuICAgICAgICBvdmVyZmxvdy14OiBhdXRvO1xuICAgICAgICAtd2Via2l0LW92ZXJmbG93LXNjcm9sbGluZzogdG91Y2g7XG5cbiAgICAgICAgLy8gUHJldmVudCBkb3VibGUgYm9yZGVyIG9uIGhvcml6b250YWwgc2Nyb2xsIGR1ZSB0byB1c2Ugb2YgYGRpc3BsYXk6IGJsb2NrO2BcbiAgICAgICAgPiAudGFibGUtYm9yZGVyZWQge1xuICAgICAgICAgIGJvcmRlcjogMDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl0sImZpbGUiOiJfdGFibGVzLnNjc3MifQ==

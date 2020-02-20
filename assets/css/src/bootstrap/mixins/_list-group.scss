@@ -1,0 +1,22 @@
+// List Groups
+
+@mixin list-group-item-variant($state, $background, $color) {
+  .list-group-item-#{$state} {
+    color: $color;
+    background-color: $background;
+
+    &.list-group-item-action {
+      @include hover-focus() {
+        color: $color;
+        background-color: darken($background, 5%);
+      }
+
+      &.active {
+        color: $white;
+        background-color: $color;
+        border-color: $color;
+      }
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2xpc3QtZ3JvdXAuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBMaXN0IEdyb3Vwc1xuXG5AbWl4aW4gbGlzdC1ncm91cC1pdGVtLXZhcmlhbnQoJHN0YXRlLCAkYmFja2dyb3VuZCwgJGNvbG9yKSB7XG4gIC5saXN0LWdyb3VwLWl0ZW0tI3skc3RhdGV9IHtcbiAgICBjb2xvcjogJGNvbG9yO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICRiYWNrZ3JvdW5kO1xuXG4gICAgJi5saXN0LWdyb3VwLWl0ZW0tYWN0aW9uIHtcbiAgICAgIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgICAgICBjb2xvcjogJGNvbG9yO1xuICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiBkYXJrZW4oJGJhY2tncm91bmQsIDUlKTtcbiAgICAgIH1cblxuICAgICAgJi5hY3RpdmUge1xuICAgICAgICBjb2xvcjogJHdoaXRlO1xuICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkY29sb3I7XG4gICAgICAgIGJvcmRlci1jb2xvcjogJGNvbG9yO1xuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl0sImZpbGUiOiJtaXhpbnMvX2xpc3QtZ3JvdXAuc2NzcyJ9

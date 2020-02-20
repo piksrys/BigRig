@@ -1,0 +1,74 @@
+// stylelint-disable declaration-no-important
+
+// Margin and Padding
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $prop, $abbrev in (margin: m, padding: p) {
+      @each $size, $length in $spacers {
+        .#{$abbrev}#{$infix}-#{$size} { #{$prop}: $length !important; }
+        .#{$abbrev}t#{$infix}-#{$size},
+        .#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-top: $length !important;
+        }
+        .#{$abbrev}r#{$infix}-#{$size},
+        .#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-right: $length !important;
+        }
+        .#{$abbrev}b#{$infix}-#{$size},
+        .#{$abbrev}y#{$infix}-#{$size} {
+          #{$prop}-bottom: $length !important;
+        }
+        .#{$abbrev}l#{$infix}-#{$size},
+        .#{$abbrev}x#{$infix}-#{$size} {
+          #{$prop}-left: $length !important;
+        }
+      }
+    }
+
+    // Negative margins (e.g., where `.mb-n1` is negative version of `.mb-1`)
+    @each $size, $length in $spacers {
+      @if $size != 0 {
+        .m#{$infix}-n#{$size} { margin: -$length !important; }
+        .mt#{$infix}-n#{$size},
+        .my#{$infix}-n#{$size} {
+          margin-top: -$length !important;
+        }
+        .mr#{$infix}-n#{$size},
+        .mx#{$infix}-n#{$size} {
+          margin-right: -$length !important;
+        }
+        .mb#{$infix}-n#{$size},
+        .my#{$infix}-n#{$size} {
+          margin-bottom: -$length !important;
+        }
+        .ml#{$infix}-n#{$size},
+        .mx#{$infix}-n#{$size} {
+          margin-left: -$length !important;
+        }
+      }
+    }
+
+    // Some special margin utils
+    .m#{$infix}-auto { margin: auto !important; }
+    .mt#{$infix}-auto,
+    .my#{$infix}-auto {
+      margin-top: auto !important;
+    }
+    .mr#{$infix}-auto,
+    .mx#{$infix}-auto {
+      margin-right: auto !important;
+    }
+    .mb#{$infix}-auto,
+    .my#{$infix}-auto {
+      margin-bottom: auto !important;
+    }
+    .ml#{$infix}-auto,
+    .mx#{$infix}-auto {
+      margin-left: auto !important;
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX3NwYWNpbmcuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuLy8gTWFyZ2luIGFuZCBQYWRkaW5nXG5cbkBlYWNoICRicmVha3BvaW50IGluIG1hcC1rZXlzKCRncmlkLWJyZWFrcG9pbnRzKSB7XG4gIEBpbmNsdWRlIG1lZGlhLWJyZWFrcG9pbnQtdXAoJGJyZWFrcG9pbnQpIHtcbiAgICAkaW5maXg6IGJyZWFrcG9pbnQtaW5maXgoJGJyZWFrcG9pbnQsICRncmlkLWJyZWFrcG9pbnRzKTtcblxuICAgIEBlYWNoICRwcm9wLCAkYWJicmV2IGluIChtYXJnaW46IG0sIHBhZGRpbmc6IHApIHtcbiAgICAgIEBlYWNoICRzaXplLCAkbGVuZ3RoIGluICRzcGFjZXJzIHtcbiAgICAgICAgLiN7JGFiYnJldn0jeyRpbmZpeH0tI3skc2l6ZX0geyAjeyRwcm9wfTogJGxlbmd0aCAhaW1wb3J0YW50OyB9XG4gICAgICAgIC4jeyRhYmJyZXZ9dCN7JGluZml4fS0jeyRzaXplfSxcbiAgICAgICAgLiN7JGFiYnJldn15I3skaW5maXh9LSN7JHNpemV9IHtcbiAgICAgICAgICAjeyRwcm9wfS10b3A6ICRsZW5ndGggIWltcG9ydGFudDtcbiAgICAgICAgfVxuICAgICAgICAuI3skYWJicmV2fXIjeyRpbmZpeH0tI3skc2l6ZX0sXG4gICAgICAgIC4jeyRhYmJyZXZ9eCN7JGluZml4fS0jeyRzaXplfSB7XG4gICAgICAgICAgI3skcHJvcH0tcmlnaHQ6ICRsZW5ndGggIWltcG9ydGFudDtcbiAgICAgICAgfVxuICAgICAgICAuI3skYWJicmV2fWIjeyRpbmZpeH0tI3skc2l6ZX0sXG4gICAgICAgIC4jeyRhYmJyZXZ9eSN7JGluZml4fS0jeyRzaXplfSB7XG4gICAgICAgICAgI3skcHJvcH0tYm90dG9tOiAkbGVuZ3RoICFpbXBvcnRhbnQ7XG4gICAgICAgIH1cbiAgICAgICAgLiN7JGFiYnJldn1sI3skaW5maXh9LSN7JHNpemV9LFxuICAgICAgICAuI3skYWJicmV2fXgjeyRpbmZpeH0tI3skc2l6ZX0ge1xuICAgICAgICAgICN7JHByb3B9LWxlZnQ6ICRsZW5ndGggIWltcG9ydGFudDtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cblxuICAgIC8vIE5lZ2F0aXZlIG1hcmdpbnMgKGUuZy4sIHdoZXJlIGAubWItbjFgIGlzIG5lZ2F0aXZlIHZlcnNpb24gb2YgYC5tYi0xYClcbiAgICBAZWFjaCAkc2l6ZSwgJGxlbmd0aCBpbiAkc3BhY2VycyB7XG4gICAgICBAaWYgJHNpemUgIT0gMCB7XG4gICAgICAgIC5tI3skaW5maXh9LW4jeyRzaXplfSB7IG1hcmdpbjogLSRsZW5ndGggIWltcG9ydGFudDsgfVxuICAgICAgICAubXQjeyRpbmZpeH0tbiN7JHNpemV9LFxuICAgICAgICAubXkjeyRpbmZpeH0tbiN7JHNpemV9IHtcbiAgICAgICAgICBtYXJnaW4tdG9wOiAtJGxlbmd0aCAhaW1wb3J0YW50O1xuICAgICAgICB9XG4gICAgICAgIC5tciN7JGluZml4fS1uI3skc2l6ZX0sXG4gICAgICAgIC5teCN7JGluZml4fS1uI3skc2l6ZX0ge1xuICAgICAgICAgIG1hcmdpbi1yaWdodDogLSRsZW5ndGggIWltcG9ydGFudDtcbiAgICAgICAgfVxuICAgICAgICAubWIjeyRpbmZpeH0tbiN7JHNpemV9LFxuICAgICAgICAubXkjeyRpbmZpeH0tbiN7JHNpemV9IHtcbiAgICAgICAgICBtYXJnaW4tYm90dG9tOiAtJGxlbmd0aCAhaW1wb3J0YW50O1xuICAgICAgICB9XG4gICAgICAgIC5tbCN7JGluZml4fS1uI3skc2l6ZX0sXG4gICAgICAgIC5teCN7JGluZml4fS1uI3skc2l6ZX0ge1xuICAgICAgICAgIG1hcmdpbi1sZWZ0OiAtJGxlbmd0aCAhaW1wb3J0YW50O1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuXG4gICAgLy8gU29tZSBzcGVjaWFsIG1hcmdpbiB1dGlsc1xuICAgIC5tI3skaW5maXh9LWF1dG8geyBtYXJnaW46IGF1dG8gIWltcG9ydGFudDsgfVxuICAgIC5tdCN7JGluZml4fS1hdXRvLFxuICAgIC5teSN7JGluZml4fS1hdXRvIHtcbiAgICAgIG1hcmdpbi10b3A6IGF1dG8gIWltcG9ydGFudDtcbiAgICB9XG4gICAgLm1yI3skaW5maXh9LWF1dG8sXG4gICAgLm14I3skaW5maXh9LWF1dG8ge1xuICAgICAgbWFyZ2luLXJpZ2h0OiBhdXRvICFpbXBvcnRhbnQ7XG4gICAgfVxuICAgIC5tYiN7JGluZml4fS1hdXRvLFxuICAgIC5teSN7JGluZml4fS1hdXRvIHtcbiAgICAgIG1hcmdpbi1ib3R0b206IGF1dG8gIWltcG9ydGFudDtcbiAgICB9XG4gICAgLm1sI3skaW5maXh9LWF1dG8sXG4gICAgLm14I3skaW5maXh9LWF1dG8ge1xuICAgICAgbWFyZ2luLWxlZnQ6IGF1dG8gIWltcG9ydGFudDtcbiAgICB9XG4gIH1cbn1cbiJdLCJmaWxlIjoidXRpbGl0aWVzL19zcGFjaW5nLnNjc3MifQ==

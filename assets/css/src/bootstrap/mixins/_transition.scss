@@ -1,0 +1,17 @@
+// stylelint-disable property-blacklist
+@mixin transition($transition...) {
+  @if $enable-transitions {
+    @if length($transition) == 0 {
+      transition: $transition-base;
+    } @else {
+      transition: $transition;
+    }
+  }
+
+  @if $enable-prefers-reduced-motion-media-query {
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3RyYW5zaXRpb24uc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBwcm9wZXJ0eS1ibGFja2xpc3RcbkBtaXhpbiB0cmFuc2l0aW9uKCR0cmFuc2l0aW9uLi4uKSB7XG4gIEBpZiAkZW5hYmxlLXRyYW5zaXRpb25zIHtcbiAgICBAaWYgbGVuZ3RoKCR0cmFuc2l0aW9uKSA9PSAwIHtcbiAgICAgIHRyYW5zaXRpb246ICR0cmFuc2l0aW9uLWJhc2U7XG4gICAgfSBAZWxzZSB7XG4gICAgICB0cmFuc2l0aW9uOiAkdHJhbnNpdGlvbjtcbiAgICB9XG4gIH1cblxuICBAaWYgJGVuYWJsZS1wcmVmZXJzLXJlZHVjZWQtbW90aW9uLW1lZGlhLXF1ZXJ5IHtcbiAgICBAbWVkaWEgKHByZWZlcnMtcmVkdWNlZC1tb3Rpb246IHJlZHVjZSkge1xuICAgICAgdHJhbnNpdGlvbjogbm9uZTtcbiAgICB9XG4gIH1cbn1cbiJdLCJmaWxlIjoibWl4aW5zL190cmFuc2l0aW9uLnNjc3MifQ==

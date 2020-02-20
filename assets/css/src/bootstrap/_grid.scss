@@ -1,0 +1,70 @@
+// Container widths
+//
+// Set the container width, and override it for fixed navbars in media queries.
+
+@if $enable-grid-classes {
+  // Single container class with breakpoint max-widths
+  .container {
+    @include make-container();
+    @include make-container-max-widths();
+  }
+
+  // 100% wide container at all breakpoints
+  .container-fluid {
+    @include make-container();
+  }
+
+  // Responsive containers that are 100% wide until a breakpoint
+  @each $breakpoint, $container-max-width in $container-max-widths {
+    .container-#{$breakpoint} {
+      @extend .container-fluid;
+    }
+
+    @include media-breakpoint-up($breakpoint, $grid-breakpoints) {
+      %responsive-container-#{$breakpoint} {
+        max-width: $container-max-width;
+      }
+
+      @each $name, $width in $grid-breakpoints {
+        @if ($container-max-width > $width or $breakpoint == $name) {
+          .container#{breakpoint-infix($name, $grid-breakpoints)} {
+            @extend %responsive-container-#{$breakpoint};
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Row
+//
+// Rows contain your columns.
+
+@if $enable-grid-classes {
+  .row {
+    @include make-row();
+  }
+
+  // Remove the negative margin from default .row, then the horizontal padding
+  // from all immediate children columns (to prevent runaway style inheritance).
+  .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+// Columns
+//
+// Common styles for small and large grid columns
+
+@if $enable-grid-classes {
+  @include make-grid-columns();
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfZ3JpZC5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIENvbnRhaW5lciB3aWR0aHNcbi8vXG4vLyBTZXQgdGhlIGNvbnRhaW5lciB3aWR0aCwgYW5kIG92ZXJyaWRlIGl0IGZvciBmaXhlZCBuYXZiYXJzIGluIG1lZGlhIHF1ZXJpZXMuXG5cbkBpZiAkZW5hYmxlLWdyaWQtY2xhc3NlcyB7XG4gIC8vIFNpbmdsZSBjb250YWluZXIgY2xhc3Mgd2l0aCBicmVha3BvaW50IG1heC13aWR0aHNcbiAgLmNvbnRhaW5lciB7XG4gICAgQGluY2x1ZGUgbWFrZS1jb250YWluZXIoKTtcbiAgICBAaW5jbHVkZSBtYWtlLWNvbnRhaW5lci1tYXgtd2lkdGhzKCk7XG4gIH1cblxuICAvLyAxMDAlIHdpZGUgY29udGFpbmVyIGF0IGFsbCBicmVha3BvaW50c1xuICAuY29udGFpbmVyLWZsdWlkIHtcbiAgICBAaW5jbHVkZSBtYWtlLWNvbnRhaW5lcigpO1xuICB9XG5cbiAgLy8gUmVzcG9uc2l2ZSBjb250YWluZXJzIHRoYXQgYXJlIDEwMCUgd2lkZSB1bnRpbCBhIGJyZWFrcG9pbnRcbiAgQGVhY2ggJGJyZWFrcG9pbnQsICRjb250YWluZXItbWF4LXdpZHRoIGluICRjb250YWluZXItbWF4LXdpZHRocyB7XG4gICAgLmNvbnRhaW5lci0jeyRicmVha3BvaW50fSB7XG4gICAgICBAZXh0ZW5kIC5jb250YWluZXItZmx1aWQ7XG4gICAgfVxuXG4gICAgQGluY2x1ZGUgbWVkaWEtYnJlYWtwb2ludC11cCgkYnJlYWtwb2ludCwgJGdyaWQtYnJlYWtwb2ludHMpIHtcbiAgICAgICVyZXNwb25zaXZlLWNvbnRhaW5lci0jeyRicmVha3BvaW50fSB7XG4gICAgICAgIG1heC13aWR0aDogJGNvbnRhaW5lci1tYXgtd2lkdGg7XG4gICAgICB9XG5cbiAgICAgIEBlYWNoICRuYW1lLCAkd2lkdGggaW4gJGdyaWQtYnJlYWtwb2ludHMge1xuICAgICAgICBAaWYgKCRjb250YWluZXItbWF4LXdpZHRoID4gJHdpZHRoIG9yICRicmVha3BvaW50ID09ICRuYW1lKSB7XG4gICAgICAgICAgLmNvbnRhaW5lciN7YnJlYWtwb2ludC1pbmZpeCgkbmFtZSwgJGdyaWQtYnJlYWtwb2ludHMpfSB7XG4gICAgICAgICAgICBAZXh0ZW5kICVyZXNwb25zaXZlLWNvbnRhaW5lci0jeyRicmVha3BvaW50fTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cblxuXG4vLyBSb3dcbi8vXG4vLyBSb3dzIGNvbnRhaW4geW91ciBjb2x1bW5zLlxuXG5AaWYgJGVuYWJsZS1ncmlkLWNsYXNzZXMge1xuICAucm93IHtcbiAgICBAaW5jbHVkZSBtYWtlLXJvdygpO1xuICB9XG5cbiAgLy8gUmVtb3ZlIHRoZSBuZWdhdGl2ZSBtYXJnaW4gZnJvbSBkZWZhdWx0IC5yb3csIHRoZW4gdGhlIGhvcml6b250YWwgcGFkZGluZ1xuICAvLyBmcm9tIGFsbCBpbW1lZGlhdGUgY2hpbGRyZW4gY29sdW1ucyAodG8gcHJldmVudCBydW5hd2F5IHN0eWxlIGluaGVyaXRhbmNlKS5cbiAgLm5vLWd1dHRlcnMge1xuICAgIG1hcmdpbi1yaWdodDogMDtcbiAgICBtYXJnaW4tbGVmdDogMDtcblxuICAgID4gLmNvbCxcbiAgICA+IFtjbGFzcyo9XCJjb2wtXCJdIHtcbiAgICAgIHBhZGRpbmctcmlnaHQ6IDA7XG4gICAgICBwYWRkaW5nLWxlZnQ6IDA7XG4gICAgfVxuICB9XG59XG5cbi8vIENvbHVtbnNcbi8vXG4vLyBDb21tb24gc3R5bGVzIGZvciBzbWFsbCBhbmQgbGFyZ2UgZ3JpZCBjb2x1bW5zXG5cbkBpZiAkZW5hYmxlLWdyaWQtY2xhc3NlcyB7XG4gIEBpbmNsdWRlIG1ha2UtZ3JpZC1jb2x1bW5zKCk7XG59XG4iXSwiZmlsZSI6Il9ncmlkLnNjc3MifQ==

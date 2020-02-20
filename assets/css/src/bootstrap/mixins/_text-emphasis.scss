@@ -1,0 +1,18 @@
+// stylelint-disable declaration-no-important
+
+// Typography
+
+@mixin text-emphasis-variant($parent, $color, $ignore-warning: false) {
+  #{$parent} {
+    color: $color !important;
+  }
+  @if $emphasized-link-hover-darken-percentage != 0 {
+    a#{$parent} {
+      @include hover-focus() {
+        color: darken($color, $emphasized-link-hover-darken-percentage) !important;
+      }
+    }
+  }
+  @include deprecate("`text-emphasis-variant()`", "v4.4.0", "v5", $ignore-warning);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3RleHQtZW1waGFzaXMuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuLy8gVHlwb2dyYXBoeVxuXG5AbWl4aW4gdGV4dC1lbXBoYXNpcy12YXJpYW50KCRwYXJlbnQsICRjb2xvciwgJGlnbm9yZS13YXJuaW5nOiBmYWxzZSkge1xuICAjeyRwYXJlbnR9IHtcbiAgICBjb2xvcjogJGNvbG9yICFpbXBvcnRhbnQ7XG4gIH1cbiAgQGlmICRlbXBoYXNpemVkLWxpbmstaG92ZXItZGFya2VuLXBlcmNlbnRhZ2UgIT0gMCB7XG4gICAgYSN7JHBhcmVudH0ge1xuICAgICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICAgIGNvbG9yOiBkYXJrZW4oJGNvbG9yLCAkZW1waGFzaXplZC1saW5rLWhvdmVyLWRhcmtlbi1wZXJjZW50YWdlKSAhaW1wb3J0YW50O1xuICAgICAgfVxuICAgIH1cbiAgfVxuICBAaW5jbHVkZSBkZXByZWNhdGUoXCJgdGV4dC1lbXBoYXNpcy12YXJpYW50KClgXCIsIFwidjQuNC4wXCIsIFwidjVcIiwgJGlnbm9yZS13YXJuaW5nKTtcbn1cbiJdLCJmaWxlIjoibWl4aW5zL190ZXh0LWVtcGhhc2lzLnNjc3MifQ==

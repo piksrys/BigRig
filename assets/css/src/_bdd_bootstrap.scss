@@ -1,0 +1,16 @@
+// Base level includes grid system, transitions and text classes.
+// Add further elements on an individual basis along with it's dependencies
+
+//@import "bootstrap/mixins/grid";
+@import "bootstrap/mixins/transition";
+@import "bootstrap/mixins/text-truncate";
+@import "bootstrap/mixins/hover";
+@import "bootstrap/mixins/text-emphasis";
+@import "bootstrap/mixins/deprecate";
+@import "bootstrap/mixins/text-hide";
+
+@import "bootstrap/bootstrap-grid";
+
+@import "bootstrap/transitions";
+@import "bootstrap/utilities/text";
+

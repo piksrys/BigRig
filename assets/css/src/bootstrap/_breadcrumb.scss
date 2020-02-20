@@ -1,0 +1,43 @@
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $breadcrumb-padding-y $breadcrumb-padding-x;
+  margin-bottom: $breadcrumb-margin-bottom;
+  @include font-size($breadcrumb-font-size);
+  list-style: none;
+  background-color: $breadcrumb-bg;
+  @include border-radius($breadcrumb-border-radius);
+}
+
+.breadcrumb-item {
+  // The separator between breadcrumbs (by default, a forward-slash: "/")
+  + .breadcrumb-item {
+    padding-left: $breadcrumb-item-padding;
+
+    &::before {
+      display: inline-block; // Suppress underlining of the separator in modern browsers
+      padding-right: $breadcrumb-item-padding;
+      color: $breadcrumb-divider-color;
+      content: escape-svg($breadcrumb-divider);
+    }
+  }
+
+  // IE9-11 hack to properly handle hyperlink underlines for breadcrumbs built
+  // without `<ul>`s. The `::before` pseudo-element generates an element
+  // *within* the .breadcrumb-item and thereby inherits the `text-decoration`.
+  //
+  // To trick IE into suppressing the underline, we give the pseudo-element an
+  // underline and then immediately remove it.
+  + .breadcrumb-item:hover::before {
+    text-decoration: underline;
+  }
+  // stylelint-disable-next-line no-duplicate-selectors
+  + .breadcrumb-item:hover::before {
+    text-decoration: none;
+  }
+
+  &.active {
+    color: $breadcrumb-active-color;
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfYnJlYWRjcnVtYi5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi5icmVhZGNydW1iIHtcbiAgZGlzcGxheTogZmxleDtcbiAgZmxleC13cmFwOiB3cmFwO1xuICBwYWRkaW5nOiAkYnJlYWRjcnVtYi1wYWRkaW5nLXkgJGJyZWFkY3J1bWItcGFkZGluZy14O1xuICBtYXJnaW4tYm90dG9tOiAkYnJlYWRjcnVtYi1tYXJnaW4tYm90dG9tO1xuICBAaW5jbHVkZSBmb250LXNpemUoJGJyZWFkY3J1bWItZm9udC1zaXplKTtcbiAgbGlzdC1zdHlsZTogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogJGJyZWFkY3J1bWItYmc7XG4gIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJGJyZWFkY3J1bWItYm9yZGVyLXJhZGl1cyk7XG59XG5cbi5icmVhZGNydW1iLWl0ZW0ge1xuICAvLyBUaGUgc2VwYXJhdG9yIGJldHdlZW4gYnJlYWRjcnVtYnMgKGJ5IGRlZmF1bHQsIGEgZm9yd2FyZC1zbGFzaDogXCIvXCIpXG4gICsgLmJyZWFkY3J1bWItaXRlbSB7XG4gICAgcGFkZGluZy1sZWZ0OiAkYnJlYWRjcnVtYi1pdGVtLXBhZGRpbmc7XG5cbiAgICAmOjpiZWZvcmUge1xuICAgICAgZGlzcGxheTogaW5saW5lLWJsb2NrOyAvLyBTdXBwcmVzcyB1bmRlcmxpbmluZyBvZiB0aGUgc2VwYXJhdG9yIGluIG1vZGVybiBicm93c2Vyc1xuICAgICAgcGFkZGluZy1yaWdodDogJGJyZWFkY3J1bWItaXRlbS1wYWRkaW5nO1xuICAgICAgY29sb3I6ICRicmVhZGNydW1iLWRpdmlkZXItY29sb3I7XG4gICAgICBjb250ZW50OiBlc2NhcGUtc3ZnKCRicmVhZGNydW1iLWRpdmlkZXIpO1xuICAgIH1cbiAgfVxuXG4gIC8vIElFOS0xMSBoYWNrIHRvIHByb3Blcmx5IGhhbmRsZSBoeXBlcmxpbmsgdW5kZXJsaW5lcyBmb3IgYnJlYWRjcnVtYnMgYnVpbHRcbiAgLy8gd2l0aG91dCBgPHVsPmBzLiBUaGUgYDo6YmVmb3JlYCBwc2V1ZG8tZWxlbWVudCBnZW5lcmF0ZXMgYW4gZWxlbWVudFxuICAvLyAqd2l0aGluKiB0aGUgLmJyZWFkY3J1bWItaXRlbSBhbmQgdGhlcmVieSBpbmhlcml0cyB0aGUgYHRleHQtZGVjb3JhdGlvbmAuXG4gIC8vXG4gIC8vIFRvIHRyaWNrIElFIGludG8gc3VwcHJlc3NpbmcgdGhlIHVuZGVybGluZSwgd2UgZ2l2ZSB0aGUgcHNldWRvLWVsZW1lbnQgYW5cbiAgLy8gdW5kZXJsaW5lIGFuZCB0aGVuIGltbWVkaWF0ZWx5IHJlbW92ZSBpdC5cbiAgKyAuYnJlYWRjcnVtYi1pdGVtOmhvdmVyOjpiZWZvcmUge1xuICAgIHRleHQtZGVjb3JhdGlvbjogdW5kZXJsaW5lO1xuICB9XG4gIC8vIHN0eWxlbGludC1kaXNhYmxlLW5leHQtbGluZSBuby1kdXBsaWNhdGUtc2VsZWN0b3JzXG4gICsgLmJyZWFkY3J1bWItaXRlbTpob3Zlcjo6YmVmb3JlIHtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIH1cblxuICAmLmFjdGl2ZSB7XG4gICAgY29sb3I6ICRicmVhZGNydW1iLWFjdGl2ZS1jb2xvcjtcbiAgfVxufVxuIl0sImZpbGUiOiJfYnJlYWRjcnVtYi5zY3NzIn0=

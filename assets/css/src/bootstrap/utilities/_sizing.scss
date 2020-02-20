@@ -1,0 +1,21 @@
+// stylelint-disable declaration-no-important
+
+// Width and height
+
+@each $prop, $abbrev in (width: w, height: h) {
+  @each $size, $length in $sizes {
+    .#{$abbrev}-#{$size} { #{$prop}: $length !important; }
+  }
+}
+
+.mw-100 { max-width: 100% !important; }
+.mh-100 { max-height: 100% !important; }
+
+// Viewport additional helpers
+
+.min-vw-100 { min-width: 100vw !important; }
+.min-vh-100 { min-height: 100vh !important; }
+
+.vw-100 { width: 100vw !important; }
+.vh-100 { height: 100vh !important; }
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX3NpemluZy5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIHN0eWxlbGludC1kaXNhYmxlIGRlY2xhcmF0aW9uLW5vLWltcG9ydGFudFxuXG4vLyBXaWR0aCBhbmQgaGVpZ2h0XG5cbkBlYWNoICRwcm9wLCAkYWJicmV2IGluICh3aWR0aDogdywgaGVpZ2h0OiBoKSB7XG4gIEBlYWNoICRzaXplLCAkbGVuZ3RoIGluICRzaXplcyB7XG4gICAgLiN7JGFiYnJldn0tI3skc2l6ZX0geyAjeyRwcm9wfTogJGxlbmd0aCAhaW1wb3J0YW50OyB9XG4gIH1cbn1cblxuLm13LTEwMCB7IG1heC13aWR0aDogMTAwJSAhaW1wb3J0YW50OyB9XG4ubWgtMTAwIHsgbWF4LWhlaWdodDogMTAwJSAhaW1wb3J0YW50OyB9XG5cbi8vIFZpZXdwb3J0IGFkZGl0aW9uYWwgaGVscGVyc1xuXG4ubWluLXZ3LTEwMCB7IG1pbi13aWR0aDogMTAwdncgIWltcG9ydGFudDsgfVxuLm1pbi12aC0xMDAgeyBtaW4taGVpZ2h0OiAxMDB2aCAhaW1wb3J0YW50OyB9XG5cbi52dy0xMDAgeyB3aWR0aDogMTAwdncgIWltcG9ydGFudDsgfVxuLnZoLTEwMCB7IGhlaWdodDogMTAwdmggIWltcG9ydGFudDsgfVxuIl0sImZpbGUiOiJ1dGlsaXRpZXMvX3NpemluZy5zY3NzIn0=

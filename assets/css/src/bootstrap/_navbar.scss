@@ -1,0 +1,325 @@
+// Contents
+//
+// Navbar
+// Navbar brand
+// Navbar nav
+// Navbar text
+// Navbar divider
+// Responsive navbar
+// Navbar position
+// Navbar themes
+
+
+// Navbar
+//
+// Provide a static navbar from which we expand to create full-width, fixed, and
+// other navbar variations.
+
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap; // allow us to do the line break for collapsing content
+  align-items: center;
+  justify-content: space-between; // space out brand from logo
+  padding: $navbar-padding-y $navbar-padding-x;
+
+  // Because flex properties aren't inherited, we need to redeclare these first
+  // few properties so that content nested within behave properly.
+  %container-flex-properties {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .container,
+  .container-fluid {
+    @extend %container-flex-properties;
+  }
+
+  @each $breakpoint, $container-max-width in $container-max-widths {
+    > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
+      @extend %container-flex-properties;
+    }
+  }
+}
+
+
+// Navbar brand
+//
+// Used for brand, project, or site names.
+
+.navbar-brand {
+  display: inline-block;
+  padding-top: $navbar-brand-padding-y;
+  padding-bottom: $navbar-brand-padding-y;
+  margin-right: $navbar-padding-x;
+  @include font-size($navbar-brand-font-size);
+  line-height: inherit;
+  white-space: nowrap;
+
+  @include hover-focus() {
+    text-decoration: none;
+  }
+}
+
+
+// Navbar nav
+//
+// Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
+
+.navbar-nav {
+  display: flex;
+  flex-direction: column; // cannot use `inherit` to get the `.navbar`s value
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+
+  .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .dropdown-menu {
+    position: static;
+    float: none;
+  }
+}
+
+
+// Navbar text
+//
+//
+
+.navbar-text {
+  display: inline-block;
+  padding-top: $nav-link-padding-y;
+  padding-bottom: $nav-link-padding-y;
+}
+
+
+// Responsive navbar
+//
+// Custom styles for responsive collapsing and toggling of navbar contents.
+// Powered by the collapse Bootstrap JavaScript plugin.
+
+// When collapsed, prevent the toggleable navbar contents from appearing in
+// the default flexbox row orientation. Requires the use of `flex-wrap: wrap`
+// on the `.navbar` parent.
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  // For always expanded or extra full navbars, ensure content aligns itself
+  // properly vertically. Can be easily overridden with flex utilities.
+  align-items: center;
+}
+
+// Button for toggling the navbar when in its collapsed state
+.navbar-toggler {
+  padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
+  @include font-size($navbar-toggler-font-size);
+  line-height: 1;
+  background-color: transparent; // remove default button style
+  border: $border-width solid transparent; // remove default button style
+  @include border-radius($navbar-toggler-border-radius);
+
+  @include hover-focus() {
+    text-decoration: none;
+  }
+}
+
+// Keep as a separate element so folks can easily override it with another icon
+// or image file as needed.
+.navbar-toggler-icon {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  content: "";
+  background: no-repeat center center;
+  background-size: 100% 100%;
+}
+
+// Generate series of `.navbar-expand-*` responsive classes for configuring
+// where your navbar collapses.
+.navbar-expand {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($next, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+        %container-navbar-expand-#{$breakpoint} {
+          padding-right: 0;
+          padding-left: 0;
+        }
+
+        > .container,
+        > .container-fluid {
+          @extend %container-navbar-expand-#{$breakpoint};
+        }
+
+        @each $size, $container-max-width in $container-max-widths {
+          > .container#{breakpoint-infix($size, $container-max-widths)} {
+            @extend %container-navbar-expand-#{$breakpoint};
+          }
+        }
+      }
+
+      @include media-breakpoint-up($next) {
+        flex-flow: row nowrap;
+        justify-content: flex-start;
+
+        .navbar-nav {
+          flex-direction: row;
+
+          .dropdown-menu {
+            position: absolute;
+          }
+
+          .nav-link {
+            padding-right: $navbar-nav-link-padding-x;
+            padding-left: $navbar-nav-link-padding-x;
+          }
+        }
+
+        // For nesting containers, have to redeclare for alignment purposes
+        %container-nesting-#{$breakpoint} {
+          flex-wrap: nowrap;
+        }
+
+        > .container,
+        > .container-fluid {
+          @extend %container-nesting-#{$breakpoint};
+        }
+
+        @each $size, $container-max-width in $container-max-widths {
+          > .container#{breakpoint-infix($size, $container-max-widths)} {
+            @extend %container-nesting-#{$breakpoint};
+          }
+        }
+
+        .navbar-collapse {
+          display: flex !important; // stylelint-disable-line declaration-no-important
+
+          // Changes flex-bases to auto because of an IE10 bug
+          flex-basis: auto;
+        }
+
+        .navbar-toggler {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+
+// Navbar themes
+//
+// Styles for switching between navbars with light or dark background.
+
+// Dark links against a light background
+.navbar-light {
+  .navbar-brand {
+    color: $navbar-light-brand-color;
+
+    @include hover-focus() {
+      color: $navbar-light-brand-hover-color;
+    }
+  }
+
+  .navbar-nav {
+    .nav-link {
+      color: $navbar-light-color;
+
+      @include hover-focus() {
+        color: $navbar-light-hover-color;
+      }
+
+      &.disabled {
+        color: $navbar-light-disabled-color;
+      }
+    }
+
+    .show > .nav-link,
+    .active > .nav-link,
+    .nav-link.show,
+    .nav-link.active {
+      color: $navbar-light-active-color;
+    }
+  }
+
+  .navbar-toggler {
+    color: $navbar-light-color;
+    border-color: $navbar-light-toggler-border-color;
+  }
+
+  .navbar-toggler-icon {
+    background-image: escape-svg($navbar-light-toggler-icon-bg);
+  }
+
+  .navbar-text {
+    color: $navbar-light-color;
+    a {
+      color: $navbar-light-active-color;
+
+      @include hover-focus() {
+        color: $navbar-light-active-color;
+      }
+    }
+  }
+}
+
+// White links against a dark background
+.navbar-dark {
+  .navbar-brand {
+    color: $navbar-dark-brand-color;
+
+    @include hover-focus() {
+      color: $navbar-dark-brand-hover-color;
+    }
+  }
+
+  .navbar-nav {
+    .nav-link {
+      color: $navbar-dark-color;
+
+      @include hover-focus() {
+        color: $navbar-dark-hover-color;
+      }
+
+      &.disabled {
+        color: $navbar-dark-disabled-color;
+      }
+    }
+
+    .show > .nav-link,
+    .active > .nav-link,
+    .nav-link.show,
+    .nav-link.active {
+      color: $navbar-dark-active-color;
+    }
+  }
+
+  .navbar-toggler {
+    color: $navbar-dark-color;
+    border-color: $navbar-dark-toggler-border-color;
+  }
+
+  .navbar-toggler-icon {
+    background-image: escape-svg($navbar-dark-toggler-icon-bg);
+  }
+
+  .navbar-text {
+    color: $navbar-dark-color;
+    a {
+      color: $navbar-dark-active-color;
+
+      @include hover-focus() {
+        color: $navbar-dark-active-color;
+      }
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfbmF2YmFyLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gQ29udGVudHNcbi8vXG4vLyBOYXZiYXJcbi8vIE5hdmJhciBicmFuZFxuLy8gTmF2YmFyIG5hdlxuLy8gTmF2YmFyIHRleHRcbi8vIE5hdmJhciBkaXZpZGVyXG4vLyBSZXNwb25zaXZlIG5hdmJhclxuLy8gTmF2YmFyIHBvc2l0aW9uXG4vLyBOYXZiYXIgdGhlbWVzXG5cblxuLy8gTmF2YmFyXG4vL1xuLy8gUHJvdmlkZSBhIHN0YXRpYyBuYXZiYXIgZnJvbSB3aGljaCB3ZSBleHBhbmQgdG8gY3JlYXRlIGZ1bGwtd2lkdGgsIGZpeGVkLCBhbmRcbi8vIG90aGVyIG5hdmJhciB2YXJpYXRpb25zLlxuXG4ubmF2YmFyIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LXdyYXA6IHdyYXA7IC8vIGFsbG93IHVzIHRvIGRvIHRoZSBsaW5lIGJyZWFrIGZvciBjb2xsYXBzaW5nIGNvbnRlbnRcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuOyAvLyBzcGFjZSBvdXQgYnJhbmQgZnJvbSBsb2dvXG4gIHBhZGRpbmc6ICRuYXZiYXItcGFkZGluZy15ICRuYXZiYXItcGFkZGluZy14O1xuXG4gIC8vIEJlY2F1c2UgZmxleCBwcm9wZXJ0aWVzIGFyZW4ndCBpbmhlcml0ZWQsIHdlIG5lZWQgdG8gcmVkZWNsYXJlIHRoZXNlIGZpcnN0XG4gIC8vIGZldyBwcm9wZXJ0aWVzIHNvIHRoYXQgY29udGVudCBuZXN0ZWQgd2l0aGluIGJlaGF2ZSBwcm9wZXJseS5cbiAgJWNvbnRhaW5lci1mbGV4LXByb3BlcnRpZXMge1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgZmxleC13cmFwOiB3cmFwO1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG4gICAganVzdGlmeS1jb250ZW50OiBzcGFjZS1iZXR3ZWVuO1xuICB9XG5cbiAgLmNvbnRhaW5lcixcbiAgLmNvbnRhaW5lci1mbHVpZCB7XG4gICAgQGV4dGVuZCAlY29udGFpbmVyLWZsZXgtcHJvcGVydGllcztcbiAgfVxuXG4gIEBlYWNoICRicmVha3BvaW50LCAkY29udGFpbmVyLW1heC13aWR0aCBpbiAkY29udGFpbmVyLW1heC13aWR0aHMge1xuICAgID4gLmNvbnRhaW5lciN7YnJlYWtwb2ludC1pbmZpeCgkYnJlYWtwb2ludCwgJGNvbnRhaW5lci1tYXgtd2lkdGhzKX0ge1xuICAgICAgQGV4dGVuZCAlY29udGFpbmVyLWZsZXgtcHJvcGVydGllcztcbiAgICB9XG4gIH1cbn1cblxuXG4vLyBOYXZiYXIgYnJhbmRcbi8vXG4vLyBVc2VkIGZvciBicmFuZCwgcHJvamVjdCwgb3Igc2l0ZSBuYW1lcy5cblxuLm5hdmJhci1icmFuZCB7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgcGFkZGluZy10b3A6ICRuYXZiYXItYnJhbmQtcGFkZGluZy15O1xuICBwYWRkaW5nLWJvdHRvbTogJG5hdmJhci1icmFuZC1wYWRkaW5nLXk7XG4gIG1hcmdpbi1yaWdodDogJG5hdmJhci1wYWRkaW5nLXg7XG4gIEBpbmNsdWRlIGZvbnQtc2l6ZSgkbmF2YmFyLWJyYW5kLWZvbnQtc2l6ZSk7XG4gIGxpbmUtaGVpZ2h0OiBpbmhlcml0O1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuXG4gIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgfVxufVxuXG5cbi8vIE5hdmJhciBuYXZcbi8vXG4vLyBDdXN0b20gbmF2YmFyIG5hdmlnYXRpb24gKGRvZXNuJ3QgcmVxdWlyZSBgLm5hdmAsIGJ1dCBkb2VzIG1ha2UgdXNlIG9mIGAubmF2LWxpbmtgKS5cblxuLm5hdmJhci1uYXYge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uOyAvLyBjYW5ub3QgdXNlIGBpbmhlcml0YCB0byBnZXQgdGhlIGAubmF2YmFyYHMgdmFsdWVcbiAgcGFkZGluZy1sZWZ0OiAwO1xuICBtYXJnaW4tYm90dG9tOiAwO1xuICBsaXN0LXN0eWxlOiBub25lO1xuXG4gIC5uYXYtbGluayB7XG4gICAgcGFkZGluZy1yaWdodDogMDtcbiAgICBwYWRkaW5nLWxlZnQ6IDA7XG4gIH1cblxuICAuZHJvcGRvd24tbWVudSB7XG4gICAgcG9zaXRpb246IHN0YXRpYztcbiAgICBmbG9hdDogbm9uZTtcbiAgfVxufVxuXG5cbi8vIE5hdmJhciB0ZXh0XG4vL1xuLy9cblxuLm5hdmJhci10ZXh0IHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBwYWRkaW5nLXRvcDogJG5hdi1saW5rLXBhZGRpbmcteTtcbiAgcGFkZGluZy1ib3R0b206ICRuYXYtbGluay1wYWRkaW5nLXk7XG59XG5cblxuLy8gUmVzcG9uc2l2ZSBuYXZiYXJcbi8vXG4vLyBDdXN0b20gc3R5bGVzIGZvciByZXNwb25zaXZlIGNvbGxhcHNpbmcgYW5kIHRvZ2dsaW5nIG9mIG5hdmJhciBjb250ZW50cy5cbi8vIFBvd2VyZWQgYnkgdGhlIGNvbGxhcHNlIEJvb3RzdHJhcCBKYXZhU2NyaXB0IHBsdWdpbi5cblxuLy8gV2hlbiBjb2xsYXBzZWQsIHByZXZlbnQgdGhlIHRvZ2dsZWFibGUgbmF2YmFyIGNvbnRlbnRzIGZyb20gYXBwZWFyaW5nIGluXG4vLyB0aGUgZGVmYXVsdCBmbGV4Ym94IHJvdyBvcmllbnRhdGlvbi4gUmVxdWlyZXMgdGhlIHVzZSBvZiBgZmxleC13cmFwOiB3cmFwYFxuLy8gb24gdGhlIGAubmF2YmFyYCBwYXJlbnQuXG4ubmF2YmFyLWNvbGxhcHNlIHtcbiAgZmxleC1iYXNpczogMTAwJTtcbiAgZmxleC1ncm93OiAxO1xuICAvLyBGb3IgYWx3YXlzIGV4cGFuZGVkIG9yIGV4dHJhIGZ1bGwgbmF2YmFycywgZW5zdXJlIGNvbnRlbnQgYWxpZ25zIGl0c2VsZlxuICAvLyBwcm9wZXJseSB2ZXJ0aWNhbGx5LiBDYW4gYmUgZWFzaWx5IG92ZXJyaWRkZW4gd2l0aCBmbGV4IHV0aWxpdGllcy5cbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbn1cblxuLy8gQnV0dG9uIGZvciB0b2dnbGluZyB0aGUgbmF2YmFyIHdoZW4gaW4gaXRzIGNvbGxhcHNlZCBzdGF0ZVxuLm5hdmJhci10b2dnbGVyIHtcbiAgcGFkZGluZzogJG5hdmJhci10b2dnbGVyLXBhZGRpbmcteSAkbmF2YmFyLXRvZ2dsZXItcGFkZGluZy14O1xuICBAaW5jbHVkZSBmb250LXNpemUoJG5hdmJhci10b2dnbGVyLWZvbnQtc2l6ZSk7XG4gIGxpbmUtaGVpZ2h0OiAxO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDsgLy8gcmVtb3ZlIGRlZmF1bHQgYnV0dG9uIHN0eWxlXG4gIGJvcmRlcjogJGJvcmRlci13aWR0aCBzb2xpZCB0cmFuc3BhcmVudDsgLy8gcmVtb3ZlIGRlZmF1bHQgYnV0dG9uIHN0eWxlXG4gIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJG5hdmJhci10b2dnbGVyLWJvcmRlci1yYWRpdXMpO1xuXG4gIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcbiAgfVxufVxuXG4vLyBLZWVwIGFzIGEgc2VwYXJhdGUgZWxlbWVudCBzbyBmb2xrcyBjYW4gZWFzaWx5IG92ZXJyaWRlIGl0IHdpdGggYW5vdGhlciBpY29uXG4vLyBvciBpbWFnZSBmaWxlIGFzIG5lZWRlZC5cbi5uYXZiYXItdG9nZ2xlci1pY29uIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICB3aWR0aDogMS41ZW07XG4gIGhlaWdodDogMS41ZW07XG4gIHZlcnRpY2FsLWFsaWduOiBtaWRkbGU7XG4gIGNvbnRlbnQ6IFwiXCI7XG4gIGJhY2tncm91bmQ6IG5vLXJlcGVhdCBjZW50ZXIgY2VudGVyO1xuICBiYWNrZ3JvdW5kLXNpemU6IDEwMCUgMTAwJTtcbn1cblxuLy8gR2VuZXJhdGUgc2VyaWVzIG9mIGAubmF2YmFyLWV4cGFuZC0qYCByZXNwb25zaXZlIGNsYXNzZXMgZm9yIGNvbmZpZ3VyaW5nXG4vLyB3aGVyZSB5b3VyIG5hdmJhciBjb2xsYXBzZXMuXG4ubmF2YmFyLWV4cGFuZCB7XG4gIEBlYWNoICRicmVha3BvaW50IGluIG1hcC1rZXlzKCRncmlkLWJyZWFrcG9pbnRzKSB7XG4gICAgJG5leHQ6IGJyZWFrcG9pbnQtbmV4dCgkYnJlYWtwb2ludCwgJGdyaWQtYnJlYWtwb2ludHMpO1xuICAgICRpbmZpeDogYnJlYWtwb2ludC1pbmZpeCgkbmV4dCwgJGdyaWQtYnJlYWtwb2ludHMpO1xuXG4gICAgJiN7JGluZml4fSB7XG4gICAgICBAaW5jbHVkZSBtZWRpYS1icmVha3BvaW50LWRvd24oJGJyZWFrcG9pbnQpIHtcbiAgICAgICAgJWNvbnRhaW5lci1uYXZiYXItZXhwYW5kLSN7JGJyZWFrcG9pbnR9IHtcbiAgICAgICAgICBwYWRkaW5nLXJpZ2h0OiAwO1xuICAgICAgICAgIHBhZGRpbmctbGVmdDogMDtcbiAgICAgICAgfVxuXG4gICAgICAgID4gLmNvbnRhaW5lcixcbiAgICAgICAgPiAuY29udGFpbmVyLWZsdWlkIHtcbiAgICAgICAgICBAZXh0ZW5kICVjb250YWluZXItbmF2YmFyLWV4cGFuZC0jeyRicmVha3BvaW50fTtcbiAgICAgICAgfVxuXG4gICAgICAgIEBlYWNoICRzaXplLCAkY29udGFpbmVyLW1heC13aWR0aCBpbiAkY29udGFpbmVyLW1heC13aWR0aHMge1xuICAgICAgICAgID4gLmNvbnRhaW5lciN7YnJlYWtwb2ludC1pbmZpeCgkc2l6ZSwgJGNvbnRhaW5lci1tYXgtd2lkdGhzKX0ge1xuICAgICAgICAgICAgQGV4dGVuZCAlY29udGFpbmVyLW5hdmJhci1leHBhbmQtI3skYnJlYWtwb2ludH07XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIEBpbmNsdWRlIG1lZGlhLWJyZWFrcG9pbnQtdXAoJG5leHQpIHtcbiAgICAgICAgZmxleC1mbG93OiByb3cgbm93cmFwO1xuICAgICAgICBqdXN0aWZ5LWNvbnRlbnQ6IGZsZXgtc3RhcnQ7XG5cbiAgICAgICAgLm5hdmJhci1uYXYge1xuICAgICAgICAgIGZsZXgtZGlyZWN0aW9uOiByb3c7XG5cbiAgICAgICAgICAuZHJvcGRvd24tbWVudSB7XG4gICAgICAgICAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgICAgICAgfVxuXG4gICAgICAgICAgLm5hdi1saW5rIHtcbiAgICAgICAgICAgIHBhZGRpbmctcmlnaHQ6ICRuYXZiYXItbmF2LWxpbmstcGFkZGluZy14O1xuICAgICAgICAgICAgcGFkZGluZy1sZWZ0OiAkbmF2YmFyLW5hdi1saW5rLXBhZGRpbmcteDtcbiAgICAgICAgICB9XG4gICAgICAgIH1cblxuICAgICAgICAvLyBGb3IgbmVzdGluZyBjb250YWluZXJzLCBoYXZlIHRvIHJlZGVjbGFyZSBmb3IgYWxpZ25tZW50IHB1cnBvc2VzXG4gICAgICAgICVjb250YWluZXItbmVzdGluZy0jeyRicmVha3BvaW50fSB7XG4gICAgICAgICAgZmxleC13cmFwOiBub3dyYXA7XG4gICAgICAgIH1cblxuICAgICAgICA+IC5jb250YWluZXIsXG4gICAgICAgID4gLmNvbnRhaW5lci1mbHVpZCB7XG4gICAgICAgICAgQGV4dGVuZCAlY29udGFpbmVyLW5lc3RpbmctI3skYnJlYWtwb2ludH07XG4gICAgICAgIH1cblxuICAgICAgICBAZWFjaCAkc2l6ZSwgJGNvbnRhaW5lci1tYXgtd2lkdGggaW4gJGNvbnRhaW5lci1tYXgtd2lkdGhzIHtcbiAgICAgICAgICA+IC5jb250YWluZXIje2JyZWFrcG9pbnQtaW5maXgoJHNpemUsICRjb250YWluZXItbWF4LXdpZHRocyl9IHtcbiAgICAgICAgICAgIEBleHRlbmQgJWNvbnRhaW5lci1uZXN0aW5nLSN7JGJyZWFrcG9pbnR9O1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuXG4gICAgICAgIC5uYXZiYXItY29sbGFwc2Uge1xuICAgICAgICAgIGRpc3BsYXk6IGZsZXggIWltcG9ydGFudDsgLy8gc3R5bGVsaW50LWRpc2FibGUtbGluZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuICAgICAgICAgIC8vIENoYW5nZXMgZmxleC1iYXNlcyB0byBhdXRvIGJlY2F1c2Ugb2YgYW4gSUUxMCBidWdcbiAgICAgICAgICBmbGV4LWJhc2lzOiBhdXRvO1xuICAgICAgICB9XG5cbiAgICAgICAgLm5hdmJhci10b2dnbGVyIHtcbiAgICAgICAgICBkaXNwbGF5OiBub25lO1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICB9XG59XG5cblxuLy8gTmF2YmFyIHRoZW1lc1xuLy9cbi8vIFN0eWxlcyBmb3Igc3dpdGNoaW5nIGJldHdlZW4gbmF2YmFycyB3aXRoIGxpZ2h0IG9yIGRhcmsgYmFja2dyb3VuZC5cblxuLy8gRGFyayBsaW5rcyBhZ2FpbnN0IGEgbGlnaHQgYmFja2dyb3VuZFxuLm5hdmJhci1saWdodCB7XG4gIC5uYXZiYXItYnJhbmQge1xuICAgIGNvbG9yOiAkbmF2YmFyLWxpZ2h0LWJyYW5kLWNvbG9yO1xuXG4gICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICBjb2xvcjogJG5hdmJhci1saWdodC1icmFuZC1ob3Zlci1jb2xvcjtcbiAgICB9XG4gIH1cblxuICAubmF2YmFyLW5hdiB7XG4gICAgLm5hdi1saW5rIHtcbiAgICAgIGNvbG9yOiAkbmF2YmFyLWxpZ2h0LWNvbG9yO1xuXG4gICAgICBAaW5jbHVkZSBob3Zlci1mb2N1cygpIHtcbiAgICAgICAgY29sb3I6ICRuYXZiYXItbGlnaHQtaG92ZXItY29sb3I7XG4gICAgICB9XG5cbiAgICAgICYuZGlzYWJsZWQge1xuICAgICAgICBjb2xvcjogJG5hdmJhci1saWdodC1kaXNhYmxlZC1jb2xvcjtcbiAgICAgIH1cbiAgICB9XG5cbiAgICAuc2hvdyA+IC5uYXYtbGluayxcbiAgICAuYWN0aXZlID4gLm5hdi1saW5rLFxuICAgIC5uYXYtbGluay5zaG93LFxuICAgIC5uYXYtbGluay5hY3RpdmUge1xuICAgICAgY29sb3I6ICRuYXZiYXItbGlnaHQtYWN0aXZlLWNvbG9yO1xuICAgIH1cbiAgfVxuXG4gIC5uYXZiYXItdG9nZ2xlciB7XG4gICAgY29sb3I6ICRuYXZiYXItbGlnaHQtY29sb3I7XG4gICAgYm9yZGVyLWNvbG9yOiAkbmF2YmFyLWxpZ2h0LXRvZ2dsZXItYm9yZGVyLWNvbG9yO1xuICB9XG5cbiAgLm5hdmJhci10b2dnbGVyLWljb24ge1xuICAgIGJhY2tncm91bmQtaW1hZ2U6IGVzY2FwZS1zdmcoJG5hdmJhci1saWdodC10b2dnbGVyLWljb24tYmcpO1xuICB9XG5cbiAgLm5hdmJhci10ZXh0IHtcbiAgICBjb2xvcjogJG5hdmJhci1saWdodC1jb2xvcjtcbiAgICBhIHtcbiAgICAgIGNvbG9yOiAkbmF2YmFyLWxpZ2h0LWFjdGl2ZS1jb2xvcjtcblxuICAgICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICAgIGNvbG9yOiAkbmF2YmFyLWxpZ2h0LWFjdGl2ZS1jb2xvcjtcbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cblxuLy8gV2hpdGUgbGlua3MgYWdhaW5zdCBhIGRhcmsgYmFja2dyb3VuZFxuLm5hdmJhci1kYXJrIHtcbiAgLm5hdmJhci1icmFuZCB7XG4gICAgY29sb3I6ICRuYXZiYXItZGFyay1icmFuZC1jb2xvcjtcblxuICAgIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgICAgY29sb3I6ICRuYXZiYXItZGFyay1icmFuZC1ob3Zlci1jb2xvcjtcbiAgICB9XG4gIH1cblxuICAubmF2YmFyLW5hdiB7XG4gICAgLm5hdi1saW5rIHtcbiAgICAgIGNvbG9yOiAkbmF2YmFyLWRhcmstY29sb3I7XG5cbiAgICAgIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgICAgICBjb2xvcjogJG5hdmJhci1kYXJrLWhvdmVyLWNvbG9yO1xuICAgICAgfVxuXG4gICAgICAmLmRpc2FibGVkIHtcbiAgICAgICAgY29sb3I6ICRuYXZiYXItZGFyay1kaXNhYmxlZC1jb2xvcjtcbiAgICAgIH1cbiAgICB9XG5cbiAgICAuc2hvdyA+IC5uYXYtbGluayxcbiAgICAuYWN0aXZlID4gLm5hdi1saW5rLFxuICAgIC5uYXYtbGluay5zaG93LFxuICAgIC5uYXYtbGluay5hY3RpdmUge1xuICAgICAgY29sb3I6ICRuYXZiYXItZGFyay1hY3RpdmUtY29sb3I7XG4gICAgfVxuICB9XG5cbiAgLm5hdmJhci10b2dnbGVyIHtcbiAgICBjb2xvcjogJG5hdmJhci1kYXJrLWNvbG9yO1xuICAgIGJvcmRlci1jb2xvcjogJG5hdmJhci1kYXJrLXRvZ2dsZXItYm9yZGVyLWNvbG9yO1xuICB9XG5cbiAgLm5hdmJhci10b2dnbGVyLWljb24ge1xuICAgIGJhY2tncm91bmQtaW1hZ2U6IGVzY2FwZS1zdmcoJG5hdmJhci1kYXJrLXRvZ2dsZXItaWNvbi1iZyk7XG4gIH1cblxuICAubmF2YmFyLXRleHQge1xuICAgIGNvbG9yOiAkbmF2YmFyLWRhcmstY29sb3I7XG4gICAgYSB7XG4gICAgICBjb2xvcjogJG5hdmJhci1kYXJrLWFjdGl2ZS1jb2xvcjtcblxuICAgICAgQGluY2x1ZGUgaG92ZXItZm9jdXMoKSB7XG4gICAgICAgIGNvbG9yOiAkbmF2YmFyLWRhcmstYWN0aXZlLWNvbG9yO1xuICAgICAgfVxuICAgIH1cbiAgfVxufVxuIl0sImZpbGUiOiJfbmF2YmFyLnNjc3MifQ==

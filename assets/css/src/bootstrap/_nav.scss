@@ -1,0 +1,121 @@
+// Base class
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: $nav-link-padding-y $nav-link-padding-x;
+
+  @include hover-focus() {
+    text-decoration: none;
+  }
+
+  // Disabled state lightens text
+  &.disabled {
+    color: $nav-link-disabled-color;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+//
+// Tabs
+//
+
+.nav-tabs {
+  border-bottom: $nav-tabs-border-width solid $nav-tabs-border-color;
+
+  .nav-item {
+    margin-bottom: -$nav-tabs-border-width;
+  }
+
+  .nav-link {
+    border: $nav-tabs-border-width solid transparent;
+    @include border-top-radius($nav-tabs-border-radius);
+
+    @include hover-focus() {
+      border-color: $nav-tabs-link-hover-border-color;
+    }
+
+    &.disabled {
+      color: $nav-link-disabled-color;
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: $nav-tabs-link-active-color;
+    background-color: $nav-tabs-link-active-bg;
+    border-color: $nav-tabs-link-active-border-color;
+  }
+
+  .dropdown-menu {
+    // Make dropdown border overlap tab border
+    margin-top: -$nav-tabs-border-width;
+    // Remove the top rounded corners here since there is a hard edge above the menu
+    @include border-top-radius(0);
+  }
+}
+
+
+//
+// Pills
+//
+
+.nav-pills {
+  .nav-link {
+    @include border-radius($nav-pills-border-radius);
+  }
+
+  .nav-link.active,
+  .show > .nav-link {
+    color: $nav-pills-link-active-color;
+    background-color: $nav-pills-link-active-bg;
+  }
+}
+
+
+//
+// Justified variants
+//
+
+.nav-fill {
+  .nav-item {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+.nav-justified {
+  .nav-item {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+}
+
+
+// Tabbable tabs
+//
+// Hide tabbable panes to start, show them when `.active`
+
+.tab-content {
+  > .tab-pane {
+    display: none;
+  }
+  > .active {
+    display: block;
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfbmF2LnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gQmFzZSBjbGFzc1xuLy9cbi8vIEtpY2tzdGFydCBhbnkgbmF2aWdhdGlvbiBjb21wb25lbnQgd2l0aCBhIHNldCBvZiBzdHlsZSByZXNldHMuIFdvcmtzIHdpdGhcbi8vIGA8bmF2PmBzLCBgPHVsPmBzIG9yIGA8b2w+YHMuXG5cbi5uYXYge1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LXdyYXA6IHdyYXA7XG4gIHBhZGRpbmctbGVmdDogMDtcbiAgbWFyZ2luLWJvdHRvbTogMDtcbiAgbGlzdC1zdHlsZTogbm9uZTtcbn1cblxuLm5hdi1saW5rIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIHBhZGRpbmc6ICRuYXYtbGluay1wYWRkaW5nLXkgJG5hdi1saW5rLXBhZGRpbmcteDtcblxuICBAaW5jbHVkZSBob3Zlci1mb2N1cygpIHtcbiAgICB0ZXh0LWRlY29yYXRpb246IG5vbmU7XG4gIH1cblxuICAvLyBEaXNhYmxlZCBzdGF0ZSBsaWdodGVucyB0ZXh0XG4gICYuZGlzYWJsZWQge1xuICAgIGNvbG9yOiAkbmF2LWxpbmstZGlzYWJsZWQtY29sb3I7XG4gICAgcG9pbnRlci1ldmVudHM6IG5vbmU7XG4gICAgY3Vyc29yOiBkZWZhdWx0O1xuICB9XG59XG5cbi8vXG4vLyBUYWJzXG4vL1xuXG4ubmF2LXRhYnMge1xuICBib3JkZXItYm90dG9tOiAkbmF2LXRhYnMtYm9yZGVyLXdpZHRoIHNvbGlkICRuYXYtdGFicy1ib3JkZXItY29sb3I7XG5cbiAgLm5hdi1pdGVtIHtcbiAgICBtYXJnaW4tYm90dG9tOiAtJG5hdi10YWJzLWJvcmRlci13aWR0aDtcbiAgfVxuXG4gIC5uYXYtbGluayB7XG4gICAgYm9yZGVyOiAkbmF2LXRhYnMtYm9yZGVyLXdpZHRoIHNvbGlkIHRyYW5zcGFyZW50O1xuICAgIEBpbmNsdWRlIGJvcmRlci10b3AtcmFkaXVzKCRuYXYtdGFicy1ib3JkZXItcmFkaXVzKTtcblxuICAgIEBpbmNsdWRlIGhvdmVyLWZvY3VzKCkge1xuICAgICAgYm9yZGVyLWNvbG9yOiAkbmF2LXRhYnMtbGluay1ob3Zlci1ib3JkZXItY29sb3I7XG4gICAgfVxuXG4gICAgJi5kaXNhYmxlZCB7XG4gICAgICBjb2xvcjogJG5hdi1saW5rLWRpc2FibGVkLWNvbG9yO1xuICAgICAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gICAgICBib3JkZXItY29sb3I6IHRyYW5zcGFyZW50O1xuICAgIH1cbiAgfVxuXG4gIC5uYXYtbGluay5hY3RpdmUsXG4gIC5uYXYtaXRlbS5zaG93IC5uYXYtbGluayB7XG4gICAgY29sb3I6ICRuYXYtdGFicy1saW5rLWFjdGl2ZS1jb2xvcjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkbmF2LXRhYnMtbGluay1hY3RpdmUtYmc7XG4gICAgYm9yZGVyLWNvbG9yOiAkbmF2LXRhYnMtbGluay1hY3RpdmUtYm9yZGVyLWNvbG9yO1xuICB9XG5cbiAgLmRyb3Bkb3duLW1lbnUge1xuICAgIC8vIE1ha2UgZHJvcGRvd24gYm9yZGVyIG92ZXJsYXAgdGFiIGJvcmRlclxuICAgIG1hcmdpbi10b3A6IC0kbmF2LXRhYnMtYm9yZGVyLXdpZHRoO1xuICAgIC8vIFJlbW92ZSB0aGUgdG9wIHJvdW5kZWQgY29ybmVycyBoZXJlIHNpbmNlIHRoZXJlIGlzIGEgaGFyZCBlZGdlIGFib3ZlIHRoZSBtZW51XG4gICAgQGluY2x1ZGUgYm9yZGVyLXRvcC1yYWRpdXMoMCk7XG4gIH1cbn1cblxuXG4vL1xuLy8gUGlsbHNcbi8vXG5cbi5uYXYtcGlsbHMge1xuICAubmF2LWxpbmsge1xuICAgIEBpbmNsdWRlIGJvcmRlci1yYWRpdXMoJG5hdi1waWxscy1ib3JkZXItcmFkaXVzKTtcbiAgfVxuXG4gIC5uYXYtbGluay5hY3RpdmUsXG4gIC5zaG93ID4gLm5hdi1saW5rIHtcbiAgICBjb2xvcjogJG5hdi1waWxscy1saW5rLWFjdGl2ZS1jb2xvcjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkbmF2LXBpbGxzLWxpbmstYWN0aXZlLWJnO1xuICB9XG59XG5cblxuLy9cbi8vIEp1c3RpZmllZCB2YXJpYW50c1xuLy9cblxuLm5hdi1maWxsIHtcbiAgLm5hdi1pdGVtIHtcbiAgICBmbGV4OiAxIDEgYXV0bztcbiAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gIH1cbn1cblxuLm5hdi1qdXN0aWZpZWQge1xuICAubmF2LWl0ZW0ge1xuICAgIGZsZXgtYmFzaXM6IDA7XG4gICAgZmxleC1ncm93OiAxO1xuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgfVxufVxuXG5cbi8vIFRhYmJhYmxlIHRhYnNcbi8vXG4vLyBIaWRlIHRhYmJhYmxlIHBhbmVzIHRvIHN0YXJ0LCBzaG93IHRoZW0gd2hlbiBgLmFjdGl2ZWBcblxuLnRhYi1jb250ZW50IHtcbiAgPiAudGFiLXBhbmUge1xuICAgIGRpc3BsYXk6IG5vbmU7XG4gIH1cbiAgPiAuYWN0aXZlIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgfVxufVxuIl0sImZpbGUiOiJfbmF2LnNjc3MifQ==

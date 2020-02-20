@@ -1,0 +1,30 @@
+$off_black: #333;
+$grey: #a;
+$light_grey: #f5f5f5;
+$blue: blue;
+$green: green;
+
+$primary_theme_colour: $blue;
+$secondary_theme_colour: $green;
+
+
+$global_font_colour: $off_black;
+$global_font_family: "Crimson Text", serif;
+$heading_font_family: "Roboto Condensed", "Helvetica Neue", "Arial Narrow", sans-serif;
+$global_font_size: 16px;
+$global_font_size_mobile: 14;
+$global_font_units_mobile: px;
+$global_line_height: 1.5;
+
+$color_link: $secondary_theme_colour;
+$color_link_visited: darken($secondary_theme_colour, 20%);
+$color_link_active: lighten($secondary_theme_colour, 30%);
+
+$color_quote_border: #000;
+$color_quote_citation: #6c7781;
+
+/* Custom editor font sizes */
+$font_size_small: calc(16 / #{$global_font_size} * 1rem);
+$font_size_regular: calc(#{$global_font_size} / 16 * 1rem);
+$font_size_large: calc(36 / #{$global_font_size} * 1rem);
+$font_size_larger: calc(48 / #{$global_font_size} * 1rem);

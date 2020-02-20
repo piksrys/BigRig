@@ -1,0 +1,7 @@
+// Resize anything
+
+@mixin resizable($direction) {
+  overflow: auto; // Per CSS3 UI, `resize` only applies when `overflow` isn't `visible`
+  resize: $direction; // Options: horizontal, vertical, both
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX3Jlc2l6ZS5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIFJlc2l6ZSBhbnl0aGluZ1xuXG5AbWl4aW4gcmVzaXphYmxlKCRkaXJlY3Rpb24pIHtcbiAgb3ZlcmZsb3c6IGF1dG87IC8vIFBlciBDU1MzIFVJLCBgcmVzaXplYCBvbmx5IGFwcGxpZXMgd2hlbiBgb3ZlcmZsb3dgIGlzbid0IGB2aXNpYmxlYFxuICByZXNpemU6ICRkaXJlY3Rpb247IC8vIE9wdGlvbnM6IGhvcml6b250YWwsIHZlcnRpY2FsLCBib3RoXG59XG4iXSwiZmlsZSI6Im1peGlucy9fcmVzaXplLnNjc3MifQ==

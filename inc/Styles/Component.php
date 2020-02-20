@@ -64,7 +64,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 *
 	 * @return string Component slug.
 	 */
-	public function get_slug() : string {
+	public function get_slug(): string {
 		return 'styles';
 	}
 
@@ -85,7 +85,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 *               a callable or an array with key 'callable'. This approach is used to reserve the possibility of
 	 *               adding support for further arguments in the future.
 	 */
-	public function template_tags() : array {
+	public function template_tags(): array {
 		return [
 			'print_styles' => [ $this, 'print_styles' ],
 		];
@@ -191,11 +191,12 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	/**
 	 * Adds preconnect resource hint for Google Fonts.
 	 *
-	 * @param array  $urls          URLs to print for resource hints.
+	 * @param array $urls URLs to print for resource hints.
 	 * @param string $relation_type The relation type the URLs are printed.
+	 *
 	 * @return array URLs to print for resource hints.
 	 */
-	public function filter_resource_hints( array $urls, string $relation_type ) : array {
+	public function filter_resource_hints( array $urls, string $relation_type ): array {
 		if ( 'preconnect' === $relation_type && wp_style_is( 'wp-rig-fonts', 'queue' ) ) {
 			$urls[] = [
 				'href' => 'https://fonts.gstatic.com',
@@ -228,12 +229,13 @@ class Component implements Component_Interface, Templating_Component_Interface {
 		$css_files = $this->get_css_files();
 		$handles   = array_filter(
 			$handles,
-			function( $handle ) use ( $css_files ) {
+			function ( $handle ) use ( $css_files ) {
 				$is_valid = isset( $css_files[ $handle ] ) && ! $css_files[ $handle ]['global'];
 				if ( ! $is_valid ) {
 					/* translators: %s: stylesheet handle */
 					_doing_it_wrong( __CLASS__ . '::print_styles()', esc_html( sprintf( __( 'Invalid theme stylesheet handle: %s', 'wp-rig' ), $handle ) ), 'WP Rig 2.0.0' );
 				}
+
 				return $is_valid;
 			}
 		);
@@ -271,45 +273,61 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 *
 	 * @return array Associative array of $handle => $data pairs.
 	 */
-	protected function get_css_files() : array {
+	protected function get_css_files(): array {
 		if ( is_array( $this->css_files ) ) {
 			return $this->css_files;
 		}
 
 		$css_files = [
-			'wp-rig-global'     => [
+			'wp-rig-global'      => [
 				'file'   => 'global.min.css',
 				'global' => true,
 			],
-			'wp-rig-comments'   => [
+			'wp-rig-comments'    => [
 				'file'             => 'comments.min.css',
-				'preload_callback' => function() {
+				'preload_callback' => function () {
 					return ! post_password_required() && is_singular() && ( comments_open() || get_comments_number() );
 				},
 			],
-			'wp-rig-content'    => [
-				'file'             => 'content.min.css',
-				'preload_callback' => '__return_true',
-			],
-			'wp-rig-sidebar'    => [
+			'wp-rig-sidebar'     => [
 				'file'             => 'sidebar.min.css',
-				'preload_callback' => function() {
+				'preload_callback' => function () {
 					return wp_rig()->is_primary_sidebar_active();
 				},
 			],
-			'wp-rig-widgets'    => [
+			'wp-rig-widgets'     => [
 				'file'             => 'widgets.min.css',
-				'preload_callback' => function() {
+				'preload_callback' => function () {
 					return wp_rig()->is_primary_sidebar_active();
 				},
 			],
-			'wp-rig-front-page' => [
-				'file' => 'front-page.min.css',
-				'preload_callback' => function() {
+			'wp-rig-forms'       => [
+				'file'             => 'gforms.min.css',
+				'preload_callback' => function () {
+					return ( is_plugin_active( 'gravityforms/gravityforms.php' ) || class_exists( 'GForms' ) );
+				},
+			],
+			'wp-rig-slick'       => [
+				'file'             => 'slick/slick.min.css',
+				'preload_callback' => function () {
+					return wp_rig()->slick_slider_active();
+				},
+			],
+			'wp-rig-slick-theme' => [
+				'file'             => 'slick/slick-theme.min.css',
+				'preload_callback' => function () {
+					return ( wp_rig()->slick_slider_active() && wp_rig()->using_slick_theme_styles() );
+				},
+			],
+			'wp-rig-front-page'  => [
+				'file'             => 'front-page.min.css',
+				'preload_callback' => function () {
 					global $template;
+
 					return 'front-page.php' === basename( $template );
 				},
 			],
+
 		];
 
 		/**
@@ -351,7 +369,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 *
 	 * @return array Associative array of $font_name => $font_variants pairs.
 	 */
-	protected function get_google_fonts() : array {
+	protected function get_google_fonts(): array {
 		if ( is_array( $this->google_fonts ) ) {
 			return $this->google_fonts;
 		}
@@ -378,7 +396,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 *
 	 * @return string Google Fonts URL, or empty string if no Google Fonts should be used.
 	 */
-	protected function get_google_fonts_url() : string {
+	protected function get_google_fonts_url(): string {
 		$google_fonts = $this->get_google_fonts();
 
 		if ( empty( $google_fonts ) ) {

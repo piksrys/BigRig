@@ -1,0 +1,111 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+@mixin button-variant($background, $border, $hover-background: darken($background, 7.5%), $hover-border: darken($border, 10%), $active-background: darken($background, 10%), $active-border: darken($border, 12.5%)) {
+  color: color-yiq($background);
+  @include gradient-bg($background);
+  border-color: $border;
+  @include box-shadow($btn-box-shadow);
+
+  @include hover() {
+    color: color-yiq($hover-background);
+    @include gradient-bg($hover-background);
+    border-color: $hover-border;
+  }
+
+  &:focus,
+  &.focus {
+    color: color-yiq($hover-background);
+    @include gradient-bg($hover-background);
+    border-color: $hover-border;
+    // Avoid using mixin so we can pass custom focus shadow properly
+    @if $enable-shadows {
+      box-shadow: $btn-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5);
+    } @else {
+      box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5);
+    }
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    color: color-yiq($background);
+    background-color: $background;
+    border-color: $border;
+    // Remove CSS gradients if they're enabled
+    @if $enable-gradients {
+      background-image: none;
+    }
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    color: color-yiq($active-background);
+    background-color: $active-background;
+    @if $enable-gradients {
+      background-image: none; // Remove the gradient for the pressed/active state
+    }
+    border-color: $active-border;
+
+    &:focus {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      @if $enable-shadows and $btn-active-box-shadow != none {
+        box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5);
+      } @else {
+        box-shadow: 0 0 0 $btn-focus-width rgba(mix(color-yiq($background), $border, 15%), .5);
+      }
+    }
+  }
+}
+
+@mixin button-outline-variant($color, $color-hover: color-yiq($color), $active-background: $color, $active-border: $color) {
+  color: $color;
+  border-color: $color;
+
+  @include hover() {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+
+  &:focus,
+  &.focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $color;
+    background-color: transparent;
+  }
+
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle {
+    color: color-yiq($active-background);
+    background-color: $active-background;
+    border-color: $active-border;
+
+    &:focus {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      @if $enable-shadows and $btn-active-box-shadow != none {
+        box-shadow: $btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($color, .5);
+      } @else {
+        box-shadow: 0 0 0 $btn-focus-width rgba($color, .5);
+      }
+    }
+  }
+}
+
+// Button sizes
+@mixin button-size($padding-y, $padding-x, $font-size, $line-height, $border-radius) {
+  padding: $padding-y $padding-x;
+  @include font-size($font-size);
+  line-height: $line-height;
+  // Manually declare to provide an override to the browser default
+  @include border-radius($border-radius, 0);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2J1dHRvbnMuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBCdXR0b24gdmFyaWFudHNcbi8vXG4vLyBFYXNpbHkgcHVtcCBvdXQgZGVmYXVsdCBzdHlsZXMsIGFzIHdlbGwgYXMgOmhvdmVyLCA6Zm9jdXMsIDphY3RpdmUsXG4vLyBhbmQgZGlzYWJsZWQgb3B0aW9ucyBmb3IgYWxsIGJ1dHRvbnNcblxuQG1peGluIGJ1dHRvbi12YXJpYW50KCRiYWNrZ3JvdW5kLCAkYm9yZGVyLCAkaG92ZXItYmFja2dyb3VuZDogZGFya2VuKCRiYWNrZ3JvdW5kLCA3LjUlKSwgJGhvdmVyLWJvcmRlcjogZGFya2VuKCRib3JkZXIsIDEwJSksICRhY3RpdmUtYmFja2dyb3VuZDogZGFya2VuKCRiYWNrZ3JvdW5kLCAxMCUpLCAkYWN0aXZlLWJvcmRlcjogZGFya2VuKCRib3JkZXIsIDEyLjUlKSkge1xuICBjb2xvcjogY29sb3IteWlxKCRiYWNrZ3JvdW5kKTtcbiAgQGluY2x1ZGUgZ3JhZGllbnQtYmcoJGJhY2tncm91bmQpO1xuICBib3JkZXItY29sb3I6ICRib3JkZXI7XG4gIEBpbmNsdWRlIGJveC1zaGFkb3coJGJ0bi1ib3gtc2hhZG93KTtcblxuICBAaW5jbHVkZSBob3ZlcigpIHtcbiAgICBjb2xvcjogY29sb3IteWlxKCRob3Zlci1iYWNrZ3JvdW5kKTtcbiAgICBAaW5jbHVkZSBncmFkaWVudC1iZygkaG92ZXItYmFja2dyb3VuZCk7XG4gICAgYm9yZGVyLWNvbG9yOiAkaG92ZXItYm9yZGVyO1xuICB9XG5cbiAgJjpmb2N1cyxcbiAgJi5mb2N1cyB7XG4gICAgY29sb3I6IGNvbG9yLXlpcSgkaG92ZXItYmFja2dyb3VuZCk7XG4gICAgQGluY2x1ZGUgZ3JhZGllbnQtYmcoJGhvdmVyLWJhY2tncm91bmQpO1xuICAgIGJvcmRlci1jb2xvcjogJGhvdmVyLWJvcmRlcjtcbiAgICAvLyBBdm9pZCB1c2luZyBtaXhpbiBzbyB3ZSBjYW4gcGFzcyBjdXN0b20gZm9jdXMgc2hhZG93IHByb3Blcmx5XG4gICAgQGlmICRlbmFibGUtc2hhZG93cyB7XG4gICAgICBib3gtc2hhZG93OiAkYnRuLWJveC1zaGFkb3csIDAgMCAwICRidG4tZm9jdXMtd2lkdGggcmdiYShtaXgoY29sb3IteWlxKCRiYWNrZ3JvdW5kKSwgJGJvcmRlciwgMTUlKSwgLjUpO1xuICAgIH0gQGVsc2Uge1xuICAgICAgYm94LXNoYWRvdzogMCAwIDAgJGJ0bi1mb2N1cy13aWR0aCByZ2JhKG1peChjb2xvci15aXEoJGJhY2tncm91bmQpLCAkYm9yZGVyLCAxNSUpLCAuNSk7XG4gICAgfVxuICB9XG5cbiAgLy8gRGlzYWJsZWQgY29tZXMgZmlyc3Qgc28gYWN0aXZlIGNhbiBwcm9wZXJseSByZXN0eWxlXG4gICYuZGlzYWJsZWQsXG4gICY6ZGlzYWJsZWQge1xuICAgIGNvbG9yOiBjb2xvci15aXEoJGJhY2tncm91bmQpO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICRiYWNrZ3JvdW5kO1xuICAgIGJvcmRlci1jb2xvcjogJGJvcmRlcjtcbiAgICAvLyBSZW1vdmUgQ1NTIGdyYWRpZW50cyBpZiB0aGV5J3JlIGVuYWJsZWRcbiAgICBAaWYgJGVuYWJsZS1ncmFkaWVudHMge1xuICAgICAgYmFja2dyb3VuZC1pbWFnZTogbm9uZTtcbiAgICB9XG4gIH1cblxuICAmOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpOmFjdGl2ZSxcbiAgJjpub3QoOmRpc2FibGVkKTpub3QoLmRpc2FibGVkKS5hY3RpdmUsXG4gIC5zaG93ID4gJi5kcm9wZG93bi10b2dnbGUge1xuICAgIGNvbG9yOiBjb2xvci15aXEoJGFjdGl2ZS1iYWNrZ3JvdW5kKTtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkYWN0aXZlLWJhY2tncm91bmQ7XG4gICAgQGlmICRlbmFibGUtZ3JhZGllbnRzIHtcbiAgICAgIGJhY2tncm91bmQtaW1hZ2U6IG5vbmU7IC8vIFJlbW92ZSB0aGUgZ3JhZGllbnQgZm9yIHRoZSBwcmVzc2VkL2FjdGl2ZSBzdGF0ZVxuICAgIH1cbiAgICBib3JkZXItY29sb3I6ICRhY3RpdmUtYm9yZGVyO1xuXG4gICAgJjpmb2N1cyB7XG4gICAgICAvLyBBdm9pZCB1c2luZyBtaXhpbiBzbyB3ZSBjYW4gcGFzcyBjdXN0b20gZm9jdXMgc2hhZG93IHByb3Blcmx5XG4gICAgICBAaWYgJGVuYWJsZS1zaGFkb3dzIGFuZCAkYnRuLWFjdGl2ZS1ib3gtc2hhZG93ICE9IG5vbmUge1xuICAgICAgICBib3gtc2hhZG93OiAkYnRuLWFjdGl2ZS1ib3gtc2hhZG93LCAwIDAgMCAkYnRuLWZvY3VzLXdpZHRoIHJnYmEobWl4KGNvbG9yLXlpcSgkYmFja2dyb3VuZCksICRib3JkZXIsIDE1JSksIC41KTtcbiAgICAgIH0gQGVsc2Uge1xuICAgICAgICBib3gtc2hhZG93OiAwIDAgMCAkYnRuLWZvY3VzLXdpZHRoIHJnYmEobWl4KGNvbG9yLXlpcSgkYmFja2dyb3VuZCksICRib3JkZXIsIDE1JSksIC41KTtcbiAgICAgIH1cbiAgICB9XG4gIH1cbn1cblxuQG1peGluIGJ1dHRvbi1vdXRsaW5lLXZhcmlhbnQoJGNvbG9yLCAkY29sb3ItaG92ZXI6IGNvbG9yLXlpcSgkY29sb3IpLCAkYWN0aXZlLWJhY2tncm91bmQ6ICRjb2xvciwgJGFjdGl2ZS1ib3JkZXI6ICRjb2xvcikge1xuICBjb2xvcjogJGNvbG9yO1xuICBib3JkZXItY29sb3I6ICRjb2xvcjtcblxuICBAaW5jbHVkZSBob3ZlcigpIHtcbiAgICBjb2xvcjogJGNvbG9yLWhvdmVyO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICRhY3RpdmUtYmFja2dyb3VuZDtcbiAgICBib3JkZXItY29sb3I6ICRhY3RpdmUtYm9yZGVyO1xuICB9XG5cbiAgJjpmb2N1cyxcbiAgJi5mb2N1cyB7XG4gICAgYm94LXNoYWRvdzogMCAwIDAgJGJ0bi1mb2N1cy13aWR0aCByZ2JhKCRjb2xvciwgLjUpO1xuICB9XG5cbiAgJi5kaXNhYmxlZCxcbiAgJjpkaXNhYmxlZCB7XG4gICAgY29sb3I6ICRjb2xvcjtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgfVxuXG4gICY6bm90KDpkaXNhYmxlZCk6bm90KC5kaXNhYmxlZCk6YWN0aXZlLFxuICAmOm5vdCg6ZGlzYWJsZWQpOm5vdCguZGlzYWJsZWQpLmFjdGl2ZSxcbiAgLnNob3cgPiAmLmRyb3Bkb3duLXRvZ2dsZSB7XG4gICAgY29sb3I6IGNvbG9yLXlpcSgkYWN0aXZlLWJhY2tncm91bmQpO1xuICAgIGJhY2tncm91bmQtY29sb3I6ICRhY3RpdmUtYmFja2dyb3VuZDtcbiAgICBib3JkZXItY29sb3I6ICRhY3RpdmUtYm9yZGVyO1xuXG4gICAgJjpmb2N1cyB7XG4gICAgICAvLyBBdm9pZCB1c2luZyBtaXhpbiBzbyB3ZSBjYW4gcGFzcyBjdXN0b20gZm9jdXMgc2hhZG93IHByb3Blcmx5XG4gICAgICBAaWYgJGVuYWJsZS1zaGFkb3dzIGFuZCAkYnRuLWFjdGl2ZS1ib3gtc2hhZG93ICE9IG5vbmUge1xuICAgICAgICBib3gtc2hhZG93OiAkYnRuLWFjdGl2ZS1ib3gtc2hhZG93LCAwIDAgMCAkYnRuLWZvY3VzLXdpZHRoIHJnYmEoJGNvbG9yLCAuNSk7XG4gICAgICB9IEBlbHNlIHtcbiAgICAgICAgYm94LXNoYWRvdzogMCAwIDAgJGJ0bi1mb2N1cy13aWR0aCByZ2JhKCRjb2xvciwgLjUpO1xuICAgICAgfVxuICAgIH1cbiAgfVxufVxuXG4vLyBCdXR0b24gc2l6ZXNcbkBtaXhpbiBidXR0b24tc2l6ZSgkcGFkZGluZy15LCAkcGFkZGluZy14LCAkZm9udC1zaXplLCAkbGluZS1oZWlnaHQsICRib3JkZXItcmFkaXVzKSB7XG4gIHBhZGRpbmc6ICRwYWRkaW5nLXkgJHBhZGRpbmcteDtcbiAgQGluY2x1ZGUgZm9udC1zaXplKCRmb250LXNpemUpO1xuICBsaW5lLWhlaWdodDogJGxpbmUtaGVpZ2h0O1xuICAvLyBNYW51YWxseSBkZWNsYXJlIHRvIHByb3ZpZGUgYW4gb3ZlcnJpZGUgdG8gdGhlIGJyb3dzZXIgZGVmYXVsdFxuICBAaW5jbHVkZSBib3JkZXItcmFkaXVzKCRib3JkZXItcmFkaXVzLCAwKTtcbn1cbiJdLCJmaWxlIjoibWl4aW5zL19idXR0b25zLnNjc3MifQ==

@@ -1,0 +1,171 @@
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: $zindex-popover;
+  display: block;
+  max-width: $popover-max-width;
+  // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+  // So reset our font and text properties to avoid inheriting weird values.
+  @include reset-text();
+  @include font-size($popover-font-size);
+  // Allow breaking very long words so they don't overflow the popover's bounds
+  word-wrap: break-word;
+  background-color: $popover-bg;
+  background-clip: padding-box;
+  border: $popover-border-width solid $popover-border-color;
+  @include border-radius($popover-border-radius);
+  @include box-shadow($popover-box-shadow);
+
+  .arrow {
+    position: absolute;
+    display: block;
+    width: $popover-arrow-width;
+    height: $popover-arrow-height;
+    margin: 0 $popover-border-radius;
+
+    &::before,
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      border-color: transparent;
+      border-style: solid;
+    }
+  }
+}
+
+.bs-popover-top {
+  margin-bottom: $popover-arrow-height;
+
+  > .arrow {
+    bottom: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      bottom: 0;
+      border-width: $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-top-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      bottom: $popover-border-width;
+      border-width: $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-top-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-right {
+  margin-left: $popover-arrow-height;
+
+  > .arrow {
+    left: subtract(-$popover-arrow-height, $popover-border-width);
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0; // make sure the arrow does not touch the popover's rounded corners
+
+    &::before {
+      left: 0;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-right-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      left: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2) 0;
+      border-right-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-bottom {
+  margin-top: $popover-arrow-height;
+
+  > .arrow {
+    top: subtract(-$popover-arrow-height, $popover-border-width);
+
+    &::before {
+      top: 0;
+      border-width: 0 ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2);
+      border-bottom-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      top: $popover-border-width;
+      border-width: 0 ($popover-arrow-width / 2) $popover-arrow-height ($popover-arrow-width / 2);
+      border-bottom-color: $popover-arrow-color;
+    }
+  }
+
+  // This will remove the popover-header's border just below the arrow
+  .popover-header::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    width: $popover-arrow-width;
+    margin-left: -$popover-arrow-width / 2;
+    content: "";
+    border-bottom: $popover-border-width solid $popover-header-bg;
+  }
+}
+
+.bs-popover-left {
+  margin-right: $popover-arrow-height;
+
+  > .arrow {
+    right: subtract(-$popover-arrow-height, $popover-border-width);
+    width: $popover-arrow-height;
+    height: $popover-arrow-width;
+    margin: $popover-border-radius 0; // make sure the arrow does not touch the popover's rounded corners
+
+    &::before {
+      right: 0;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-left-color: $popover-arrow-outer-color;
+    }
+
+    &::after {
+      right: $popover-border-width;
+      border-width: ($popover-arrow-width / 2) 0 ($popover-arrow-width / 2) $popover-arrow-height;
+      border-left-color: $popover-arrow-color;
+    }
+  }
+}
+
+.bs-popover-auto {
+  &[x-placement^="top"] {
+    @extend .bs-popover-top;
+  }
+  &[x-placement^="right"] {
+    @extend .bs-popover-right;
+  }
+  &[x-placement^="bottom"] {
+    @extend .bs-popover-bottom;
+  }
+  &[x-placement^="left"] {
+    @extend .bs-popover-left;
+  }
+}
+
+
+// Offset the popover to account for the popover arrow
+.popover-header {
+  padding: $popover-header-padding-y $popover-header-padding-x;
+  margin-bottom: 0; // Reset the default from Reboot
+  @include font-size($font-size-base);
+  color: $popover-header-color;
+  background-color: $popover-header-bg;
+  border-bottom: $popover-border-width solid darken($popover-header-bg, 5%);
+  @include border-top-radius($popover-inner-border-radius);
+
+  &:empty {
+    display: none;
+  }
+}
+
+.popover-body {
+  padding: $popover-body-padding-y $popover-body-padding-x;
+  color: $popover-body-color;
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfcG9wb3Zlci5zY3NzIl0sInNvdXJjZXNDb250ZW50IjpbIi5wb3BvdmVyIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICB0b3A6IDA7XG4gIGxlZnQ6IDA7XG4gIHotaW5kZXg6ICR6aW5kZXgtcG9wb3ZlcjtcbiAgZGlzcGxheTogYmxvY2s7XG4gIG1heC13aWR0aDogJHBvcG92ZXItbWF4LXdpZHRoO1xuICAvLyBPdXIgcGFyZW50IGVsZW1lbnQgY2FuIGJlIGFyYml0cmFyeSBzaW5jZSB0b29sdGlwcyBhcmUgYnkgZGVmYXVsdCBpbnNlcnRlZCBhcyBhIHNpYmxpbmcgb2YgdGhlaXIgdGFyZ2V0IGVsZW1lbnQuXG4gIC8vIFNvIHJlc2V0IG91ciBmb250IGFuZCB0ZXh0IHByb3BlcnRpZXMgdG8gYXZvaWQgaW5oZXJpdGluZyB3ZWlyZCB2YWx1ZXMuXG4gIEBpbmNsdWRlIHJlc2V0LXRleHQoKTtcbiAgQGluY2x1ZGUgZm9udC1zaXplKCRwb3BvdmVyLWZvbnQtc2l6ZSk7XG4gIC8vIEFsbG93IGJyZWFraW5nIHZlcnkgbG9uZyB3b3JkcyBzbyB0aGV5IGRvbid0IG92ZXJmbG93IHRoZSBwb3BvdmVyJ3MgYm91bmRzXG4gIHdvcmQtd3JhcDogYnJlYWstd29yZDtcbiAgYmFja2dyb3VuZC1jb2xvcjogJHBvcG92ZXItYmc7XG4gIGJhY2tncm91bmQtY2xpcDogcGFkZGluZy1ib3g7XG4gIGJvcmRlcjogJHBvcG92ZXItYm9yZGVyLXdpZHRoIHNvbGlkICRwb3BvdmVyLWJvcmRlci1jb2xvcjtcbiAgQGluY2x1ZGUgYm9yZGVyLXJhZGl1cygkcG9wb3Zlci1ib3JkZXItcmFkaXVzKTtcbiAgQGluY2x1ZGUgYm94LXNoYWRvdygkcG9wb3Zlci1ib3gtc2hhZG93KTtcblxuICAuYXJyb3cge1xuICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICB3aWR0aDogJHBvcG92ZXItYXJyb3ctd2lkdGg7XG4gICAgaGVpZ2h0OiAkcG9wb3Zlci1hcnJvdy1oZWlnaHQ7XG4gICAgbWFyZ2luOiAwICRwb3BvdmVyLWJvcmRlci1yYWRpdXM7XG5cbiAgICAmOjpiZWZvcmUsXG4gICAgJjo6YWZ0ZXIge1xuICAgICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICBjb250ZW50OiBcIlwiO1xuICAgICAgYm9yZGVyLWNvbG9yOiB0cmFuc3BhcmVudDtcbiAgICAgIGJvcmRlci1zdHlsZTogc29saWQ7XG4gICAgfVxuICB9XG59XG5cbi5icy1wb3BvdmVyLXRvcCB7XG4gIG1hcmdpbi1ib3R0b206ICRwb3BvdmVyLWFycm93LWhlaWdodDtcblxuICA+IC5hcnJvdyB7XG4gICAgYm90dG9tOiBzdWJ0cmFjdCgtJHBvcG92ZXItYXJyb3ctaGVpZ2h0LCAkcG9wb3Zlci1ib3JkZXItd2lkdGgpO1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIGJvdHRvbTogMDtcbiAgICAgIGJvcmRlci13aWR0aDogJHBvcG92ZXItYXJyb3ctaGVpZ2h0ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpIDA7XG4gICAgICBib3JkZXItdG9wLWNvbG9yOiAkcG9wb3Zlci1hcnJvdy1vdXRlci1jb2xvcjtcbiAgICB9XG5cbiAgICAmOjphZnRlciB7XG4gICAgICBib3R0b206ICRwb3BvdmVyLWJvcmRlci13aWR0aDtcbiAgICAgIGJvcmRlci13aWR0aDogJHBvcG92ZXItYXJyb3ctaGVpZ2h0ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpIDA7XG4gICAgICBib3JkZXItdG9wLWNvbG9yOiAkcG9wb3Zlci1hcnJvdy1jb2xvcjtcbiAgICB9XG4gIH1cbn1cblxuLmJzLXBvcG92ZXItcmlnaHQge1xuICBtYXJnaW4tbGVmdDogJHBvcG92ZXItYXJyb3ctaGVpZ2h0O1xuXG4gID4gLmFycm93IHtcbiAgICBsZWZ0OiBzdWJ0cmFjdCgtJHBvcG92ZXItYXJyb3ctaGVpZ2h0LCAkcG9wb3Zlci1ib3JkZXItd2lkdGgpO1xuICAgIHdpZHRoOiAkcG9wb3Zlci1hcnJvdy1oZWlnaHQ7XG4gICAgaGVpZ2h0OiAkcG9wb3Zlci1hcnJvdy13aWR0aDtcbiAgICBtYXJnaW46ICRwb3BvdmVyLWJvcmRlci1yYWRpdXMgMDsgLy8gbWFrZSBzdXJlIHRoZSBhcnJvdyBkb2VzIG5vdCB0b3VjaCB0aGUgcG9wb3ZlcidzIHJvdW5kZWQgY29ybmVyc1xuXG4gICAgJjo6YmVmb3JlIHtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICBib3JkZXItd2lkdGg6ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpICRwb3BvdmVyLWFycm93LWhlaWdodCAoJHBvcG92ZXItYXJyb3ctd2lkdGggLyAyKSAwO1xuICAgICAgYm9yZGVyLXJpZ2h0LWNvbG9yOiAkcG9wb3Zlci1hcnJvdy1vdXRlci1jb2xvcjtcbiAgICB9XG5cbiAgICAmOjphZnRlciB7XG4gICAgICBsZWZ0OiAkcG9wb3Zlci1ib3JkZXItd2lkdGg7XG4gICAgICBib3JkZXItd2lkdGg6ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpICRwb3BvdmVyLWFycm93LWhlaWdodCAoJHBvcG92ZXItYXJyb3ctd2lkdGggLyAyKSAwO1xuICAgICAgYm9yZGVyLXJpZ2h0LWNvbG9yOiAkcG9wb3Zlci1hcnJvdy1jb2xvcjtcbiAgICB9XG4gIH1cbn1cblxuLmJzLXBvcG92ZXItYm90dG9tIHtcbiAgbWFyZ2luLXRvcDogJHBvcG92ZXItYXJyb3ctaGVpZ2h0O1xuXG4gID4gLmFycm93IHtcbiAgICB0b3A6IHN1YnRyYWN0KC0kcG9wb3Zlci1hcnJvdy1oZWlnaHQsICRwb3BvdmVyLWJvcmRlci13aWR0aCk7XG5cbiAgICAmOjpiZWZvcmUge1xuICAgICAgdG9wOiAwO1xuICAgICAgYm9yZGVyLXdpZHRoOiAwICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpICRwb3BvdmVyLWFycm93LWhlaWdodCAoJHBvcG92ZXItYXJyb3ctd2lkdGggLyAyKTtcbiAgICAgIGJvcmRlci1ib3R0b20tY29sb3I6ICRwb3BvdmVyLWFycm93LW91dGVyLWNvbG9yO1xuICAgIH1cblxuICAgICY6OmFmdGVyIHtcbiAgICAgIHRvcDogJHBvcG92ZXItYm9yZGVyLXdpZHRoO1xuICAgICAgYm9yZGVyLXdpZHRoOiAwICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpICRwb3BvdmVyLWFycm93LWhlaWdodCAoJHBvcG92ZXItYXJyb3ctd2lkdGggLyAyKTtcbiAgICAgIGJvcmRlci1ib3R0b20tY29sb3I6ICRwb3BvdmVyLWFycm93LWNvbG9yO1xuICAgIH1cbiAgfVxuXG4gIC8vIFRoaXMgd2lsbCByZW1vdmUgdGhlIHBvcG92ZXItaGVhZGVyJ3MgYm9yZGVyIGp1c3QgYmVsb3cgdGhlIGFycm93XG4gIC5wb3BvdmVyLWhlYWRlcjo6YmVmb3JlIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgdG9wOiAwO1xuICAgIGxlZnQ6IDUwJTtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICB3aWR0aDogJHBvcG92ZXItYXJyb3ctd2lkdGg7XG4gICAgbWFyZ2luLWxlZnQ6IC0kcG9wb3Zlci1hcnJvdy13aWR0aCAvIDI7XG4gICAgY29udGVudDogXCJcIjtcbiAgICBib3JkZXItYm90dG9tOiAkcG9wb3Zlci1ib3JkZXItd2lkdGggc29saWQgJHBvcG92ZXItaGVhZGVyLWJnO1xuICB9XG59XG5cbi5icy1wb3BvdmVyLWxlZnQge1xuICBtYXJnaW4tcmlnaHQ6ICRwb3BvdmVyLWFycm93LWhlaWdodDtcblxuICA+IC5hcnJvdyB7XG4gICAgcmlnaHQ6IHN1YnRyYWN0KC0kcG9wb3Zlci1hcnJvdy1oZWlnaHQsICRwb3BvdmVyLWJvcmRlci13aWR0aCk7XG4gICAgd2lkdGg6ICRwb3BvdmVyLWFycm93LWhlaWdodDtcbiAgICBoZWlnaHQ6ICRwb3BvdmVyLWFycm93LXdpZHRoO1xuICAgIG1hcmdpbjogJHBvcG92ZXItYm9yZGVyLXJhZGl1cyAwOyAvLyBtYWtlIHN1cmUgdGhlIGFycm93IGRvZXMgbm90IHRvdWNoIHRoZSBwb3BvdmVyJ3Mgcm91bmRlZCBjb3JuZXJzXG5cbiAgICAmOjpiZWZvcmUge1xuICAgICAgcmlnaHQ6IDA7XG4gICAgICBib3JkZXItd2lkdGg6ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpIDAgKCRwb3BvdmVyLWFycm93LXdpZHRoIC8gMikgJHBvcG92ZXItYXJyb3ctaGVpZ2h0O1xuICAgICAgYm9yZGVyLWxlZnQtY29sb3I6ICRwb3BvdmVyLWFycm93LW91dGVyLWNvbG9yO1xuICAgIH1cblxuICAgICY6OmFmdGVyIHtcbiAgICAgIHJpZ2h0OiAkcG9wb3Zlci1ib3JkZXItd2lkdGg7XG4gICAgICBib3JkZXItd2lkdGg6ICgkcG9wb3Zlci1hcnJvdy13aWR0aCAvIDIpIDAgKCRwb3BvdmVyLWFycm93LXdpZHRoIC8gMikgJHBvcG92ZXItYXJyb3ctaGVpZ2h0O1xuICAgICAgYm9yZGVyLWxlZnQtY29sb3I6ICRwb3BvdmVyLWFycm93LWNvbG9yO1xuICAgIH1cbiAgfVxufVxuXG4uYnMtcG9wb3Zlci1hdXRvIHtcbiAgJlt4LXBsYWNlbWVudF49XCJ0b3BcIl0ge1xuICAgIEBleHRlbmQgLmJzLXBvcG92ZXItdG9wO1xuICB9XG4gICZbeC1wbGFjZW1lbnRePVwicmlnaHRcIl0ge1xuICAgIEBleHRlbmQgLmJzLXBvcG92ZXItcmlnaHQ7XG4gIH1cbiAgJlt4LXBsYWNlbWVudF49XCJib3R0b21cIl0ge1xuICAgIEBleHRlbmQgLmJzLXBvcG92ZXItYm90dG9tO1xuICB9XG4gICZbeC1wbGFjZW1lbnRePVwibGVmdFwiXSB7XG4gICAgQGV4dGVuZCAuYnMtcG9wb3Zlci1sZWZ0O1xuICB9XG59XG5cblxuLy8gT2Zmc2V0IHRoZSBwb3BvdmVyIHRvIGFjY291bnQgZm9yIHRoZSBwb3BvdmVyIGFycm93XG4ucG9wb3Zlci1oZWFkZXIge1xuICBwYWRkaW5nOiAkcG9wb3Zlci1oZWFkZXItcGFkZGluZy15ICRwb3BvdmVyLWhlYWRlci1wYWRkaW5nLXg7XG4gIG1hcmdpbi1ib3R0b206IDA7IC8vIFJlc2V0IHRoZSBkZWZhdWx0IGZyb20gUmVib290XG4gIEBpbmNsdWRlIGZvbnQtc2l6ZSgkZm9udC1zaXplLWJhc2UpO1xuICBjb2xvcjogJHBvcG92ZXItaGVhZGVyLWNvbG9yO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAkcG9wb3Zlci1oZWFkZXItYmc7XG4gIGJvcmRlci1ib3R0b206ICRwb3BvdmVyLWJvcmRlci13aWR0aCBzb2xpZCBkYXJrZW4oJHBvcG92ZXItaGVhZGVyLWJnLCA1JSk7XG4gIEBpbmNsdWRlIGJvcmRlci10b3AtcmFkaXVzKCRwb3BvdmVyLWlubmVyLWJvcmRlci1yYWRpdXMpO1xuXG4gICY6ZW1wdHkge1xuICAgIGRpc3BsYXk6IG5vbmU7XG4gIH1cbn1cblxuLnBvcG92ZXItYm9keSB7XG4gIHBhZGRpbmc6ICRwb3BvdmVyLWJvZHktcGFkZGluZy15ICRwb3BvdmVyLWJvZHktcGFkZGluZy14O1xuICBjb2xvcjogJHBvcG92ZXItYm9keS1jb2xvcjtcbn1cbiJdLCJmaWxlIjoiX3BvcG92ZXIuc2NzcyJ9

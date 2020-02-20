@@ -1,0 +1,27 @@
+// stylelint-disable declaration-no-important
+
+//
+// Utilities for common `display` values
+//
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $value in $displays {
+      .d#{$infix}-#{$value} { display: $value !important; }
+    }
+  }
+}
+
+
+//
+// Utilities for toggling `display` in print
+//
+
+@media print {
+  @each $value in $displays {
+    .d-print-#{$value} { display: $value !important; }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX2Rpc3BsYXkuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBkZWNsYXJhdGlvbi1uby1pbXBvcnRhbnRcblxuLy9cbi8vIFV0aWxpdGllcyBmb3IgY29tbW9uIGBkaXNwbGF5YCB2YWx1ZXNcbi8vXG5cbkBlYWNoICRicmVha3BvaW50IGluIG1hcC1rZXlzKCRncmlkLWJyZWFrcG9pbnRzKSB7XG4gIEBpbmNsdWRlIG1lZGlhLWJyZWFrcG9pbnQtdXAoJGJyZWFrcG9pbnQpIHtcbiAgICAkaW5maXg6IGJyZWFrcG9pbnQtaW5maXgoJGJyZWFrcG9pbnQsICRncmlkLWJyZWFrcG9pbnRzKTtcblxuICAgIEBlYWNoICR2YWx1ZSBpbiAkZGlzcGxheXMge1xuICAgICAgLmQjeyRpbmZpeH0tI3skdmFsdWV9IHsgZGlzcGxheTogJHZhbHVlICFpbXBvcnRhbnQ7IH1cbiAgICB9XG4gIH1cbn1cblxuXG4vL1xuLy8gVXRpbGl0aWVzIGZvciB0b2dnbGluZyBgZGlzcGxheWAgaW4gcHJpbnRcbi8vXG5cbkBtZWRpYSBwcmludCB7XG4gIEBlYWNoICR2YWx1ZSBpbiAkZGlzcGxheXMge1xuICAgIC5kLXByaW50LSN7JHZhbHVlfSB7IGRpc3BsYXk6ICR2YWx1ZSAhaW1wb3J0YW50OyB9XG4gIH1cbn1cbiJdLCJmaWxlIjoidXRpbGl0aWVzL19kaXNwbGF5LnNjc3MifQ==

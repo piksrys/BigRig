@@ -1,0 +1,40 @@
+// Credit: Nicolas Gallagher and SUIT CSS.
+
+.embed-responsive {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+
+  &::before {
+    display: block;
+    content: "";
+  }
+
+  .embed-responsive-item,
+  iframe,
+  embed,
+  object,
+  video {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+@each $embed-responsive-aspect-ratio in $embed-responsive-aspect-ratios {
+  $embed-responsive-aspect-ratio-x: nth($embed-responsive-aspect-ratio, 1);
+  $embed-responsive-aspect-ratio-y: nth($embed-responsive-aspect-ratio, 2);
+
+  .embed-responsive-#{$embed-responsive-aspect-ratio-x}by#{$embed-responsive-aspect-ratio-y} {
+    &::before {
+      padding-top: percentage($embed-responsive-aspect-ratio-y / $embed-responsive-aspect-ratio-x);
+    }
+  }
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJ1dGlsaXRpZXMvX2VtYmVkLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gQ3JlZGl0OiBOaWNvbGFzIEdhbGxhZ2hlciBhbmQgU1VJVCBDU1MuXG5cbi5lbWJlZC1yZXNwb25zaXZlIHtcbiAgcG9zaXRpb246IHJlbGF0aXZlO1xuICBkaXNwbGF5OiBibG9jaztcbiAgd2lkdGg6IDEwMCU7XG4gIHBhZGRpbmc6IDA7XG4gIG92ZXJmbG93OiBoaWRkZW47XG5cbiAgJjo6YmVmb3JlIHtcbiAgICBkaXNwbGF5OiBibG9jaztcbiAgICBjb250ZW50OiBcIlwiO1xuICB9XG5cbiAgLmVtYmVkLXJlc3BvbnNpdmUtaXRlbSxcbiAgaWZyYW1lLFxuICBlbWJlZCxcbiAgb2JqZWN0LFxuICB2aWRlbyB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHRvcDogMDtcbiAgICBib3R0b206IDA7XG4gICAgbGVmdDogMDtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBoZWlnaHQ6IDEwMCU7XG4gICAgYm9yZGVyOiAwO1xuICB9XG59XG5cbkBlYWNoICRlbWJlZC1yZXNwb25zaXZlLWFzcGVjdC1yYXRpbyBpbiAkZW1iZWQtcmVzcG9uc2l2ZS1hc3BlY3QtcmF0aW9zIHtcbiAgJGVtYmVkLXJlc3BvbnNpdmUtYXNwZWN0LXJhdGlvLXg6IG50aCgkZW1iZWQtcmVzcG9uc2l2ZS1hc3BlY3QtcmF0aW8sIDEpO1xuICAkZW1iZWQtcmVzcG9uc2l2ZS1hc3BlY3QtcmF0aW8teTogbnRoKCRlbWJlZC1yZXNwb25zaXZlLWFzcGVjdC1yYXRpbywgMik7XG5cbiAgLmVtYmVkLXJlc3BvbnNpdmUtI3skZW1iZWQtcmVzcG9uc2l2ZS1hc3BlY3QtcmF0aW8teH1ieSN7JGVtYmVkLXJlc3BvbnNpdmUtYXNwZWN0LXJhdGlvLXl9IHtcbiAgICAmOjpiZWZvcmUge1xuICAgICAgcGFkZGluZy10b3A6IHBlcmNlbnRhZ2UoJGVtYmVkLXJlc3BvbnNpdmUtYXNwZWN0LXJhdGlvLXkgLyAkZW1iZWQtcmVzcG9uc2l2ZS1hc3BlY3QtcmF0aW8teCk7XG4gICAgfVxuICB9XG59XG4iXSwiZmlsZSI6InV0aWxpdGllcy9fZW1iZWQuc2NzcyJ9

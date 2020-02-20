@@ -1,0 +1,37 @@
+// Image Mixins
+// - Responsive image
+// - Retina image
+
+
+// Responsive image
+//
+// Keep images from scaling beyond the width of their parents.
+
+@mixin img-fluid() {
+  // Part 1: Set a maximum relative to the parent
+  max-width: 100%;
+  // Part 2: Override the height to auto, otherwise images will be stretched
+  // when setting a width and height attribute on the img element.
+  height: auto;
+}
+
+
+// Retina image
+//
+// Short retina mixin for setting background-image and -size.
+
+@mixin img-retina($file-1x, $file-2x, $width-1x, $height-1x) {
+  background-image: url($file-1x);
+
+  // Autoprefixer takes care of adding -webkit-min-device-pixel-ratio and -o-min-device-pixel-ratio,
+  // but doesn't convert dppx=>dpi.
+  // There's no such thing as unprefixed min-device-pixel-ratio since it's nonstandard.
+  // Compatibility info: https://caniuse.com/#feat=css-media-resolution
+  @media only screen and (min-resolution: 192dpi), // IE9-11 don't support dppx
+    only screen and (min-resolution: 2dppx) { // Standardized
+    background-image: url($file-2x);
+    background-size: $width-1x $height-1x;
+  }
+  @include deprecate("`img-retina()`", "v4.3.0", "v5");
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJtaXhpbnMvX2ltYWdlLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLy8gSW1hZ2UgTWl4aW5zXG4vLyAtIFJlc3BvbnNpdmUgaW1hZ2Vcbi8vIC0gUmV0aW5hIGltYWdlXG5cblxuLy8gUmVzcG9uc2l2ZSBpbWFnZVxuLy9cbi8vIEtlZXAgaW1hZ2VzIGZyb20gc2NhbGluZyBiZXlvbmQgdGhlIHdpZHRoIG9mIHRoZWlyIHBhcmVudHMuXG5cbkBtaXhpbiBpbWctZmx1aWQoKSB7XG4gIC8vIFBhcnQgMTogU2V0IGEgbWF4aW11bSByZWxhdGl2ZSB0byB0aGUgcGFyZW50XG4gIG1heC13aWR0aDogMTAwJTtcbiAgLy8gUGFydCAyOiBPdmVycmlkZSB0aGUgaGVpZ2h0IHRvIGF1dG8sIG90aGVyd2lzZSBpbWFnZXMgd2lsbCBiZSBzdHJldGNoZWRcbiAgLy8gd2hlbiBzZXR0aW5nIGEgd2lkdGggYW5kIGhlaWdodCBhdHRyaWJ1dGUgb24gdGhlIGltZyBlbGVtZW50LlxuICBoZWlnaHQ6IGF1dG87XG59XG5cblxuLy8gUmV0aW5hIGltYWdlXG4vL1xuLy8gU2hvcnQgcmV0aW5hIG1peGluIGZvciBzZXR0aW5nIGJhY2tncm91bmQtaW1hZ2UgYW5kIC1zaXplLlxuXG5AbWl4aW4gaW1nLXJldGluYSgkZmlsZS0xeCwgJGZpbGUtMngsICR3aWR0aC0xeCwgJGhlaWdodC0xeCkge1xuICBiYWNrZ3JvdW5kLWltYWdlOiB1cmwoJGZpbGUtMXgpO1xuXG4gIC8vIEF1dG9wcmVmaXhlciB0YWtlcyBjYXJlIG9mIGFkZGluZyAtd2Via2l0LW1pbi1kZXZpY2UtcGl4ZWwtcmF0aW8gYW5kIC1vLW1pbi1kZXZpY2UtcGl4ZWwtcmF0aW8sXG4gIC8vIGJ1dCBkb2Vzbid0IGNvbnZlcnQgZHBweD0+ZHBpLlxuICAvLyBUaGVyZSdzIG5vIHN1Y2ggdGhpbmcgYXMgdW5wcmVmaXhlZCBtaW4tZGV2aWNlLXBpeGVsLXJhdGlvIHNpbmNlIGl0J3Mgbm9uc3RhbmRhcmQuXG4gIC8vIENvbXBhdGliaWxpdHkgaW5mbzogaHR0cHM6Ly9jYW5pdXNlLmNvbS8jZmVhdD1jc3MtbWVkaWEtcmVzb2x1dGlvblxuICBAbWVkaWEgb25seSBzY3JlZW4gYW5kIChtaW4tcmVzb2x1dGlvbjogMTkyZHBpKSwgLy8gSUU5LTExIGRvbid0IHN1cHBvcnQgZHBweFxuICAgIG9ubHkgc2NyZWVuIGFuZCAobWluLXJlc29sdXRpb246IDJkcHB4KSB7IC8vIFN0YW5kYXJkaXplZFxuICAgIGJhY2tncm91bmQtaW1hZ2U6IHVybCgkZmlsZS0yeCk7XG4gICAgYmFja2dyb3VuZC1zaXplOiAkd2lkdGgtMXggJGhlaWdodC0xeDtcbiAgfVxuICBAaW5jbHVkZSBkZXByZWNhdGUoXCJgaW1nLXJldGluYSgpYFwiLCBcInY0LjMuMFwiLCBcInY1XCIpO1xufVxuIl0sImZpbGUiOiJtaXhpbnMvX2ltYWdlLnNjc3MifQ==

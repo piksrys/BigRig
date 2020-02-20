@@ -53,7 +53,7 @@ class Theme {
 			if ( ! $component instanceof Component_Interface ) {
 				throw new InvalidArgumentException(
 					sprintf(
-						/* translators: 1: classname/type of the variable, 2: interface name */
+					/* translators: 1: classname/type of the variable, 2: interface name */
 						__( 'The theme component %1$s does not implement the %2$s interface.', 'wp-rig' ),
 						gettype( $component ),
 						Component_Interface::class
@@ -68,7 +68,7 @@ class Theme {
 		$this->template_tags = new Template_Tags(
 			array_filter(
 				$this->components,
-				function( Component_Interface $component ) {
+				function ( Component_Interface $component ) {
 					return $component instanceof Templating_Component_Interface;
 				}
 			)
@@ -83,7 +83,7 @@ class Theme {
 	public function initialize() {
 		array_walk(
 			$this->components,
-			function( Component_Interface $component ) {
+			function ( Component_Interface $component ) {
 				$component->initialize();
 			}
 		);
@@ -98,7 +98,7 @@ class Theme {
 	 *
 	 * @return Template_Tags Template tags instance.
 	 */
-	public function template_tags() : Template_Tags {
+	public function template_tags(): Template_Tags {
 		return $this->template_tags;
 	}
 
@@ -108,15 +108,16 @@ class Theme {
 	 * This should typically not be used from outside of the theme classes infrastructure.
 	 *
 	 * @param string $slug Slug identifying the component.
+	 *
 	 * @return Component_Interface Component for the slug.
 	 *
 	 * @throws InvalidArgumentException Thrown when no theme component with the given slug exists.
 	 */
-	public function component( string $slug ) : Component_Interface {
+	public function component( string $slug ): Component_Interface {
 		if ( ! isset( $this->components[ $slug ] ) ) {
 			throw new InvalidArgumentException(
 				sprintf(
-					/* translators: %s: slug */
+				/* translators: %s: slug */
 					__( 'No theme component with the slug %s exists.', 'wp-rig' ),
 					$slug
 				)
@@ -133,9 +134,12 @@ class Theme {
 	 *
 	 * @return array List of theme components to use by default.
 	 */
-	protected function get_default_components() : array {
+	protected function get_default_components(): array {
 		$components = [
+			new Cleanup\Component(),
 			new Localization\Component(),
+			new Helper\Component(),
+			new Slick\Component(),
 			new Base_Support\Component(),
 			new Editor\Component(),
 			new Accessibility\Component(),
@@ -146,16 +150,24 @@ class Theme {
 			new Comments\Component(),
 			new Nav_Menus\Component(),
 			new Sidebars\Component(),
-			new Custom_Background\Component(),
-			new Custom_Header\Component(),
 			new Custom_Logo\Component(),
 			new Post_Thumbnails\Component(),
 			new Customizer\Component(),
+			new Header_Code\Component(),
 			new Styles\Component(),
+
 		];
 
 		if ( defined( 'JETPACK__VERSION' ) ) {
 			$components[] = new Jetpack\Component();
+		}
+
+		if ( is_plugin_active( 'gravityforms/gravityforms.php' ) || class_exists( 'GForms' ) ) {
+			$components[] = new Forms\Component();
+		}
+
+		if ( is_plugin_active( 'advanced-custom-fields-pro/acf.php' ) ) {
+			$components[] = new ACF\Component();
 		}
 
 		return $components;

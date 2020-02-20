@@ -1,0 +1,192 @@
+// stylelint-disable selector-no-qualifying-type
+
+//
+// Base styles
+//
+
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap; // For form validation feedback
+  align-items: stretch;
+  width: 100%;
+
+  > .form-control,
+  > .form-control-plaintext,
+  > .custom-select,
+  > .custom-file {
+    position: relative; // For focus state's z-index
+    flex: 1 1 0%;
+    min-width: 0; // https://stackoverflow.com/questions/36247140/why-dont-flex-items-shrink-past-content-size
+    margin-bottom: 0;
+
+    + .form-control,
+    + .custom-select,
+    + .custom-file {
+      margin-left: -$input-border-width;
+    }
+  }
+
+  // Bring the "active" form control to the top of surrounding elements
+  > .form-control:focus,
+  > .custom-select:focus,
+  > .custom-file .custom-file-input:focus ~ .custom-file-label {
+    z-index: 3;
+  }
+
+  // Bring the custom file input above the label
+  > .custom-file .custom-file-input:focus {
+    z-index: 4;
+  }
+
+  > .form-control,
+  > .custom-select {
+    &:not(:last-child) { @include border-right-radius(0); }
+    &:not(:first-child) { @include border-left-radius(0); }
+  }
+
+  // Custom file inputs have more complex markup, thus requiring different
+  // border-radius overrides.
+  > .custom-file {
+    display: flex;
+    align-items: center;
+
+    &:not(:last-child) .custom-file-label,
+    &:not(:last-child) .custom-file-label::after { @include border-right-radius(0); }
+    &:not(:first-child) .custom-file-label { @include border-left-radius(0); }
+  }
+}
+
+
+// Prepend and append
+//
+// While it requires one extra layer of HTML for each, dedicated prepend and
+// append elements allow us to 1) be less clever, 2) simplify our selectors, and
+// 3) support HTML5 form validation.
+
+.input-group-prepend,
+.input-group-append {
+  display: flex;
+
+  // Ensure buttons are always above inputs for more visually pleasing borders.
+  // This isn't needed for `.input-group-text` since it shares the same border-color
+  // as our inputs.
+  .btn {
+    position: relative;
+    z-index: 2;
+
+    &:focus {
+      z-index: 3;
+    }
+  }
+
+  .btn + .btn,
+  .btn + .input-group-text,
+  .input-group-text + .input-group-text,
+  .input-group-text + .btn {
+    margin-left: -$input-border-width;
+  }
+}
+
+.input-group-prepend { margin-right: -$input-border-width; }
+.input-group-append { margin-left: -$input-border-width; }
+
+
+// Textual addons
+//
+// Serves as a catch-all element for any text or radio/checkbox input you wish
+// to prepend or append to an input.
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: $input-padding-y $input-padding-x;
+  margin-bottom: 0; // Allow use of <label> elements by overriding our default margin-bottom
+  @include font-size($input-font-size); // Match inputs
+  font-weight: $font-weight-normal;
+  line-height: $input-line-height;
+  color: $input-group-addon-color;
+  text-align: center;
+  white-space: nowrap;
+  background-color: $input-group-addon-bg;
+  border: $input-border-width solid $input-group-addon-border-color;
+  @include border-radius($input-border-radius);
+
+  // Nuke default margins from checkboxes and radios to vertically center within.
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-top: 0;
+  }
+}
+
+
+// Sizing
+//
+// Remix the default form control sizing classes into new ones for easier
+// manipulation.
+
+.input-group-lg > .form-control:not(textarea),
+.input-group-lg > .custom-select {
+  height: $input-height-lg;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .custom-select,
+.input-group-lg > .input-group-prepend > .input-group-text,
+.input-group-lg > .input-group-append > .input-group-text,
+.input-group-lg > .input-group-prepend > .btn,
+.input-group-lg > .input-group-append > .btn {
+  padding: $input-padding-y-lg $input-padding-x-lg;
+  @include font-size($input-font-size-lg);
+  line-height: $input-line-height-lg;
+  @include border-radius($input-border-radius-lg);
+}
+
+.input-group-sm > .form-control:not(textarea),
+.input-group-sm > .custom-select {
+  height: $input-height-sm;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .custom-select,
+.input-group-sm > .input-group-prepend > .input-group-text,
+.input-group-sm > .input-group-append > .input-group-text,
+.input-group-sm > .input-group-prepend > .btn,
+.input-group-sm > .input-group-append > .btn {
+  padding: $input-padding-y-sm $input-padding-x-sm;
+  @include font-size($input-font-size-sm);
+  line-height: $input-line-height-sm;
+  @include border-radius($input-border-radius-sm);
+}
+
+.input-group-lg > .custom-select,
+.input-group-sm > .custom-select {
+  padding-right: $custom-select-padding-x + $custom-select-indicator-padding;
+}
+
+
+// Prepend and append rounded corners
+//
+// These rulesets must come after the sizing ones to properly override sm and lg
+// border-radius values when extending. They're more specific than we'd like
+// with the `.input-group >` part, but without it, we cannot override the sizing.
+
+
+.input-group > .input-group-prepend > .btn,
+.input-group > .input-group-prepend > .input-group-text,
+.input-group > .input-group-append:not(:last-child) > .btn,
+.input-group > .input-group-append:not(:last-child) > .input-group-text,
+.input-group > .input-group-append:last-child > .btn:not(:last-child):not(.dropdown-toggle),
+.input-group > .input-group-append:last-child > .input-group-text:not(:last-child) {
+  @include border-right-radius(0);
+}
+
+.input-group > .input-group-append > .btn,
+.input-group > .input-group-append > .input-group-text,
+.input-group > .input-group-prepend:not(:first-child) > .btn,
+.input-group > .input-group-prepend:not(:first-child) > .input-group-text,
+.input-group > .input-group-prepend:first-child > .btn:not(:first-child),
+.input-group > .input-group-prepend:first-child > .input-group-text:not(:first-child) {
+  @include border-left-radius(0);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiIiwic291cmNlcyI6WyJfaW5wdXQtZ3JvdXAuc2NzcyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBzdHlsZWxpbnQtZGlzYWJsZSBzZWxlY3Rvci1uby1xdWFsaWZ5aW5nLXR5cGVcblxuLy9cbi8vIEJhc2Ugc3R5bGVzXG4vL1xuXG4uaW5wdXQtZ3JvdXAge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtd3JhcDogd3JhcDsgLy8gRm9yIGZvcm0gdmFsaWRhdGlvbiBmZWVkYmFja1xuICBhbGlnbi1pdGVtczogc3RyZXRjaDtcbiAgd2lkdGg6IDEwMCU7XG5cbiAgPiAuZm9ybS1jb250cm9sLFxuICA+IC5mb3JtLWNvbnRyb2wtcGxhaW50ZXh0LFxuICA+IC5jdXN0b20tc2VsZWN0LFxuICA+IC5jdXN0b20tZmlsZSB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlOyAvLyBGb3IgZm9jdXMgc3RhdGUncyB6LWluZGV4XG4gICAgZmxleDogMSAxIDAlO1xuICAgIG1pbi13aWR0aDogMDsgLy8gaHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzYyNDcxNDAvd2h5LWRvbnQtZmxleC1pdGVtcy1zaHJpbmstcGFzdC1jb250ZW50LXNpemVcbiAgICBtYXJnaW4tYm90dG9tOiAwO1xuXG4gICAgKyAuZm9ybS1jb250cm9sLFxuICAgICsgLmN1c3RvbS1zZWxlY3QsXG4gICAgKyAuY3VzdG9tLWZpbGUge1xuICAgICAgbWFyZ2luLWxlZnQ6IC0kaW5wdXQtYm9yZGVyLXdpZHRoO1xuICAgIH1cbiAgfVxuXG4gIC8vIEJyaW5nIHRoZSBcImFjdGl2ZVwiIGZvcm0gY29udHJvbCB0byB0aGUgdG9wIG9mIHN1cnJvdW5kaW5nIGVsZW1lbnRzXG4gID4gLmZvcm0tY29udHJvbDpmb2N1cyxcbiAgPiAuY3VzdG9tLXNlbGVjdDpmb2N1cyxcbiAgPiAuY3VzdG9tLWZpbGUgLmN1c3RvbS1maWxlLWlucHV0OmZvY3VzIH4gLmN1c3RvbS1maWxlLWxhYmVsIHtcbiAgICB6LWluZGV4OiAzO1xuICB9XG5cbiAgLy8gQnJpbmcgdGhlIGN1c3RvbSBmaWxlIGlucHV0IGFib3ZlIHRoZSBsYWJlbFxuICA+IC5jdXN0b20tZmlsZSAuY3VzdG9tLWZpbGUtaW5wdXQ6Zm9jdXMge1xuICAgIHotaW5kZXg6IDQ7XG4gIH1cblxuICA+IC5mb3JtLWNvbnRyb2wsXG4gID4gLmN1c3RvbS1zZWxlY3Qge1xuICAgICY6bm90KDpsYXN0LWNoaWxkKSB7IEBpbmNsdWRlIGJvcmRlci1yaWdodC1yYWRpdXMoMCk7IH1cbiAgICAmOm5vdCg6Zmlyc3QtY2hpbGQpIHsgQGluY2x1ZGUgYm9yZGVyLWxlZnQtcmFkaXVzKDApOyB9XG4gIH1cblxuICAvLyBDdXN0b20gZmlsZSBpbnB1dHMgaGF2ZSBtb3JlIGNvbXBsZXggbWFya3VwLCB0aHVzIHJlcXVpcmluZyBkaWZmZXJlbnRcbiAgLy8gYm9yZGVyLXJhZGl1cyBvdmVycmlkZXMuXG4gID4gLmN1c3RvbS1maWxlIHtcbiAgICBkaXNwbGF5OiBmbGV4O1xuICAgIGFsaWduLWl0ZW1zOiBjZW50ZXI7XG5cbiAgICAmOm5vdCg6bGFzdC1jaGlsZCkgLmN1c3RvbS1maWxlLWxhYmVsLFxuICAgICY6bm90KDpsYXN0LWNoaWxkKSAuY3VzdG9tLWZpbGUtbGFiZWw6OmFmdGVyIHsgQGluY2x1ZGUgYm9yZGVyLXJpZ2h0LXJhZGl1cygwKTsgfVxuICAgICY6bm90KDpmaXJzdC1jaGlsZCkgLmN1c3RvbS1maWxlLWxhYmVsIHsgQGluY2x1ZGUgYm9yZGVyLWxlZnQtcmFkaXVzKDApOyB9XG4gIH1cbn1cblxuXG4vLyBQcmVwZW5kIGFuZCBhcHBlbmRcbi8vXG4vLyBXaGlsZSBpdCByZXF1aXJlcyBvbmUgZXh0cmEgbGF5ZXIgb2YgSFRNTCBmb3IgZWFjaCwgZGVkaWNhdGVkIHByZXBlbmQgYW5kXG4vLyBhcHBlbmQgZWxlbWVudHMgYWxsb3cgdXMgdG8gMSkgYmUgbGVzcyBjbGV2ZXIsIDIpIHNpbXBsaWZ5IG91ciBzZWxlY3RvcnMsIGFuZFxuLy8gMykgc3VwcG9ydCBIVE1MNSBmb3JtIHZhbGlkYXRpb24uXG5cbi5pbnB1dC1ncm91cC1wcmVwZW5kLFxuLmlucHV0LWdyb3VwLWFwcGVuZCB7XG4gIGRpc3BsYXk6IGZsZXg7XG5cbiAgLy8gRW5zdXJlIGJ1dHRvbnMgYXJlIGFsd2F5cyBhYm92ZSBpbnB1dHMgZm9yIG1vcmUgdmlzdWFsbHkgcGxlYXNpbmcgYm9yZGVycy5cbiAgLy8gVGhpcyBpc24ndCBuZWVkZWQgZm9yIGAuaW5wdXQtZ3JvdXAtdGV4dGAgc2luY2UgaXQgc2hhcmVzIHRoZSBzYW1lIGJvcmRlci1jb2xvclxuICAvLyBhcyBvdXIgaW5wdXRzLlxuICAuYnRuIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgei1pbmRleDogMjtcblxuICAgICY6Zm9jdXMge1xuICAgICAgei1pbmRleDogMztcbiAgICB9XG4gIH1cblxuICAuYnRuICsgLmJ0bixcbiAgLmJ0biArIC5pbnB1dC1ncm91cC10ZXh0LFxuICAuaW5wdXQtZ3JvdXAtdGV4dCArIC5pbnB1dC1ncm91cC10ZXh0LFxuICAuaW5wdXQtZ3JvdXAtdGV4dCArIC5idG4ge1xuICAgIG1hcmdpbi1sZWZ0OiAtJGlucHV0LWJvcmRlci13aWR0aDtcbiAgfVxufVxuXG4uaW5wdXQtZ3JvdXAtcHJlcGVuZCB7IG1hcmdpbi1yaWdodDogLSRpbnB1dC1ib3JkZXItd2lkdGg7IH1cbi5pbnB1dC1ncm91cC1hcHBlbmQgeyBtYXJnaW4tbGVmdDogLSRpbnB1dC1ib3JkZXItd2lkdGg7IH1cblxuXG4vLyBUZXh0dWFsIGFkZG9uc1xuLy9cbi8vIFNlcnZlcyBhcyBhIGNhdGNoLWFsbCBlbGVtZW50IGZvciBhbnkgdGV4dCBvciByYWRpby9jaGVja2JveCBpbnB1dCB5b3Ugd2lzaFxuLy8gdG8gcHJlcGVuZCBvciBhcHBlbmQgdG8gYW4gaW5wdXQuXG5cbi5pbnB1dC1ncm91cC10ZXh0IHtcbiAgZGlzcGxheTogZmxleDtcbiAgYWxpZ24taXRlbXM6IGNlbnRlcjtcbiAgcGFkZGluZzogJGlucHV0LXBhZGRpbmcteSAkaW5wdXQtcGFkZGluZy14O1xuICBtYXJnaW4tYm90dG9tOiAwOyAvLyBBbGxvdyB1c2Ugb2YgPGxhYmVsPiBlbGVtZW50cyBieSBvdmVycmlkaW5nIG91ciBkZWZhdWx0IG1hcmdpbi1ib3R0b21cbiAgQGluY2x1ZGUgZm9udC1zaXplKCRpbnB1dC1mb250LXNpemUpOyAvLyBNYXRjaCBpbnB1dHNcbiAgZm9udC13ZWlnaHQ6ICRmb250LXdlaWdodC1ub3JtYWw7XG4gIGxpbmUtaGVpZ2h0OiAkaW5wdXQtbGluZS1oZWlnaHQ7XG4gIGNvbG9yOiAkaW5wdXQtZ3JvdXAtYWRkb24tY29sb3I7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgd2hpdGUtc3BhY2U6IG5vd3JhcDtcbiAgYmFja2dyb3VuZC1jb2xvcjogJGlucHV0LWdyb3VwLWFkZG9uLWJnO1xuICBib3JkZXI6ICRpbnB1dC1ib3JkZXItd2lkdGggc29saWQgJGlucHV0LWdyb3VwLWFkZG9uLWJvcmRlci1jb2xvcjtcbiAgQGluY2x1ZGUgYm9yZGVyLXJhZGl1cygkaW5wdXQtYm9yZGVyLXJhZGl1cyk7XG5cbiAgLy8gTnVrZSBkZWZhdWx0IG1hcmdpbnMgZnJvbSBjaGVja2JveGVzIGFuZCByYWRpb3MgdG8gdmVydGljYWxseSBjZW50ZXIgd2l0aGluLlxuICBpbnB1dFt0eXBlPVwicmFkaW9cIl0sXG4gIGlucHV0W3R5cGU9XCJjaGVja2JveFwiXSB7XG4gICAgbWFyZ2luLXRvcDogMDtcbiAgfVxufVxuXG5cbi8vIFNpemluZ1xuLy9cbi8vIFJlbWl4IHRoZSBkZWZhdWx0IGZvcm0gY29udHJvbCBzaXppbmcgY2xhc3NlcyBpbnRvIG5ldyBvbmVzIGZvciBlYXNpZXJcbi8vIG1hbmlwdWxhdGlvbi5cblxuLmlucHV0LWdyb3VwLWxnID4gLmZvcm0tY29udHJvbDpub3QodGV4dGFyZWEpLFxuLmlucHV0LWdyb3VwLWxnID4gLmN1c3RvbS1zZWxlY3Qge1xuICBoZWlnaHQ6ICRpbnB1dC1oZWlnaHQtbGc7XG59XG5cbi5pbnB1dC1ncm91cC1sZyA+IC5mb3JtLWNvbnRyb2wsXG4uaW5wdXQtZ3JvdXAtbGcgPiAuY3VzdG9tLXNlbGVjdCxcbi5pbnB1dC1ncm91cC1sZyA+IC5pbnB1dC1ncm91cC1wcmVwZW5kID4gLmlucHV0LWdyb3VwLXRleHQsXG4uaW5wdXQtZ3JvdXAtbGcgPiAuaW5wdXQtZ3JvdXAtYXBwZW5kID4gLmlucHV0LWdyb3VwLXRleHQsXG4uaW5wdXQtZ3JvdXAtbGcgPiAuaW5wdXQtZ3JvdXAtcHJlcGVuZCA+IC5idG4sXG4uaW5wdXQtZ3JvdXAtbGcgPiAuaW5wdXQtZ3JvdXAtYXBwZW5kID4gLmJ0biB7XG4gIHBhZGRpbmc6ICRpbnB1dC1wYWRkaW5nLXktbGcgJGlucHV0LXBhZGRpbmcteC1sZztcbiAgQGluY2x1ZGUgZm9udC1zaXplKCRpbnB1dC1mb250LXNpemUtbGcpO1xuICBsaW5lLWhlaWdodDogJGlucHV0LWxpbmUtaGVpZ2h0LWxnO1xuICBAaW5jbHVkZSBib3JkZXItcmFkaXVzKCRpbnB1dC1ib3JkZXItcmFkaXVzLWxnKTtcbn1cblxuLmlucHV0LWdyb3VwLXNtID4gLmZvcm0tY29udHJvbDpub3QodGV4dGFyZWEpLFxuLmlucHV0LWdyb3VwLXNtID4gLmN1c3RvbS1zZWxlY3Qge1xuICBoZWlnaHQ6ICRpbnB1dC1oZWlnaHQtc207XG59XG5cbi5pbnB1dC1ncm91cC1zbSA+IC5mb3JtLWNvbnRyb2wsXG4uaW5wdXQtZ3JvdXAtc20gPiAuY3VzdG9tLXNlbGVjdCxcbi5pbnB1dC1ncm91cC1zbSA+IC5pbnB1dC1ncm91cC1wcmVwZW5kID4gLmlucHV0LWdyb3VwLXRleHQsXG4uaW5wdXQtZ3JvdXAtc20gPiAuaW5wdXQtZ3JvdXAtYXBwZW5kID4gLmlucHV0LWdyb3VwLXRleHQsXG4uaW5wdXQtZ3JvdXAtc20gPiAuaW5wdXQtZ3JvdXAtcHJlcGVuZCA+IC5idG4sXG4uaW5wdXQtZ3JvdXAtc20gPiAuaW5wdXQtZ3JvdXAtYXBwZW5kID4gLmJ0biB7XG4gIHBhZGRpbmc6ICRpbnB1dC1wYWRkaW5nLXktc20gJGlucHV0LXBhZGRpbmcteC1zbTtcbiAgQGluY2x1ZGUgZm9udC1zaXplKCRpbnB1dC1mb250LXNpemUtc20pO1xuICBsaW5lLWhlaWdodDogJGlucHV0LWxpbmUtaGVpZ2h0LXNtO1xuICBAaW5jbHVkZSBib3JkZXItcmFkaXVzKCRpbnB1dC1ib3JkZXItcmFkaXVzLXNtKTtcbn1cblxuLmlucHV0LWdyb3VwLWxnID4gLmN1c3RvbS1zZWxlY3QsXG4uaW5wdXQtZ3JvdXAtc20gPiAuY3VzdG9tLXNlbGVjdCB7XG4gIHBhZGRpbmctcmlnaHQ6ICRjdXN0b20tc2VsZWN0LXBhZGRpbmcteCArICRjdXN0b20tc2VsZWN0LWluZGljYXRvci1wYWRkaW5nO1xufVxuXG5cbi8vIFByZXBlbmQgYW5kIGFwcGVuZCByb3VuZGVkIGNvcm5lcnNcbi8vXG4vLyBUaGVzZSBydWxlc2V0cyBtdXN0IGNvbWUgYWZ0ZXIgdGhlIHNpemluZyBvbmVzIHRvIHByb3Blcmx5IG92ZXJyaWRlIHNtIGFuZCBsZ1xuLy8gYm9yZGVyLXJhZGl1cyB2YWx1ZXMgd2hlbiBleHRlbmRpbmcuIFRoZXkncmUgbW9yZSBzcGVjaWZpYyB0aGFuIHdlJ2QgbGlrZVxuLy8gd2l0aCB0aGUgYC5pbnB1dC1ncm91cCA+YCBwYXJ0LCBidXQgd2l0aG91dCBpdCwgd2UgY2Fubm90IG92ZXJyaWRlIHRoZSBzaXppbmcuXG5cblxuLmlucHV0LWdyb3VwID4gLmlucHV0LWdyb3VwLXByZXBlbmQgPiAuYnRuLFxuLmlucHV0LWdyb3VwID4gLmlucHV0LWdyb3VwLXByZXBlbmQgPiAuaW5wdXQtZ3JvdXAtdGV4dCxcbi5pbnB1dC1ncm91cCA+IC5pbnB1dC1ncm91cC1hcHBlbmQ6bm90KDpsYXN0LWNoaWxkKSA+IC5idG4sXG4uaW5wdXQtZ3JvdXAgPiAuaW5wdXQtZ3JvdXAtYXBwZW5kOm5vdCg6bGFzdC1jaGlsZCkgPiAuaW5wdXQtZ3JvdXAtdGV4dCxcbi5pbnB1dC1ncm91cCA+IC5pbnB1dC1ncm91cC1hcHBlbmQ6bGFzdC1jaGlsZCA+IC5idG46bm90KDpsYXN0LWNoaWxkKTpub3QoLmRyb3Bkb3duLXRvZ2dsZSksXG4uaW5wdXQtZ3JvdXAgPiAuaW5wdXQtZ3JvdXAtYXBwZW5kOmxhc3QtY2hpbGQgPiAuaW5wdXQtZ3JvdXAtdGV4dDpub3QoOmxhc3QtY2hpbGQpIHtcbiAgQGluY2x1ZGUgYm9yZGVyLXJpZ2h0LXJhZGl1cygwKTtcbn1cblxuLmlucHV0LWdyb3VwID4gLmlucHV0LWdyb3VwLWFwcGVuZCA+IC5idG4sXG4uaW5wdXQtZ3JvdXAgPiAuaW5wdXQtZ3JvdXAtYXBwZW5kID4gLmlucHV0LWdyb3VwLXRleHQsXG4uaW5wdXQtZ3JvdXAgPiAuaW5wdXQtZ3JvdXAtcHJlcGVuZDpub3QoOmZpcnN0LWNoaWxkKSA+IC5idG4sXG4uaW5wdXQtZ3JvdXAgPiAuaW5wdXQtZ3JvdXAtcHJlcGVuZDpub3QoOmZpcnN0LWNoaWxkKSA+IC5pbnB1dC1ncm91cC10ZXh0LFxuLmlucHV0LWdyb3VwID4gLmlucHV0LWdyb3VwLXByZXBlbmQ6Zmlyc3QtY2hpbGQgPiAuYnRuOm5vdCg6Zmlyc3QtY2hpbGQpLFxuLmlucHV0LWdyb3VwID4gLmlucHV0LWdyb3VwLXByZXBlbmQ6Zmlyc3QtY2hpbGQgPiAuaW5wdXQtZ3JvdXAtdGV4dDpub3QoOmZpcnN0LWNoaWxkKSB7XG4gIEBpbmNsdWRlIGJvcmRlci1sZWZ0LXJhZGl1cygwKTtcbn1cbiJdLCJmaWxlIjoiX2lucHV0LWdyb3VwLnNjc3MifQ==
