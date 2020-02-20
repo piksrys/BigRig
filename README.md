@@ -4,7 +4,7 @@
 # Big Rig: WordPress Theme Boilerplate for Big Dog Digital
 [![Build Status](https://travis-ci.com/wprig/wprig.svg?branch=master)](https://travis-ci.com/wprig/wprig)
 [![License: GPL](https://img.shields.io/github/license/wprig/wprig)](https://www.gnu.org/licenses/gpl-3.0.html)
-![WP Rig version 2.0.1](https://img.shields.io/badge/version-2.0.1-blue.svg)
+![WP Rig version 1.0](https://img.shields.io/badge/version-1.0-blue.svg)
 
 
 Big Rig is based on [WP Rig](https://github.com/wprig/wprig/)
