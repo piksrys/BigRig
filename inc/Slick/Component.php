@@ -76,7 +76,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 	 */
 
 	public function slick_slider_active() {
-		return $this->slick;
+		return $this->slick_active;
 	}
 
 	public function using_slick_theme_styles() {
