@@ -16,8 +16,8 @@ use function WP_Rig\WP_Rig\wp_rig;
 class Component implements Component_Interface, Templating_Component_Interface {
 
 
-	static $slick_active = false;
-	static $using_slick_theme_styles = false;
+	public $slick_active = false;
+	public $using_slick_theme_styles = false;
 
 	/**
 	 * Gets the unique identifier for the theme component.
