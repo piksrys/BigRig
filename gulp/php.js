@@ -11,7 +11,7 @@ import { pipeline } from 'mississippi';
 /**
  * Internal dependencies
  */
-import { paths, PHPCSOptions, gulpPlugins, isProd } from './constants';
+import { paths, gulpPlugins, isProd } from './constants';
 import { getStringReplacementTasks, getThemeConfig } from './utils';
 
 export function phpBeforeReplacementStream() {
@@ -40,7 +40,7 @@ export default function php( done ) {
 		// Only do string replacements and save PHP files when building for production
 		return pump( [
 			src( paths.php.src ),
-			phpBeforeReplacementStream(),
+			// phpBeforeReplacementStream(),
 			getStringReplacementTasks(),
 			dest( paths.php.dest ),
 		], done );
@@ -49,6 +49,6 @@ export default function php( done ) {
 	// Only run code sniffing in dev, don't save PHP files
 	return pump( [
 		src( paths.php.src ),
-		phpBeforeReplacementStream(),
+		dest( paths.php.dest ),
 	], done );
 }
